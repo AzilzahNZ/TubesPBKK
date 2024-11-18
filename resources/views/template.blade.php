@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <title>Dashboard - SIMPULS</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -37,7 +37,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="{{ url('/') }}" class="logo d-flex align-items-center">
         <img src="{{ asset('assets/img/logo_unib.png') }}" alt="">
-        <span class="d-none d-lg-block">PusDig</span>
+        <span class="d-none d-lg-block">SIMPULS</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
@@ -136,7 +136,7 @@
       &copy; Copyright <strong><span>2024</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
-      TUBES <a href="https://bootstrapmade.com/">PBKK</a>
+      SIMPULS <a href="https://bootstrapmade.com/">PPL</a>
     </div>
   </footer>
 

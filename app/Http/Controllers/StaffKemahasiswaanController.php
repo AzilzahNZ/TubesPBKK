@@ -2,49 +2,64 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Katalog_Buku;
-use App\Models\Peminjaman;
-use App\Models\user_role;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
-class PengunjungController extends Controller
+class StaffKemahasiswaanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index( Request $request): View
     {
         $user = Auth::user();
         $role = $user->role;    
-        $userRoles = user_role::where('role', $role)->get();
+        $userRoles = UserRole::where('role', $role)->get();
 
         $data =[
             'menu' => $userRoles,
         ];
-
-        $katalog__bukus = Katalog_Buku::all();
-        return view('pengunjung.katalogBuku', ['katalog__bukus' => $katalog__bukus], $data);
+        return view('staff-kemahasiswaan.index', ['user' => $request->user()], $data);
     }
 
-    public function pinjam()
-    {
-        return view('pengunjung.pinjam');
-    }
-
-
-    public function riwayatPeminjaman()
+    public function surat_masuk( Request $request): View
     {
         $user = Auth::user();
         $role = $user->role;    
-        $userRoles = user_role::where('role', $role)->get();
+        $userRoles = UserRole::where('role', $role)->get();
 
         $data =[
             'menu' => $userRoles,
         ];
-        $peminjamans = Peminjaman::all();
-        return view('pengunjung.riwayatPeminjaman', ['peminjamans' => $peminjamans], $data);
+        return view('staff-kemahasiswaan.surat-masuk', ['user' => $request->user()], $data);
     }
+
+    public function surat_keluar( Request $request): View
+    {
+        $user = Auth::user();
+        $role = $user->role;    
+        $userRoles = UserRole::where('role', $role)->get();
+
+        $data =[
+            'menu' => $userRoles,
+        ];
+        return view('staff-kemahasiswaan.surat-keluar', ['user' => $request->user()], $data);
+    }
+
+    public function riwayat_surat( Request $request): View
+    {
+        $user = Auth::user();
+        $role = $user->role;    
+        $userRoles = UserRole::where('role', $role)->get();
+
+        $data =[
+            'menu' => $userRoles,
+        ];
+        return view('staff-kemahasiswaan.riwayat-surat', ['user' => $request->user()], $data);
+    }
+
 
     /**
      * Show the form for creating a new resource.

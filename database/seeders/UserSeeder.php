@@ -23,18 +23,28 @@ class UserSeeder extends Seeder
                 'role' => 'admin',
             ],
     
-            //pengunjung
+            //ormawa
             [
-                'name' =>  'Pengunjung1',
-                'email' => 'pengunjung1@gmail.com',
+                'name' =>  'HIMATIF',
+                'email' => 'himatif@gmail.com',
                 'password' => Hash::make('password'),
-                'role' => 'pengunjung',
+                'role' => 'ormawa',
             ],
+
+            //staff-kemahasiswaan
             [
-                'name' =>  'Pengunjung2',
-                'email' => 'pengunjung2@gmail.com',
+                'name' =>  'Staff Kemahasiswaan',
+                'email' => 'staff-kemahasiswaan@gmail.com',
                 'password' => Hash::make('password'),
-                'role' => 'pengunjung',
+                'role' => 'staff-kemahasiswaan',
+            ],
+
+            //staff-tu
+            [
+                'name' =>  'Staff TU',
+                'email' => 'staff-tu@gmail.com',
+                'password' => Hash::make('password'),
+                'role' => 'staff-tu',
             ],
         ]);
     }

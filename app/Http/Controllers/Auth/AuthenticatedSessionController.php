@@ -30,8 +30,12 @@ class AuthenticatedSessionController extends Controller
         $url = ""; // Default URL if needed
         if ($request->user()->role === 'admin') {
             $url = route('admin.index'); // Rute ke halaman admin
-        } elseif ($request->user()->role === 'pengunjung') {
-            $url = route('pengunjung.index'); // Rute ke halaman index pasien
+        } elseif ($request->user()->role === 'ormawa') {
+            $url = route('ormawa.index'); // Rute ke halaman ormawa
+        } elseif ($request->user()->role === 'staff-kemahasiswaan') {
+            $url = route('staff-kemahasiswaan.index'); // Rute ke halaman staff kemahasiswaan
+        } elseif ($request->user()->role === 'staff-tu') {
+            $url = route('staff-tu.index'); // Rute ke halaman staff-tu
         }
     
         return redirect()->intended($url);

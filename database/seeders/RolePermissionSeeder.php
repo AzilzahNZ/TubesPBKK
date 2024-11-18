@@ -16,7 +16,9 @@ class RolePermissionSeeder extends Seeder
     {
         // Permission::create(['name'=>'buat-tulisan']);
         Role::firstOrCreate(['name' => 'admin']);
-        Role::firstOrCreate(['name' => 'pengunjung']);
+        Role::firstOrCreate(['name' => 'ormawa']);
+        Role::firstOrCreate(['name' => 'staff-kemahasiswaan']);
+        Role::firstOrCreate(['name' => 'staff-tu']);
         
         // $roleAdmin = Role::findByName('admin');
         // $roleAdmin->givePermissionTo('buat-tulisan');

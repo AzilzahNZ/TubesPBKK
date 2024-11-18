@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrmawaController;
 use App\Http\Controllers\PengunjungController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StaffKemahasiswaanController;
+use App\Http\Controllers\StaffTUController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,18 +24,25 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin.katalog-buku', [AdminController::class, 'katalogBuku'])->name('admin.katalog-buku');
-    Route::get('/admin/{Katalog_Buku}', [AdminController::class, 'edit'])->name('edit');
-    Route::delete('/admin/{Katalog_Buku}', [AdminController::class, 'destroy'])->name('destroy');
-    Route::put('/admin/{Katalog_Buku}', [AdminController::class, 'update'])->name('update');
-    Route::get('/admin.peminjaman', [AdminController::class, 'peminjaman'])->name('admin.peminjaman');
-    Route::get('/admin.pengunjung', [AdminController::class, 'pengunjung'])->name('admin.pengunjung');
+    Route::get('/admin.manajemen-akun-pengguna', [AdminController::class, 'manajemen_akun_pengguna'])->name('admin.manajemen-akun-pengguna');
 });
 
-Route::middleware(['auth', 'role:pengunjung'])->group(function () {
-    Route::get('/pengunjung', [PengunjungController::class, 'index'])->name('pengunjung.index');
-    Route::get('/pengunjung.pinjam', [PengunjungController::class, 'pinjam'])->name('pengunjung.pinjam');
-    Route::get('/pengunjung.riwayat-peminjaman', [PengunjungController::class, 'riwayatPeminjaman'])->name('pengunjung.riwayat-peminjaman');
+Route::middleware(['auth', 'role:ormawa'])->group(function () {
+    Route::get('/ormawa', [OrmawaController::class, 'index'])->name('ormawa.index');
+    Route::get('/ormawa.pengajuan-surat', [OrmawaController::class, 'pengajuan_surat'])->name('ormawa.pengajuan-surat');
+    Route::get('/ormawa.riwayat-pengajuan-surat', [OrmawaController::class, 'riwayat_pengajuan_surat'])->name('ormawa.riwayat-pengajuan-surat');
+});
+
+Route::middleware(['auth', 'role:staff-kemahasiswaan'])->group(function () {
+    Route::get('/staff-kemahasiswaan', [StaffKemahasiswaanController::class, 'index'])->name('staff-kemahasiswaan.index');
+    Route::get('/staff-kemahasiswaan.surat-masuk', [StaffKemahasiswaanController::class, 'surat_masuk'])->name('staff-kemahasiswaan.surat-masuk');
+    Route::get('/staff-kemahasiswaan.surat-keluar', [StaffKemahasiswaanController::class, 'surat_keluar'])->name('staff-kemahasiswaan.surat-keluar');
+    Route::get('/staff-kemahasiswaan.riwayat-surat', [StaffKemahasiswaanController::class, 'riwayat_surat'])->name('staff-kemahasiswaan.riwayat-surat');
+});
+
+Route::middleware(['auth', 'role:staff-tu'])->group(function () {
+    Route::get('/staff-tu', [StaffTUController::class, 'index'])->name('staff-tu.index');
+    Route::get('/staff-tu.riwayat-surat', [StaffTUController::class, 'riwayat_surat'])->name('staff-tu.riwayat-surat');
 });
 
 require __DIR__.'/auth.php';
