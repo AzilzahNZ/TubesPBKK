@@ -39,6 +39,14 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
+        {{-- No. Telepon --}}
+        <div class="mt-4">
+            <x-input-label for="no_telepon" :value="__('No. Telepon')" />
+            <x-text-input id="no_telepon" class="block mt-1 w-full" type="no_telepon" name="no_telepon" :value="old('no_telepon')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('no_telepon')" class="mt-2" />
+        </div>
+
+
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}

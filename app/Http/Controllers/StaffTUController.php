@@ -15,25 +15,15 @@ class StaffTUController extends Controller
     public function index( Request $request): View
     {
         $user = Auth::user();
-        $role = $user->role;    
-        $userRoles = UserRole::where('role', $role)->get();
 
-        $data =[
-            'menu' => $userRoles,
-        ];
-        return view('staff-tu.index', ['user' => $request->user()], $data);
+        return view('staff-tu.index');
     }
 
     public function riwayat_surat( Request $request): View
     {
         $user = Auth::user();
-        $role = $user->role;    
-        $userRoles = UserRole::where('role', $role)->get();
 
-        $data =[
-            'menu' => $userRoles,
-        ];
-        return view('staff-tu.riwayat-surat', ['user' => $request->user()], $data);
+        return view('staff-tu.riwayat-surat');
     }
 
     /**

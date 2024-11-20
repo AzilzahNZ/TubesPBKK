@@ -15,49 +15,29 @@ class StaffKemahasiswaanController extends Controller
     public function index( Request $request): View
     {
         $user = Auth::user();
-        $role = $user->role;    
-        $userRoles = UserRole::where('role', $role)->get();
-
-        $data =[
-            'menu' => $userRoles,
-        ];
-        return view('staff-kemahasiswaan.index', ['user' => $request->user()], $data);
+        
+        return view('staff-kemahasiswaan.index', compact('user'));
     }
 
     public function surat_masuk( Request $request): View
     {
         $user = Auth::user();
-        $role = $user->role;    
-        $userRoles = UserRole::where('role', $role)->get();
-
-        $data =[
-            'menu' => $userRoles,
-        ];
-        return view('staff-kemahasiswaan.surat-masuk', ['user' => $request->user()], $data);
+    
+        return view('staff-kemahasiswaan.surat-masuk', compact('user'));
     }
 
     public function surat_keluar( Request $request): View
     {
         $user = Auth::user();
-        $role = $user->role;    
-        $userRoles = UserRole::where('role', $role)->get();
 
-        $data =[
-            'menu' => $userRoles,
-        ];
-        return view('staff-kemahasiswaan.surat-keluar', ['user' => $request->user()], $data);
+        return view('staff-kemahasiswaan.surat-keluar', compact('user'));
     }
 
     public function riwayat_surat( Request $request): View
     {
         $user = Auth::user();
-        $role = $user->role;    
-        $userRoles = UserRole::where('role', $role)->get();
-
-        $data =[
-            'menu' => $userRoles,
-        ];
-        return view('staff-kemahasiswaan.riwayat-surat', ['user' => $request->user()], $data);
+        
+        return view('staff-kemahasiswaan.riwayat-surat', compact('user'));
     }
 
 

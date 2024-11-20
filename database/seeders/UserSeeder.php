@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
                 'name' =>  'Admin',
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
                 'role' => 'admin',
             ],
     
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
                 'name' =>  'HIMATIF',
                 'email' => 'himatif@gmail.com',
                 'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
                 'role' => 'ormawa',
             ],
 
@@ -36,6 +38,7 @@ class UserSeeder extends Seeder
                 'name' =>  'Staff Kemahasiswaan',
                 'email' => 'staff-kemahasiswaan@gmail.com',
                 'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
                 'role' => 'staff-kemahasiswaan',
             ],
 
@@ -44,6 +47,7 @@ class UserSeeder extends Seeder
                 'name' =>  'Staff TU',
                 'email' => 'staff-tu@gmail.com',
                 'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
                 'role' => 'staff-tu',
             ],
         ]);

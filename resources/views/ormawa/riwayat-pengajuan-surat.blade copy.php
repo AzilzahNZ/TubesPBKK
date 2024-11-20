@@ -131,12 +131,12 @@
                                                                 Lihat
                                                             </a>
                                                         </td>
-                                                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">
+                                                        <!-- <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                                             <span
                                                                 style="color: {{ $dt->status == 'Selesai' ? '#198754' : '#fd7e14' }};">
                                                                 {{ $dt->status }}
                                                             </span>
-                                                        </td>
+                                                        </td> -->
                                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                                             <a class="btn btn-sm btn-warning" data-id="{{ $dt->id }}"
                                                                 style="margin-right: 5px;">Edit</a>
