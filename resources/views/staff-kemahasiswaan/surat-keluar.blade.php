@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <form action="/ormawa.surat-keluar.store" method="POST" enctype="multipart/form-data" style="max-width: 800px; margin: auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+    <form action="/staff-kemahasiswaan.surat-keluar.store" method="POST" enctype="multipart/form-data" style="max-width: 800px; margin: auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
         @csrf
         <h1 class="justify-content-center text-align-center text-center" style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">
             Surat Keluar
