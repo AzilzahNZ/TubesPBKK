@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Dashboard - SIMPULS</title>
+    <title>SIMPULS</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -61,11 +61,14 @@
                 </li>
 
                 <li class="nav-item dropdown pe-3">
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
-                        data-bs-toggle="dropdown">
-                        <img src="{{ asset('assets/img/profile1.jpeg') }}" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2"></span>
+                    <a class="nav-link nav-profile d-flex justify-content-end" href="#" data-bs-toggle="dropdown">
+                        {{-- <img src="{{ asset('assets/img/profile1.jpeg') }}" alt="Profile" class="rounded-circle"> --}}
+                        <li><i class="bi bi-person-fill menu-icon"></i></li>
+                    <span class="d-none d-md-block dropdown-toggle ps-6" style="margin-right: 30px"></span>
                     </a>
+                    {{-- <a a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-fill menu-icon"></i>
+                    </a> --}}
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
@@ -106,16 +109,17 @@
         <ul class="sidebar-nav" id="sidebar-nav">
             @if (Auth::user()->role == 'admin')
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard/admin">
-                        <i class=""></i>
+                    <a class="nav-link {{ request()->is('dashboard/admin') ? 'active' : '' }}" href="/dashboard/admin">
+                        <i class="bi bi-clipboard2-fill menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
             @endif
             @if (Auth::user()->role == 'admin')
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin.manajemen-akun-pengguna">
-                        <i class="bi bi-person-fill menu-icon"></i>
+                    <a class="nav-link {{ request()->is('admin.manajemen-akun-pengguna') ? 'active' : '' }}"
+                        href="/admin.manajemen-akun-pengguna">
+                        <i class="bi bi-people-fill menu-icon"></i>
                         <span class="menu-title">Manajemen Akun Pengguna</span>
                     </a>
                 </li>
@@ -123,7 +127,8 @@
 
             @if (Auth::user()->role == 'ormawa')
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard/ormawa">
+                    <a class="nav-link {{ request()->is('dashboard/ormawa') ? 'active' : '' }}"
+                        href="/dashboard/ormawa">
                         <i class="fa-solid fa-calculator menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
@@ -131,7 +136,8 @@
             @endif
             @if (Auth::user()->role == 'ormawa')
                 <li class="nav-item">
-                    <a class="nav-link" href="/ormawa.pengajuan-surat">
+                    <a class="nav-link {{ request()->is('ormawa.pengajuan-surat') ? 'active' : '' }}"
+                        href="/ormawa.pengajuan-surat">
                         <i class="fa-solid fa-user-group menu-icon"></i>
                         <span class="menu-title">Pengajuan Surat</span>
                     </a>
@@ -139,7 +145,8 @@
             @endif
             @if (Auth::user()->role == 'ormawa')
                 <li class="nav-item">
-                    <a class="nav-link" href="/ormawa.riwayat-pengajuan-surat">
+                    <a class="nav-link {{ request()->is('ormawa.riwayat-pengajuan-surat') ? 'active' : '' }}"
+                        href="/ormawa.riwayat-pengajuan-surat">
                         <i class="fa-solid fa-user-group menu-icon"></i>
                         <span class="menu-title">Riwayat Pengajuan Surat</span>
                     </a>
@@ -148,7 +155,8 @@
 
             @if (Auth::user()->role == 'staff-kemahasiswaan')
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard/staff-kemahasiswaan">
+                    <a class="nav-link {{ request()->is('dashboard/staff-kemahasiswaan') ? 'active' : '' }}"
+                        href="/dashboard/staff-kemahasiswaan">
                         <i class="fa-solid fa-calculator menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
@@ -156,7 +164,8 @@
             @endif
             @if (Auth::user()->role == 'staff-kemahasiswaan')
                 <li class="nav-item">
-                    <a class="nav-link" href="/staff-kemahasiswaan.surat-masuk">
+                    <a class="nav-link {{ request()->is('staff-kemahasiswaan.surat-masuk') ? 'active' : '' }}"
+                        href="/staff-kemahasiswaan.surat-masuk">
                         <i class="fa-solid fa-user-group menu-icon"></i>
                         <span class="menu-title">Surat Masuk</span>
                     </a>
@@ -164,7 +173,8 @@
             @endif
             @if (Auth::user()->role == 'staff-kemahasiswaan')
                 <li class="nav-item">
-                    <a class="nav-link" href="/staff-kemahasiswaan.surat-keluar">
+                    <a class="nav-link {{ request()->is('staff-kemahasiswaan.surat-keluar') ? 'active' : '' }}"
+                        href="/staff-kemahasiswaan.surat-keluar">
                         <i class="fa-solid fa-user-group menu-icon"></i>
                         <span class="menu-title">Surat Keluar</span>
                     </a>
@@ -173,7 +183,8 @@
 
             @if (Auth::user()->role == 'staff-tu')
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard/staff-tu">
+                    <a class="nav-link {{ request()->is('dashboard/staff-tu') ? 'active' : '' }}"
+                        href="/dashboard/staff-tu">
                         <i class="fa-solid fa-calculator menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
@@ -181,7 +192,8 @@
             @endif
             @if (Auth::user()->role == 'staff-kemahasiswaan' || Auth::user()->role == 'staff-tu')
                 <li class="nav-item">
-                    <a class="nav-link" href="/staff-kemahasiswaan.riwayat-surat">
+                    <a class="nav-link {{ request()->is('staff-kemahasiswaan.riwayat-surat') ? 'active' : '' }}"
+                        href="/staff-kemahasiswaan.riwayat-surat">
                         <i class="fa-solid fa-user-group menu-icon"></i>
                         <span class="menu-title">Riwayat Surat</span>
                     </a>
@@ -191,48 +203,6 @@
     </aside>
 
     <main id="main" class="main">
-
-        <!-- ======= Breadcrumbs ======= -->
-        <?php
-        // Cari menu aktif berdasarkan URL saat ini
-        $currentRouteName = Route::currentRouteName();
-        $currentMenu = null;
-        
-        foreach ($menu as $key => $value) {
-            if ($value->role . '.' . $value->link === $currentRouteName) {
-                $currentMenu = $value;
-                break;
-            }
-        }
-        ?>
-
-        <div class="pagetitle">
-            {{-- <h1>{{ $currentMenu ? $currentMenu->title : 'Dashboard' }}</h1> --}}
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="{{ url('/') }}">SIMPULS</a>
-                    </li>
-
-                    <!-- Tampilkan breadcrumb parent jika ada -->
-                    <?php if (!empty($currentMenu) && isset($currentMenu->parent)): ?>
-                    <li class="breadcrumb-item">
-                        <a href="{{ route($currentMenu->role . '.' . $currentMenu->parent->link) }}">
-                            {{ $currentMenu->parent->title }}
-                        </a>
-                    </li>
-                    <?php endif; ?>
-
-                    <!-- Menu aktif -->
-                    <?php if (!empty($currentMenu)): ?>
-                    <li class="breadcrumb-item active">{{ $currentMenu->title }}</li>
-                    <?php else: ?>
-                    <li class="breadcrumb-item active">Dashboard</li>
-                    <?php endif; ?>
-                </ol>
-            </nav>
-        </div>
-
         <section class="section dashboard">
             @yield('content')
         </section>

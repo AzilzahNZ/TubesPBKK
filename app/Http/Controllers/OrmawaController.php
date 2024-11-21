@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class OrmawaController extends Controller
@@ -17,7 +18,11 @@ class OrmawaController extends Controller
     public function index(Request $request): View
     {
         $user = Auth::user();
-        return view('ormawa.index', compact('user'));
+        $totalStatusDiproses = DB::table('riwayat_pengajuan_surats')->where('status', 'Diproses')->count();
+        $totalStatusDisetujui = DB::table('riwayat_pengajuan_surats')->where('status', 'Disetujui')->count();
+        $totalStatusDitolak = DB::table('riwayat_pengajuan_surats')->where('status', 'Ditolak')->count();
+        $totalStatusSelesai = DB::table('riwayat_pengajuan_surats')->where('status', 'Selesai')->count();
+        return view('ormawa.index', compact('user', 'totalStatusDiproses', 'totalStatusDisetujui', 'totalStatusDitolak', 'totalStatusSelesai'));
     }
 
     public function pengajuan_surat(Request $request): View
@@ -29,7 +34,7 @@ class OrmawaController extends Controller
     public function riwayat_pengajuan_surat(Request $request): View
     {
         $user = Auth::user();
-        
+
         $riwayat_pengajuan_surats = RiwayatPengajuanSurat::all();
         // dd($riwayat_pengajuan_surats);
         return view('ormawa.riwayat-pengajuan-surat', compact('riwayat_pengajuan_surats'));
@@ -94,7 +99,7 @@ class OrmawaController extends Controller
             'jenis_surat' => 'required|string|max:255',
             'nama_kegiatan' => 'required|string|max:255',
             'penanggung_jawab' => 'required|string|max:255',
-            'file_surat' => 'nullable|file|mimes:pdf|max:2048', // File opsional
+            'file_surat' => 'required|file|mimes:pdf|max:2048', // File opsional
         ]);
 
         // Simpan file jika diunggah
@@ -111,7 +116,6 @@ class OrmawaController extends Controller
             'nama_kegiatan' => $validated['nama_kegiatan'],
             'penanggung_jawab' => $validated['penanggung_jawab'],
             'file_surat' => $filePath,
-            'status' => 'Diproses', // Status default
         ]);
 
         // Redirect dengan pesan sukses
@@ -132,18 +136,8 @@ class OrmawaController extends Controller
      */
     public function edit(string $id)
     {
-        $pengajuan = RiwayatPengajuanSurat::findOrFail($id);
-
-        return response()->json([
-            'id' => $pengajuan->id,
-            'tanggal_surat' => $pengajuan->tanggal_diajukan,
-            'nomor_surat' => $pengajuan->nomor_surat,
-            'jenis_surat' => $pengajuan->jenis_surat,
-            'nama_kegiatan' => $pengajuan->nama_kegiatan,
-            'penanggung_jawab' => $pengajuan->penanggung_jawab,
-            'file_surat' => $pengajuan->file_surat,
-            'status' => $pengajuan->status,
-        ]);
+        // $pengajuanSurat = RiwayatPengajuanSurat::findOrFail($id); // Cari data berdasarkan ID pengajuanSurat::findOrFail($id);
+        // return view('ormawa.edit-pengajuan-surat', compact('pengajuanSurat'));
     }
 
     /**
@@ -152,28 +146,30 @@ class OrmawaController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'tanggal_surat' => 'required|date',
+            'tanggal_diajukan' => 'required|date',
             'nomor_surat' => 'required|string|max:255',
             'jenis_surat' => 'required|string|max:255',
             'nama_kegiatan' => 'required|string|max:255',
             'penanggung_jawab' => 'required|string|max:255',
             'file_surat' => 'required|file|mimes:pdf|max:2048',
-            'status' => 'required|in:Diproses,Selesai',
+            'status' => 'nullable|string|max:255',
         ]);
 
-        $pengajuan = RiwayatPengajuanSurat::findOrFail($id);
-        $pengajuan->update([
-            $pengajuan->tanggal_diajukan = $request->tanggal_surat,
-            $pengajuan->nomor_surat = $request->nomor_surat,
-            $pengajuan->jenis_surat = $request->jenis_surat,
-            $pengajuan->nama_kegiatan = $request->nama_kegiatan,
-            $pengajuan->penanggung_jawab = $request->penanggung_jawab,
-            $pengajuan->file_surat = $request->file('file_surat')->store('surat', 'public'),
-            $pengajuan->status = $request->status,
-            $pengajuan->save()
+        // Temukan user berdasarkan ID
+        $pengajuanSurat = RiwayatPengajuanSurat::findOrFail($id);
+
+        // Update data pengguna
+        $pengajuanSurat->update([
+            'tanggal_diajukan' => $request->tanggal_diajukan,
+            'nomor_surat' => $request->nomor_surat,
+            'jenis_surat' => $request->jenis_surat,
+            'nama_kegiatan' => $request->nama_kegiatan,
+            'penanggung_jawab' => $request->penanggung_jawab,
+            'file_surat' => $request->file('file_surat')->store('surat', 'public'),
+            'status' => $request->status,
         ]);
 
-        return redirect()->route('ormawa.riwayat-pengajuan-surat')->with('success', 'Data berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Data berhasil diperbarui!');
     }
 
     /**

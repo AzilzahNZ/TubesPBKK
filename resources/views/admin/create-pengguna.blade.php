@@ -5,7 +5,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Tambah Akun Pengguna</h5>
+                <h5 class="card-title" style="font-weight: bold; text-align: center;">Tambah Akun Pengguna</h5>
 
                 <!-- Menampilkan pesan sukses jika ada -->
                 @if(session('success'))
@@ -48,7 +48,9 @@
                     </div>
 
                     <!-- Tombol Kirim -->
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>                    
                 </form>
             </div>
         </div>

@@ -65,9 +65,9 @@
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
+            <button class="ms-3" type="submit" style="padding: 8px 20px; background-color: #000000; color: white; border: none; border-radius: 4px; cursor: pointer;">
                 {{ __('Log in') }}
-            </x-primary-button>
+            <button>
         </div>
     </form>
 </x-guest-layout>

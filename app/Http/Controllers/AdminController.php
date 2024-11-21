@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -15,7 +16,9 @@ class AdminController extends Controller
     public function index(Request $request): View
     {
         $user = Auth::user();
-        return view('admin.index', compact('user'));
+        $totalUsers = DB::table('users')->count();
+        $totalOrmawa = DB::table('users')->where('role', 'Ormawa')->count();
+        return view('admin.index', compact('user', 'totalUsers', 'totalOrmawa'));
     }
 
     // public function manajemen_akun_pengguna(Request $request)
@@ -44,7 +47,7 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $users = User::all();
-        
+
         $search = $request->input('search');
 
         $users = User::query()
@@ -148,4 +151,11 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Pengguna berhasil dihapus!');
     }
+
+    // public function Dasboard()
+    // {
+    //     $totalUsers = DB::table('users')->where('role', 'Ormawa')->count();
+
+    //     return view('admin.index', compact('totalUsers'));
+    // }
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nama_kegiatan');
             $table->string('penanggung_jawab');
             $table->string('file_surat');
-            $table->string('status')->nullable(); // Status bisa kosong
+            $table->enum('status', ['Ditolak', 'Disetujui', 'Diproses', 'Selesai'])->default('Diproses');
             $table->timestamps();
         });
     }
