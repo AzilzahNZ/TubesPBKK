@@ -48,7 +48,7 @@
                                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#deleteModal"
                                                 onclick="setDeleteData('{{ $dt->id }}')">
-                                                Delete
+                                                Hapus
                                             </button>
                                         </td>
                                     </tr>

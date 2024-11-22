@@ -6,17 +6,16 @@
             <div class="card">
                 <div class="card-body">
                     <div style="max-width: 1200px; margin: 0 auto; padding: 10px;">
-                        <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">Riwayat Pengajuan Surat</h1>
+                        <h1 class="fs-4 fw-bold mb-4">Riwayat Pengajuan Surat</h1>
 
                         {{-- Filter dan Pencarian --}}
                         <div class="d-flex justify-content-end mb-3">
                             <form method="GET" action="{{ route('ormawa.riwayat-pengajuan-surat') }}"
-                                style="display: flex; gap: 5px; flex-wrap: wrap;">
+                                class="d-flex gap-2 flex-wrap">
                                 <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
-                                    style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px;">
+                                    class="form-input">
 
-                                <select name="jenis_surat"
-                                    style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px;">
+                                <select name="jenis_surat" class="form-input">
                                     <option value="">Jenis Surat</option>
                                     <option value="Permohonan Izin Kegiatan"
                                         {{ request('jenis_surat') == 'Permohonan Izin Kegiatan' ? 'selected' : '' }}>
@@ -32,8 +31,7 @@
                                         Kamera</option>
                                 </select>
 
-                                <select name="status"
-                                    style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px;">
+                                <select name="status" class="form-input">
                                     <option value="">Status</option>
                                     <option value="Diproses" {{ request('status') == 'Diproses' ? 'selected' : '' }}>
                                         Diproses</option>
@@ -45,239 +43,235 @@
                                     </option>
                                 </select>
 
-                                <select name="sort"
-                                    style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px;">
+                                <select name="sort" class="form-input">
                                     <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>Terbaru
                                     </option>
                                     <option value="terlama" {{ request('sort') == 'terlama' ? 'selected' : '' }}>Terlama
                                     </option>
                                 </select>
 
-                                <button type="submit"
-                                    style="padding: 8px 16px; background-color: #0d6efd; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                                    Filter
-                                </button>
+                                <button type="submit" class="form-button form-button-primary">Filter</button>
                             </form>
-                            <div style="margin-left: 5px;">
-                                <form method="GET" action="{{ route('ormawa.riwayat-pengajuan-surat') }}">
-                                    <button type="submit"
-                                        style="padding: 10px 16px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                                        Hapus Filter
-                                    </button>
-                                </form>
-                            </div>
+                            <form method="GET" action="{{ route('ormawa.riwayat-pengajuan-surat') }}" class="ms-2">
+                                <button type="submit" class="form-button form-button-danger">Hapus Filter</button>
+                            </form>
                         </div>
 
                         {{-- Tabel Riwayat --}}
                         @if ($riwayat_pengajuan_surats->isEmpty())
-                            <div class="alert alert-warning" role="alert" style="text-align: center;">
-                                Tidak ada data yang ditemukan berdasarkan filter atau pencarian Anda.
+                            <div class="alert alert-warning">
+                                Belum ada data Riwayat Pengajuan Surat.
                             </div>
                         @else
-                            {{-- Tampilkan tabel jika data ditemukan --}}
                             <div style="overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 20px;">
                                 <table
-                                    style="width: 100%; border-collapse: collapse; background-color: white; border: 1px solid #ddd; white-space: nowrap;">
-                                    <div style="overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 20px;">
-                                        <table
-                                            style="width: 100%; border-collapse: collapse; background-color: white; border: 1px solid #ddd; white-space: nowrap;">
-                                            <thead>
-                                                <tr style="background-color: #f8f9fa;">
-                                                    <th
-                                                        style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
-                                                        No</th>
-                                                    <th
-                                                        style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
-                                                        Tanggal Diajukan</th>
-                                                    <th
-                                                        style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
-                                                        Nomor Surat</th>
-                                                    <th
-                                                        style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
-                                                        Jenis Surat</th>
-                                                    <th
-                                                        style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
-                                                        Nama Kegiatan</th>
-                                                    <th
-                                                        style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
-                                                        PJ</th>
-                                                    <th
-                                                        style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
-                                                        File Surat</th>
-                                                    <th
-                                                        style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
-                                                        Status</th>
-                                                    <th
-                                                        style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
-                                                        Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($riwayat_pengajuan_surats as $dt)
-                                                    <tr>
-                                                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                                            {{ $loop->iteration }}</td>
-                                                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                                            {{ \Carbon\Carbon::parse($dt->tanggal_diajukan)->format('d F Y') }}
-                                                        </td>
-                                                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                                            {{ $dt->nomor_surat }}</td>
-                                                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                                            {{ $dt->jenis_surat }}</td>
-                                                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                                            {{ $dt->nama_kegiatan }}</td>
-                                                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                                            {{ $dt->penanggung_jawab }}</td>
-                                                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                                            <a href="{{ asset('storage/' . $dt->file_surat) }}"
-                                                                target="_blank"
-                                                                style="color: #0d6efd; text-decoration: none;">
-                                                                Lihat
-                                                            </a>
-                                                        </td>
-                                                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                                            <span
-                                                                style="color: {{ $dt->status == 'Selesai' ? '#198754' : '#fd7e14' }};">
-                                                                {{ $dt->status }}
-                                                            </span>
-                                                        </td>
-                                                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                                            <a href="#editModal-{{ $dt->id }}"
-                                                                class="btn btn-sm btn-warning"
-                                                                data-bs-toggle="modal">Edit</a>
-                                                            <form
-                                                                action="{{ route('ormawa.destroy-pengajuan-surat', $dt->id) }}"
-                                                                method="POST" style="display: inline;">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit"
-                                                                    style="padding: 6px 12px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;"
-                                                                    onclick="return confirm('Yakin ingin membatalkan?')">
-                                                                    Batal
-                                                                </button>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; white-space: nowrap;">
+                                    <thead>
+                                        <tr class="table-header">
+                                            <th class="table-cell">No</th>
+                                            <th class="table-cell">Tanggal Diajukan</th>
+                                            <th class="table-cell">Nomor Surat</th>
+                                            <th class="table-cell">Jenis Surat</th>
+                                            <th class="table-cell">Nama Kegiatan</th>
+                                            <th class="table-cell">PJ</th>
+                                            <th class="table-cell">File Surat</th>
+                                            <th class="table-cell">Status</th>
+                                            <th class="table-cell">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($riwayat_pengajuan_surats as $dt)
+                                            <tr>
+                                                <td class="table-cell">{{ $loop->iteration }}</td>
+                                                <td class="table-cell">
+                                                    {{ Carbon\Carbon::parse($dt->tanggal_diajukan)->format('d F Y') }}</td>
+                                                <td class="table-cell">{{ $dt->nomor_surat }}</td>
+                                                <td class="table-cell">{{ $dt->jenis_surat }}</td>
+                                                <td class="table-cell">{{ $dt->nama_kegiatan }}</td>
+                                                <td class="table-cell">{{ $dt->penanggung_jawab }}</td>
+                                                <td class="table-cell">
+                                                    <a href="{{ asset('storage/' . $dt->file_surat) }}" target="_blank"
+                                                        class="text-primary text-decoration-none">Lihat</a>
+                                                </td>
+                                                <td class="table-cell">
+                                                    <span
+                                                        class="{{ $dt->status == 'Selesai' ? 'status-finish' : 'status-pending' }}">{{ $dt->status }}</span>
+                                                </td>
+                                                <td class="table-cell">
+                                                    <a class="btn btn-sm btn-warning"
+                                                        data-id="{{ $dt->id }}">Edit</a>
+                                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                        data-bs-target="#deleteModal"
+                                                        onclick="setDeleteData('{{ $dt->id }}')">Batal</button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         @endif
 
                         <script>
                             document.addEventListener('DOMContentLoaded', () => {
                                 const editButtons = document.querySelectorAll('.btn-warning'); // Tombol Edit
                                 const editForm = document.getElementById('editForm'); // Formulir di modal
-                                const tanggal_diajukanInput = document.getElementById('tanggal_diajukan');
-                                const nomor_suratInput = document.getElementById('nomor_surat');
-                                const jenis_suratInput = document.getElementById('jenis_surat');
-                                const nama_kegiatanInput = document.getElementById('nama_kegiatan');
-                                const penanggung_jawabInput = document.getElementById('penanggung_jawab');
-                                const file_suratInput = document.getElementById('file_surat');
+                                const tanggalDiajukanInput = document.getElementById('tanggal_diajukan'); // Input Tanggal Diajukan
+                                const nomorSuratInput = document.getElementById('nomor_surat'); // Input Nomor Surat
+                                const jenisSuratInput = document.getElementById('jenis_surat'); // Input Jenis Surat
+                                const namaKegiatanInput = document.getElementById('nama_kegiatan'); // Input Nama Kegiatan
+                                const penanggungJawabInput = document.getElementById('penanggung_jawab'); // Input Penanggung Jawab
+                                const fileSuratLink = document.getElementById('file_surat_link'); // Link File Surat
 
-
-                                // Event listener untuk tombol Edit
                                 editButtons.forEach(button => {
                                     button.addEventListener('click', function() {
-                                        const row = this.closest('tr'); // Baris tabel pengguna
-                                        const userId = this.getAttribute('data-id'); // Ambil ID pengguna
-                                        const tanggal_diajukan = row.querySelector('td:nth-child(2)').textContent.trim();
-                                        const nomor_surat = row.querySelector('td:nth-child(3)').textContent.trim();
-                                        const jenis_surat = row.querySelector('td:nth-child(4)').textContent.trim();
-                                        const nama_kegiatan = row.querySelector('td:nth-child(5)').textContent.trim();
-                                        const penanggung_jawab = row.querySelector('td:nth-child(6)').textContent.trim();
-                                        const file_surat = row.querySelector('td:nth-child(7)').textContent.trim();
+                                        const row = this.closest('tr'); // Baris tabel
+                                        const pengajuanId = this.getAttribute('data-id'); // Ambil ID dari tombol
+          
+                                        // Ambil tanggal dari tabel
+                                        const tanggalText = row.querySelector('td:nth-child(2)').textContent.trim();
+                                        const [day, month, year] = tanggalText.split(" ");
+                                        const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
+                                            "Agustus", "September", "Oktober", "November", "Desember"
+                                        ];
+                                        const monthNumber = months.indexOf(month) + 1;
+                                        const formattedTanggal =
+                                            `${year}-${monthNumber.toString().padStart(2, '0')}-${day.padStart(2, '0')}`;
+                                        tanggalDiajukanInput.value = formattedTanggal;
 
-                                        // Isi form modal dengan data pengguna
-                                        tanggal_diajukanInput.value = tanggal_diajukan;
-                                        nomor_suratInput.value = nomor_surat;
-                                        jenis_suratInput.value = jenis_surat;
-                                        nama_kegiatanInput.value = nama_kegiatan;
-                                        penanggung_jawabInput.value = penanggung_jawab;
-                                        file_suratInput.value = file_surat;
+                                        const nomorSurat = row.querySelector('td:nth-child(3)').textContent
+                                            .trim(); // Ambil Nomor Surat
+                                        const jenisSurat = row.querySelector('td:nth-child(4)').textContent
+                                            .trim(); // Ambil Jenis Surat
+                                        const namaKegiatan = row.querySelector('td:nth-child(5)').textContent
+                                            .trim(); // Ambil Nama Kegiatan
+                                        const penanggungJawab = row.querySelector('td:nth-child(6)').textContent
+                                            .trim(); // Ambil Penanggung Jawab
+                                        const fileSuratPath = row.querySelector('td:nth-child(7) a').getAttribute(
+                                            'href'); // Ambil Link File Surat
 
-                                        // Set action URL form dengan ID pengguna
-                                        editForm.action = `/ormawa/edit-pengajuan-surat/${userId}`;
+                                        // Isi form dengan data lama
+                                        // tanggalDiajukanInput.value = tanggalDiajukan; // Isi Tanggal Diajukan
+                                        nomorSuratInput.value = nomorSurat; // Isi Nomor Surat
+                                        jenisSuratInput.value = jenisSurat; // Isi Jenis Surat
+                                        namaKegiatanInput.value = namaKegiatan; // Isi Nama Kegiatan
+                                        penanggungJawabInput.value = penanggungJawab; // Isi Penanggung Jawab
+                                        fileSuratLink.href = fileSuratPath; // Tampilkan Link File Surat
+
+                                        // Atur action form dengan ID pengajuan
+                                        editForm.action = `/ormawa/edit-pengajuan-surat/${pengajuanId}`;
 
                                         // Tampilkan modal
                                         const editModal = new bootstrap.Modal(document.getElementById('editModal'));
                                         editModal.show();
                                     });
                                 });
+
+                                // Reset input file setiap kali modal ditutup
+                                const editModalElement = document.getElementById('editModal');
+                                editModalElement.addEventListener('hidden.bs.modal', () => {
+                                    document.getElementById('file_surat').value = '';
+                                });
                             });
+
+
+                            function setDeleteData(id) {
+                                const deleteForm = document.getElementById('deleteForm');
+                                deleteForm.action = `/ormawa/destroy-pengajuan-surat/${id}`;
+                            };
                         </script>
 
                         <!-- Modal -->
                         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
                             aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-dialog modal-dialog-centered modal-lg custom-modal-width">
                                 <div class="modal-content">
                                     <!-- Header Modal -->
                                     <div class="modal-header" style="border: none;">
                                         <h5 class="modal-title w-100 text-center" id="editModalLabel"
                                             style="font-weight: bold; font-size: 1.25rem;">
-                                            Edit Pengajuan Surat
+                                            Edit Data Riwayat Pengajuan Surat
                                         </h5>
                                         <!-- Tombol X -->
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <!-- Form Modal -->
-                                    <form id="editForm" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="modal-body" style="padding: 20px;">
-                                            <!-- tanggal_diajukan -->
-                                            <div class="mb-3">
-                                                <label for="tanggal_diajukan" class="form-label"
-                                                    style="font-weight: bold;">Tanggal Diajukan</label>
-                                                <input type="date" class="form-control" id="tanggal_diajukan" name="tanggal_diajukan"
-                                                    required style="border-radius: 5px;">
+                                    <div class="modal-body">
+                                        <form action="" method="POST" enctype="multipart/form-data" id="editForm">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="row g-4">
+                                                <!-- Tanggal Diajukan -->
+                                                <div class="col-md-6">
+                                                    <label for="tanggal_diajukan" class="form-label">Tanggal
+                                                        Diajukan</label>
+                                                    <input type="date" class="form-control" id="tanggal_diajukan"
+                                                        name="tanggal_diajukan" required readonly>
+                                                </div>
+
+                                                <!-- Nama Kegiatan -->
+                                                <div class="col-md-6">
+                                                    <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
+                                                    <input type="text" class="form-control" id="nama_kegiatan"
+                                                        name="nama_kegiatan" required>
+                                                </div>
+
+                                                <!-- Nomor Surat -->
+                                                <div class="col-md-6">
+                                                    <label for="nomor_surat" class="form-label">Nomor Surat</label>
+                                                    <input type="text" class="form-control" id="nomor_surat"
+                                                        name="nomor_surat" required>
+                                                </div>
+
+                                                <!-- Penanggung Jawab -->
+                                                <div class="col-md-6">
+                                                    <label for="penanggung_jawab" class="form-label">Penanggung
+                                                        Jawab</label>
+                                                    <input type="text" class="form-control" id="penanggung_jawab"
+                                                        name="penanggung_jawab" required>
+                                                </div>
+
+                                                <!-- Jenis Surat -->
+                                                <div class="col-md-6">
+                                                    <label for="jenis_surat" class="form-label">Jenis Surat</label>
+                                                    <select class="form-select" id="jenis_surat" name="jenis_surat"
+                                                        required>
+                                                        <option value="Permohonan Izin Kegiatan">Permohonan Izin Kegiatan
+                                                        </option>
+                                                        <option value="Proposal Permohonan Dana">Proposal Permohonan Dana
+                                                        </option>
+                                                        <option value="Peminjaman Ruangan">Peminjaman Ruangan</option>
+                                                        <option value="Peminjaman Kamera">Peminjaman Kamera</option>
+                                                    </select>
+                                                </div>
+
+                                                <!-- File Surat -->
+                                                <div class="col-md-6">
+                                                    <label for="file_surat" class="form-label">File Surat</label>
+                                                    <input type="file" class="form-control" id="file_surat"
+                                                        name="file_surat">
+                                                    <small id="current_file_surat" class="form-text text-muted">
+                                                        File saat ini: <a href="#" target="_blank"
+                                                            id="file_surat_link">Lihat File</a>
+                                                    </small>
+                                                </div>
+
+                                                {{-- <!-- Status -->
+                                                <div class="col-md-6">
+                                                    <label for="status" class="form-label">Status</label>
+                                                    <select class="form-select" id="status" name="status" required>
+                                                        <option value="Diproses">Diproses</option>
+                                                        <option value="Ditolak">Ditolak</option>
+                                                        <option value="Disetujui">Disetujui</option>
+                                                        <option value="Selesai">Selesai</option>
+                                                    </select>
+                                                </div> --}}
                                             </div>
-                                            <!-- Nomor Surat -->
-                                            <div class="mb-3">
-                                                <label for="nomor_surat" class="form-label"
-                                                    style="font-weight: bold;">Nomor Surat</label>
-                                                <input type="text" class="form-control" id="nomor_surat" name="nomor_surat"
-                                                    required style="border-radius: 5px;">
+                                            <div class="mt-3 text-end">
+                                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                                             </div>
-                                            <!-- Jenis Surat -->
-                                            <div class="mb-3">
-                                                <label for="jenis_surat" class="form-label"
-                                                    style="font-weight: bold;">Jenis Surat</label>
-                                                <input type="text" class="form-control" id="jenis_surat" name="jenis_surat"
-                                                    required style="border-radius: 5px;">
-                                            </div>
-                                            <!-- Nama Kegiatan -->
-                                            <div class="mb-3">
-                                                <label for="nama_kegiatan" class="form-label"
-                                                    style="font-weight: bold;">Nama Kegiatan</label>
-                                                <input type="text" class="form-control" id="nama_kegiatan" name="nama_kegiatan"
-                                                    required style="border-radius: 5px;">
-                                            </div>
-                                            <!-- Penanggung Jawab -->
-                                            <div class="mb-3">
-                                                <label for="penanggung_jawab" class="form-label"
-                                                    style="font-weight: bold;">Penanggung Jawab</label>
-                                                <input type="text" class="form-control" id="penanggung_jawab" name="penanggung_jawab"
-                                                    required style="border-radius: 5px;">
-                                            </div>
-                                            <!-- File Surat -->
-                                            <div class="mb-3">
-                                                <label for="file_surat" class="form-label"
-                                                    style="font-weight: bold;">File Surat</label>
-                                                <input type="file" class="form-control" id="file_surat" name="file_surat"
-                                                    required style="border-radius: 5px;">
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Footer Modal -->
-                                        <div class="modal-footer"
-                                            style="border: none; justify-content: center; padding: 15px 0;">
-                                            <button type="submit" class="btn btn-primary"
-                                                style="padding: 10px 30px;">Simpan</button>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -290,25 +284,26 @@
                                     <div class="modal-header" style="border: none;">
                                         <h5 class="modal-title w-100 text-center" id="deleteModalLabel"
                                             style="font-weight: bold; font-size: 1.25rem;">
-                                            Konfirmasi Hapus Akun
+                                            Konfirmasi Pembatalan Pengajuan Surat
                                         </h5>
                                     </div>
                                     <div class="modal-body text-center" style="padding: 20px;">
-                                        <p>Apakah Anda yakin ingin menghapus Akun ini?</p>
+                                        <p>Apakah Anda yakin ingin membatalkan Pengajuan Surat ini?</p>
                                     </div>
                                     <div class="modal-footer" style="border: none; justify-content: center;">
                                         <form id="deleteForm" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger"
-                                                style="padding: 10px 30px;">Hapus</button>
+                                                style="padding: 10px 30px;">Iya</button>
                                         </form>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                            style="padding: 10px 30px;">Batal</button>
+                                            style="padding: 10px 30px;">Kembali</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

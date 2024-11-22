@@ -10,7 +10,7 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/favicon.png') }}" rel="icon">
+    <link href="{{ asset('assets/img/logo_unib.png') }}" rel="icon">
     <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -30,6 +30,139 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+
+    <!-- Updated CSS for Layout and Centered Footer -->
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        .main {
+            flex: 1 0 auto;
+            min-height: calc(100vh - 160px);
+            padding-bottom: 60px;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        .footer {
+            flex-shrink: 0;
+            background: #f6f9ff;
+            padding: 20px 0;
+            margin-top: auto;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+            text-align: center;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        .footer .copyright,
+        .footer .credits {
+            text-align: center;
+            width: 100%;
+            padding: 5px 0;
+        }
+
+        #header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 997;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .sidebar {
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+            transition: all 0.3s ease-in-out;
+        }
+
+        @media (min-width: 1200px) {
+            body:not(.toggle-sidebar) #main {
+                margin-left: 300px;
+            }
+
+            body:not(.toggle-sidebar) .footer {
+                margin-left: 300px;
+                width: calc(100% - 300px);
+            }
+        }
+
+        /* When sidebar is toggled/hidden */
+        body.toggle-sidebar #main {
+            margin-left: 0;
+        }
+
+        body.toggle-sidebar .footer {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1199px) {
+            .footer {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            #main {
+                margin-left: 0;
+            }
+        }
+
+        /* Custom Styles */
+        .form-input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .form-button-primary {
+            background-color: #0d6efd;
+            border: none;
+        }
+
+        .form-button-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+
+        .table-header {
+            background-color: #f8f9fa;
+        }
+
+        .table-cell {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .status-finish {
+            color: #198754;
+        }
+
+        .status-pending {
+            color: #fd7e14;
+        }
+
+        .alert-warning {
+            text-align: center;
+        }
+ 
+        .form-label {
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -62,43 +195,39 @@
 
                 <li class="nav-item dropdown pe-3">
                     <a class="nav-link nav-profile d-flex justify-content-end" href="#" data-bs-toggle="dropdown">
-                        {{-- <img src="{{ asset('assets/img/profile1.jpeg') }}" alt="Profile" class="rounded-circle"> --}}
-                        <li><i class="bi bi-person-fill menu-icon"></i></li>
-                    <span class="d-none d-md-block dropdown-toggle ps-6" style="margin-right: 30px"></span>
-                    </a>
-                    {{-- <a a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-person-fill menu-icon"></i>
-                    </a> --}}
+                <li><i class="bi bi-person-fill menu-icon"></i></li>
+                <span class="d-none d-md-block dropdown-toggle ps-6" style="margin-right: 30px"></span>
+                </a>
 
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                        <li class="dropdown-header">
-                            <h6>{{ Auth::user()->name }}</h6>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                    <li class="dropdown-header">
+                        <h6>{{ Auth::user()->name }}</h6>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
 
-                        <li>
-                            <a class="dropdown-item" href="/profile">
-                                <i class="ti-settings text-primary"></i>
-                                Profile
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
+                    <li>
+                        <a class="dropdown-item" href="/profile">
+                            <i class="ti-settings text-primary"></i>
+                            Profile
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
 
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>Log Out</span>
-                            </a>
-                        </li>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </ul>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" href="#"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Log Out</span>
+                        </a>
+                    </li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </ul>
                 </li>
             </ul>
         </nav>
@@ -192,8 +321,8 @@
             @endif
             @if (Auth::user()->role == 'staff-kemahasiswaan' || Auth::user()->role == 'staff-tu')
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('staff-kemahasiswaan.riwayat-surat') ? 'active' : '' }}"
-                        href="/staff-kemahasiswaan.riwayat-surat">
+                    <a class="nav-link {{ request()->is('riwayat-surat') ? 'active' : '' }}"
+                        href="/riwayat-surat">
                         <i class="fa-solid fa-user-group menu-icon"></i>
                         <span class="menu-title">Riwayat Surat</span>
                     </a>

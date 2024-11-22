@@ -136,8 +136,8 @@ class OrmawaController extends Controller
      */
     public function edit(string $id)
     {
-        // $pengajuanSurat = RiwayatPengajuanSurat::findOrFail($id); // Cari data berdasarkan ID pengajuanSurat::findOrFail($id);
-        // return view('ormawa.edit-pengajuan-surat', compact('pengajuanSurat'));
+        $pengajuanSurat = RiwayatPengajuanSurat::findOrFail($id); // Cari data berdasarkan ID pengajuanSurat::findOrFail($id);
+        return view('ormawa.edit-pengajuan-surat', compact('pengajuanSurat'));
     }
 
     /**
@@ -182,4 +182,5 @@ class OrmawaController extends Controller
 
         return redirect()->back()->with('success', 'Pengajuan surat berhasil dihapus!');
     }
+    
 }

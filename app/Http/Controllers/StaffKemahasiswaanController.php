@@ -37,7 +37,7 @@ class StaffKemahasiswaanController extends Controller
     {
         $user = Auth::user();
         
-        return view('staff-kemahasiswaan.riwayat-surat', compact('user'));
+        return view('riwayat-surat', compact('user'));
     }
 
 

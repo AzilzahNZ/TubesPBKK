@@ -23,7 +23,7 @@ class StaffTUController extends Controller
     {
         $user = Auth::user();
 
-        return view('staff-tu.riwayat-surat');
+        return view('riwayat-surat', compact('user'));
     }
 
     /**
