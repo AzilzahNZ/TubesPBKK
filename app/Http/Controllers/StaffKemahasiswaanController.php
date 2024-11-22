@@ -82,6 +82,8 @@ class StaffKemahasiswaanController extends Controller
     public function riwayat_surat(Request $request): View
     {
         $user = Auth::user();
+<<<<<<< HEAD
+        
         return view('riwayat-surat', compact('user'));
     }
 

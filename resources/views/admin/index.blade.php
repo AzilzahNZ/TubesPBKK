@@ -1,7 +1,8 @@
 @extends('template')
 
 @section('content')
-                <!-- Card -->
+    <h1>Dashboard</h1>
+                <!-- Sales Card -->
                 <div class="col-xxl-12 col-md-6 ">
                     <div class="card info-card sales-card ">
       
