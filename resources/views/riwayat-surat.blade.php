@@ -1,11 +1,6 @@
 @extends('template')
 
 @section('content')
-<<<<<<< HEAD:resources/views/riwayat-surat.blade.php
-    <h1>Halaman Riwayat Surat</h1>
-    <p>Ini adalah halaman Riwayat Surat</p>
-@endsection
-=======
 <div class="container" style="max-width: 100%; margin: auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
     <h1 class="justify-content-center text-align-center text-center" style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">
         Riwayat Persetujuan Surat
@@ -89,4 +84,3 @@
     </table>
 </div>
 @endsection
->>>>>>> 0d65e7cd09f99f2fb2eea85732002b5290fd79cd:resources/views/staff-kemahasiswaan/riwayat-surat.blade.php

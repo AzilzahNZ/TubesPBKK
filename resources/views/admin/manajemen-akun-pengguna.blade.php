@@ -5,9 +5,9 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="card-title">Daftar Akun Pengguna</h5>
-                    </div>
+                    <div class="d-flex justify-content-center align-items-center mb-3">
+                        <h1 class="card-title text-center" style="font-size: 30px;">Daftar Akun Pengguna</h1>
+                    </div>                                       
                     <div class="d-flex justify-content-end mb-3">
                         <!-- Form Search -->
                         <form method="GET" class="d-flex me-2">

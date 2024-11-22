@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserRole;
 use Illuminate\View\View;
 use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
@@ -83,13 +82,7 @@ class StaffKemahasiswaanController extends Controller
     public function riwayat_surat(Request $request): View
     {
         $user = Auth::user();
-<<<<<<< HEAD
-        
         return view('riwayat-surat', compact('user'));
-=======
-
-        return view('staff-kemahasiswaan.riwayat-surat', compact('user'));
->>>>>>> 0d65e7cd09f99f2fb2eea85732002b5290fd79cd
     }
 
 

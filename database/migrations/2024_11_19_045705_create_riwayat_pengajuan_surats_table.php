@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nama_kegiatan');
             $table->string('penanggung_jawab');
             $table->string('file_surat');
+            $table->unsignedBigInteger('nominal_dana')->nullable(); // Nominal dana, opsional
             $table->enum('status', ['Ditolak', 'Disetujui', 'Diproses', 'Selesai'])->default('Diproses');
             $table->timestamps();
         });

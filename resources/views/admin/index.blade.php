@@ -1,8 +1,7 @@
 @extends('template')
 
 @section('content')
-    <h1>Dashboard</h1>
-                <!-- Sales Card -->
+                <!-- Card -->
                 <div class="col-xxl-12 col-md-6 ">
                     <div class="card info-card sales-card ">
       
@@ -14,7 +13,7 @@
                       </div>
       
                     </div>
-                </div><!-- End Sales Card -->
+                </div><!-- End Card -->
 
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
@@ -28,7 +27,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div><!-- End Sales Card -->
+                    </div><!-- End Card -->
                 
                     <div class="col-lg-6 col-md-6">
                         <div class="card info-card sales-card">
@@ -41,6 +40,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div><!-- End Sales Card -->
+                    </div><!-- End Card -->
                 </div>
 @endsection
