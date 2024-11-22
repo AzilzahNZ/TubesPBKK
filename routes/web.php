@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\OrmawaController;
-use App\Http\Controllers\PengajuanSuratController;
-use App\Http\Controllers\PengunjungController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RiwayatPengajuanSuratController;
-use App\Http\Controllers\StaffKemahasiswaanController;
-use App\Http\Controllers\StaffTUController;
 use App\Models\RiwayatPengajuanSurat;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrmawaController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StaffTUController;
+use App\Http\Controllers\PengunjungController;
+use App\Http\Controllers\SuratMasukController;
+use App\Http\Controllers\PengajuanSuratController;
+use App\Http\Controllers\StaffKemahasiswaanController;
+use App\Http\Controllers\RiwayatPengajuanSuratController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -58,8 +59,14 @@ Route::get('/ormawa.riwayat-pengajuan.index', [RiwayatPengajuanSuratController::
 Route::middleware(['auth', 'role:staff-kemahasiswaan'])->group(function () {
     Route::get('/dashboard/staff-kemahasiswaan', [StaffKemahasiswaanController::class, 'index'])->name('staff-kemahasiswaan.index');
     Route::get('/staff-kemahasiswaan.surat-masuk', [StaffKemahasiswaanController::class, 'surat_masuk'])->name('staff-kemahasiswaan.surat-masuk');
+    Route::get('/staff-kemahasiswaan/detail-surat/{id}', [SuratMasukController::class, 'show'])->name('staff-kemahasiswaan.detail-surat');
     Route::get('/staff-kemahasiswaan.surat-keluar', [StaffKemahasiswaanController::class, 'surat_keluar'])->name('staff-kemahasiswaan.surat-keluar');
+<<<<<<< HEAD
     Route::get('/riwayat-surat', [StaffKemahasiswaanController::class, 'riwayat_surat'])->name('riwayat-surat');
+=======
+    Route::post('/staff-kemahasiswaan.surat-keluar.store', [StaffKemahasiswaanController::class, 'store'])->name('staff-kemahasiswaan.surat-keluar.store');
+    Route::get('/staff-kemahasiswaan.riwayat-surat', [StaffKemahasiswaanController::class, 'riwayat_surat'])->name('staff-kemahasiswaan.riwayat-surat');
+>>>>>>> 0d65e7cd09f99f2fb2eea85732002b5290fd79cd
 });
 
 Route::middleware(['auth'])->group(function () {

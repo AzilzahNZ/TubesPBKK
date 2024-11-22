@@ -309,22 +309,21 @@
                     </a>
                 </li>
             @endif
-
-            @if (Auth::user()->role == 'staff-tu')
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('dashboard/staff-tu') ? 'active' : '' }}"
-                        href="/dashboard/staff-tu">
-                        <i class="fa-solid fa-calculator menu-icon"></i>
-                        <span class="menu-title">Dashboard</span>
-                    </a>
-                </li>
-            @endif
             @if (Auth::user()->role == 'staff-kemahasiswaan' || Auth::user()->role == 'staff-tu')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('riwayat-surat') ? 'active' : '' }}"
                         href="/riwayat-surat">
                         <i class="fa-solid fa-user-group menu-icon"></i>
                         <span class="menu-title">Riwayat Surat</span>
+                    </a>
+                </li>
+            @endif
+            @if (Auth::user()->role == 'staff-tu')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('dashboard/staff-tu') ? 'active' : '' }}"
+                        href="/dashboard/staff-tu">
+                        <i class="fa-solid fa-calculator menu-icon"></i>
+                        <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
             @endif
