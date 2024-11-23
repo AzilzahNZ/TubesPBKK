@@ -177,13 +177,13 @@
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div>
 
-        <div class="search-bar">
+        {{-- <div class="search-bar">
             <form class="search-form d-flex align-items-center" method="POST" action="#">
                 @csrf
                 <input type="text" name="query" placeholder="Search" title="Enter search keyword">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
-        </div>
+        </div> --}}
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -309,7 +309,7 @@
                     </a>
                 </li>
             @endif
-            @if (Auth::user()->role == 'staff-kemahasiswaan' || Auth::user()->role == 'staff-tu')
+            @if ( Auth::user()->role == 'staff-kemahasiswaan')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('riwayat-surat') ? 'active' : '' }}" href="/riwayat-surat">
                         <i class="fa-solid fa-user-group menu-icon"></i>
@@ -323,6 +323,15 @@
                         href="/dashboard/staff-tu">
                         <i class="fa-solid fa-calculator menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
+                    </a>
+                </li>
+            @endif
+            @if ( Auth::user()->role == 'staff-tu')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('riwayat-surat') ? 'active' : '' }}"
+                        href="/riwayat-surat">
+                        <i class="fa-solid fa-user-group menu-icon"></i>
+                        <span class="menu-title">Riwayat Surat</span>
                     </a>
                 </li>
             @endif

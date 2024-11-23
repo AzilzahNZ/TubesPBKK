@@ -10,8 +10,7 @@
 
                         {{-- Filter dan Pencarian --}}
                         <div class="d-flex justify-content-end mb-3">
-                            <form method="GET"
-                                class="d-flex gap-2 flex-wrap">
+                            <form method="GET" class="d-flex gap-2 flex-wrap">
                                 <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
                                     class="form-input">
 
@@ -86,7 +85,8 @@
                                                 <td class="table-cell">{{ $loop->iteration }}</td>
                                                 <td class="table-cell">Nama Ormawa</td>
                                                 <td class="table-cell">
-                                                    {{ Carbon\Carbon::parse($dt->tanggal_surat_masuk_keluar)->format('d F Y') }}</td>
+                                                    {{ Carbon\Carbon::parse($dt->tanggal_surat_masuk_keluar)->format('d F Y') }}
+                                                </td>
                                                 <td class="table-cell">{{ $dt->kategori }}</td>
                                                 <td class="table-cell">{{ $dt->nomor_surat }}</td>
                                                 <td class="table-cell">{{ $dt->jenis_surat }}</td>
@@ -123,7 +123,7 @@
                                     button.addEventListener('click', function() {
                                         const row = this.closest('tr'); // Baris tabel
                                         const pengajuanId = this.getAttribute('data-id'); // Ambil ID dari tombol
-          
+
                                         // Ambil tanggal dari tabel
                                         const tanggalText = row.querySelector('td:nth-child(2)').textContent.trim();
                                         const [day, month, year] = tanggalText.split(" ");
@@ -300,7 +300,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

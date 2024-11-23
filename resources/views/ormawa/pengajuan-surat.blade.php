@@ -1,7 +1,8 @@
 @extends('template')
 
 @section('content')
-    <form action="/ormawa/pengajuan-surat/store" method="POST" enctype="multipart/form-data" id="formPengajuanSurat" style="max-width: 800px; margin: auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+    <form action="/ormawa/pengajuan-surat/store" method="POST" enctype="multipart/form-data" id="formPengajuanSurat"
+        style="max-width: 800px; margin: auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
         @csrf
         <h1 class="justify-content-center text-align-center text-center"
             style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">
@@ -63,6 +64,16 @@
                 </div>
             </div>
         </div>
+
+        <!-- Input Nominal Dana -->
+        <div id="nominalDanaWrapper" style="display: none; margin-top: 20px;">
+            <label for="nominal_dana" style="display: block; font-weight: bold; margin-bottom: 5px;">Nominal Dana yang
+                Diajukan</label>
+            <input type="text" id="nominal_dana" name="nominal_dana"
+                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 40px;"
+                placeholder="Masukkan nominal dalam format rupiah">
+        </div>
+
         <!-- Wrapper untuk tombol Kirim -->
         <div style="display: flex; justify-content: center; margin-top: 20px;">
             <button class="items-center justify-center" type="submit"
@@ -71,10 +82,22 @@
     </form>
 
     <script>
-        // Mengisi input tanggal dengan tanggal hari ini
-        document.addEventListener("DOMContentLoaded", function() {
-            const today = new Date().toISOString().split('T')[0]; // Mengambil tanggal dalam format yyyy-mm-dd
+        document.addEventListener("DOMContentLoaded", function () {
+            // Mengisi input tanggal dengan tanggal hari ini
+            const today = new Date().toISOString().split('T')[0];
             document.getElementById("tanggal_surat").value = today;
+
+            // Menampilkan/menghilangkan form Nominal Dana
+            const jenisSurat = document.getElementById("jenis_surat");
+            const nominalDanaWrapper = document.getElementById("nominalDanaWrapper");
+
+            jenisSurat.addEventListener("change", function () {
+                if (jenisSurat.value === "Proposal Permohonan Dana") {
+                    nominalDanaWrapper.style.display = "block";
+                } else {
+                    nominalDanaWrapper.style.display = "none";
+                }
+            });
         });
     </script>
 @endsection

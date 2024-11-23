@@ -1,14 +1,11 @@
 <?php
 
-use App\Models\RiwayatPengajuanSurat;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrmawaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffTUController;
-use App\Http\Controllers\PengunjungController;
 use App\Http\Controllers\SuratMasukController;
-use App\Http\Controllers\RiwayatSuratController;
 use App\Http\Controllers\PengajuanSuratController;
 use App\Http\Controllers\StaffKemahasiswaanController;
 use App\Http\Controllers\RiwayatPengajuanSuratController;
@@ -62,23 +59,15 @@ Route::middleware(['auth', 'role:staff-kemahasiswaan'])->group(function () {
     Route::get('/staff-kemahasiswaan.surat-masuk', [SuratMasukController::class, 'index'])->name('staff-kemahasiswaan.surat-masuk');
     Route::get('/staff-kemahasiswaan/detail-surat/{id}', [SuratMasukController::class, 'show'])->name('staff-kemahasiswaan.detail-surat');
     Route::get('/staff-kemahasiswaan.surat-keluar', [StaffKemahasiswaanController::class, 'surat_keluar'])->name('staff-kemahasiswaan.surat-keluar');
-    // Route::get('/riwayat-surat', [StaffKemahasiswaanController::class, 'riwayat_surat'])->name('riwayat-surat');
+    Route::get('/riwayat-surat', [StaffKemahasiswaanController::class, 'riwayat_surat'])->name('riwayat-surat');
 
     Route::post('/staff-kemahasiswaan.surat-keluar.store', [StaffKemahasiswaanController::class, 'store'])->name('staff-kemahasiswaan.surat-keluar.store');
-    // Route::get('/staff-kemahasiswaan.riwayat-surat', [StaffKemahasiswaanController::class, 'riwayat_surat'])->name('staff-kemahasiswaan.riwayat-surat');
-
-    // Route::get('/riwayat-surat', [RiwayatSuratController::class, 'index'])->name('riwayat-surat');
+    Route::get('/staff-kemahasiswaan.riwayat-surat', [StaffKemahasiswaanController::class, 'riwayat_surat'])->name('staff-kemahasiswaan.riwayat-surat');
 });
 
-Route::middleware(['auth', 'role:staff-tu'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/staff-tu', [StaffTUController::class, 'index'])->name('staff-tu.index');
-    // Route::get('/riwayat-surat', [StaffTUController::class, 'riwayat_surat'])->name('riwayat-surat');
-
-    // Route::get('/riwayat-surat', [RiwayatSuratController::class, 'index'])->name('riwayat-surat');
-});
-
-Route::middleware(['auth', 'role:staff-kemahasiswaan|staff-tu'])->group(function () {
-    Route::get('/riwayat-surat', [RiwayatSuratController::class, 'index'])->name('riwayat-surat');
+    Route::get('/riwayat-surat', [StaffTUController::class, 'riwayat_surat'])->name('riwayat-surat');
 });
 
 require __DIR__.'/auth.php';

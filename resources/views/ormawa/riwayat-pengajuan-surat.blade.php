@@ -75,6 +75,7 @@
                                             <th class="table-cell">Nama Kegiatan</th>
                                             <th class="table-cell">PJ</th>
                                             <th class="table-cell">File Surat</th>
+                                            <th class="table-cell">Nominal Dana yang Diajukan</th>
                                             <th class="table-cell">Status</th>
                                             <th class="table-cell">Aksi</th>
                                         </tr>
@@ -93,6 +94,9 @@
                                                     <a href="{{ asset('storage/' . $dt->file_surat) }}" target="_blank"
                                                         class="text-primary text-decoration-none">Lihat</a>
                                                 </td>
+                                                <td class="table-cell">
+                                                    {{ $dt->nominal_dana !== null ? 'Rp ' . number_format($dt->nominal_dana, 0, ',', '.') : '-' }}
+                                                </td>                                                
                                                 <td class="table-cell">
                                                     <span
                                                         class="{{ $dt->status == 'Selesai' ? 'status-finish' : 'status-pending' }}">{{ $dt->status }}</span>
