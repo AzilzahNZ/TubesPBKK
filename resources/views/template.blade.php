@@ -158,7 +158,7 @@
         .alert-warning {
             text-align: center;
         }
- 
+
         .form-label {
             font-weight: bold;
         }
@@ -311,8 +311,7 @@
             @endif
             @if (Auth::user()->role == 'staff-kemahasiswaan' || Auth::user()->role == 'staff-tu')
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('riwayat-surat') ? 'active' : '' }}"
-                        href="/riwayat-surat">
+                    <a class="nav-link {{ request()->is('riwayat-surat') ? 'active' : '' }}" href="/riwayat-surat">
                         <i class="fa-solid fa-user-group menu-icon"></i>
                         <span class="menu-title">Riwayat Surat</span>
                     </a>

@@ -40,7 +40,7 @@ class SuratMasukController extends Controller
         }
 
         // Ambil data
-        $riwayat_pengajuan_surats = $query->get();
+        $surat_masuks = $query->get();
 
         return view('staff-kemahasiswaan.surat-masuk', compact('surat_masuks'));
     }
