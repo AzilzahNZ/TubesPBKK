@@ -58,12 +58,12 @@ Route::middleware(['auth', 'role:staff-kemahasiswaan'])->group(function () {
     Route::get('/staff-kemahasiswaan.surat-masuk', [StaffKemahasiswaanController::class, 'surat_masuk'])->name('staff-kemahasiswaan.surat-masuk');
     Route::get('/staff-kemahasiswaan/detail-surat/{id}', [SuratMasukController::class, 'show'])->name('staff-kemahasiswaan.detail-surat');
     Route::get('/staff-kemahasiswaan.surat-keluar', [StaffKemahasiswaanController::class, 'surat_keluar'])->name('staff-kemahasiswaan.surat-keluar');
-<<<<<<< HEAD
+
     Route::get('/riwayat-surat', [StaffKemahasiswaanController::class, 'riwayat_surat'])->name('riwayat-surat');
-=======
+
     Route::post('/staff-kemahasiswaan.surat-keluar.store', [StaffKemahasiswaanController::class, 'store'])->name('staff-kemahasiswaan.surat-keluar.store');
     Route::get('/staff-kemahasiswaan.riwayat-surat', [StaffKemahasiswaanController::class, 'riwayat_surat'])->name('staff-kemahasiswaan.riwayat-surat');
->>>>>>> 0d65e7cd09f99f2fb2eea85732002b5290fd79cd
+
 });
 
 Route::middleware(['auth'])->group(function () {
