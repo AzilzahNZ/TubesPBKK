@@ -686,7 +686,7 @@ h6 {
   font-weight: 600;
   color: #4154f1;
   transition: 0.3;
-  background: #f6f9ff;
+  /*background: #f6f9ff;  /*bg menu jika diklik*/
   padding: 10px 15px;
   border-radius: 4px;
 }
@@ -753,9 +753,15 @@ h6 {
   color: #4154f1;
 }
 
-.sidebar-nav .nav-content a.active i {
-  background-color: #4154f1;
+.sidebar-nav .nav-link.active {
+  background: #f6f9ff; /* Ganti dengan warna latar belakang yang Anda inginkan */
 }
+
+.sidebar-nav .nav-link.active:hover {
+  background: #f6f9ff;
+}
+
+
 
 /*--------------------------------------------------------------
 # Dashboard

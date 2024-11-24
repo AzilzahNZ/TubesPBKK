@@ -12,9 +12,9 @@
             <!-- Kolom Kiri -->
             <div style="flex: 1;">
                 <div style="margin-bottom: 15px;">
-                    <label for="tanggal_surat" style="display: block; font-weight: bold; margin-bottom: 5px;">
+                    <label for="tanggal_diajukan" style="display: block; font-weight: bold; margin-bottom: 5px;">
                         Tanggal Surat Diajukan</label>
-                    <input type="date" id="tanggal_surat" name="tanggal_surat"
+                    <input type="date" id="tanggal_diajukan" name="tanggal_diajukan"
                         style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 40px;"
                         readonly required>
                 </div>
@@ -85,7 +85,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             // Mengisi input tanggal dengan tanggal hari ini
             const today = new Date().toISOString().split('T')[0];
-            document.getElementById("tanggal_surat").value = today;
+            document.getElementById("tanggal_diajukan").value = today;
 
             // Menampilkan/menghilangkan form Nominal Dana
             const jenisSurat = document.getElementById("jenis_surat");

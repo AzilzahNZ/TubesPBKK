@@ -126,12 +126,12 @@ class OrmawaController extends Controller
     {
     // Validasi umum untuk semua jenis surat
     $request->validate([
-        'tanggal_surat' => 'required|date',
-        'nomor_surat' => 'required|string|max:50',
+        'tanggal_diajukan' => 'required|date',
+        'nomor_surat' => 'required|string',
         'jenis_surat' => 'required|string',
-        'nama_kegiatan' => 'required|string|max:100',
-        'penanggung_jawab' => 'required|string|max:100',
-        'file_surat' => 'required|file|mimes:pdf|max:2048',
+        'nama_kegiatan' => 'required|string',
+        'penanggung_jawab' => 'required|string',
+        'file_surat' => 'required|file|mimes:pdf',
         'nominal_dana' => 'nullable|numeric|min:1',
     ]);
 
@@ -144,7 +144,7 @@ class OrmawaController extends Controller
 
     // Menyimpan data ke database (contoh)
     $data = [
-        'tanggal_surat' => $request->tanggal_surat,
+        'tanggal_diajukan' => $request->tanggal_diajukan,
         'nomor_surat' => $request->nomor_surat,
         'jenis_surat' => $request->jenis_surat,
         'nama_kegiatan' => $request->nama_kegiatan,

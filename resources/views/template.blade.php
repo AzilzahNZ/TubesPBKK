@@ -158,10 +158,27 @@
         .alert-warning {
             text-align: center;
         }
- 
+
         .form-label {
             font-weight: bold;
         }
+
+        .table {
+            table-layout: auto;
+            width: 150%;
+        }
+
+        .table th,
+        .table td {
+            min-width: 100px;
+            /* Lebar minimum untuk kolom */
+            white-space: nowrap;
+            /* Tidak memotong teks ke baris baru */
+            text-overflow: ellipsis;
+            /* Tambahkan "..." jika terlalu panjang */
+            overflow: hidden;
+        }
+
     </style>
 </head>
 
@@ -170,7 +187,7 @@
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
         <div class="d-flex align-items-center justify-content-between">
-            <a href="{{ url('/') }}" class="logo d-flex align-items-center">
+            <a class="logo d-flex align-items-center">
                 <img src="{{ asset('assets/img/logo_unib.png') }}" alt="">
                 <span class="d-none d-lg-block">SIMPULS</span>
             </a>
@@ -246,8 +263,7 @@
             @endif
             @if (Auth::user()->role == 'admin')
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('admin.manajemen-akun-pengguna') ? 'active' : '' }}"
-                        href="/admin.manajemen-akun-pengguna">
+                    <a class="nav-link {{ request()->is('admin.manajemen-akun-pengguna') ? 'active' : '' }}" href="/admin.manajemen-akun-pengguna">
                         <i class="bi bi-people-fill menu-icon"></i>
                         <span class="menu-title">Manajemen Akun Pengguna</span>
                     </a>
@@ -258,7 +274,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('dashboard/ormawa') ? 'active' : '' }}"
                         href="/dashboard/ormawa">
-                        <i class="fa-solid fa-calculator menu-icon"></i>
+                        <i class="bi bi-clipboard2-fill menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
@@ -267,7 +283,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('ormawa.pengajuan-surat') ? 'active' : '' }}"
                         href="/ormawa.pengajuan-surat">
-                        <i class="fa-solid fa-user-group menu-icon"></i>
+                        <i class="bi bi-envelope-arrow-up-fill"></i>
                         <span class="menu-title">Pengajuan Surat</span>
                     </a>
                 </li>
@@ -276,7 +292,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('ormawa.riwayat-pengajuan-surat') ? 'active' : '' }}"
                         href="/ormawa.riwayat-pengajuan-surat">
-                        <i class="fa-solid fa-user-group menu-icon"></i>
+                        <i class="bi bi-archive-fill"></i>
                         <span class="menu-title">Riwayat Pengajuan Surat</span>
                     </a>
                 </li>
@@ -286,7 +302,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('dashboard/staff-kemahasiswaan') ? 'active' : '' }}"
                         href="/dashboard/staff-kemahasiswaan">
-                        <i class="fa-solid fa-calculator menu-icon"></i>
+                        <i class="bi bi-clipboard2-fill menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
@@ -295,7 +311,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('staff-kemahasiswaan.surat-masuk') ? 'active' : '' }}"
                         href="/staff-kemahasiswaan.surat-masuk">
-                        <i class="fa-solid fa-user-group menu-icon"></i>
+                        <i class="bi bi-envelope-arrow-down-fill"></i>
                         <span class="menu-title">Surat Masuk</span>
                     </a>
                 </li>
@@ -304,16 +320,15 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('staff-kemahasiswaan.surat-keluar') ? 'active' : '' }}"
                         href="/staff-kemahasiswaan.surat-keluar">
-                        <i class="fa-solid fa-user-group menu-icon"></i>
+                        <i class="bi bi-envelope-arrow-up-fill"></i>
                         <span class="menu-title">Surat Keluar</span>
                     </a>
                 </li>
             @endif
-            @if ( Auth::user()->role == 'staff-kemahasiswaan')
+            @if (Auth::user()->role == 'staff-kemahasiswaan')
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('riwayat-surat') ? 'active' : '' }}"
-                        href="/riwayat-surat">
-                        <i class="fa-solid fa-user-group menu-icon"></i>
+                    <a class="nav-link {{ request()->is('riwayat-surat') ? 'active' : '' }}" href="/riwayat-surat">
+                        <i class="bi bi-archive-fill"></i>
                         <span class="menu-title">Riwayat Surat</span>
                     </a>
                 </li>
@@ -322,16 +337,15 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('dashboard/staff-tu') ? 'active' : '' }}"
                         href="/dashboard/staff-tu">
-                        <i class="fa-solid fa-calculator menu-icon"></i>
+                        <i class="bi bi-clipboard2-fill menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
             @endif
-            @if ( Auth::user()->role == 'staff-tu')
+            @if (Auth::user()->role == 'staff-tu')
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('riwayat-surat') ? 'active' : '' }}"
-                        href="/riwayat-surat">
-                        <i class="fa-solid fa-user-group menu-icon"></i>
+                    <a class="nav-link {{ request()->is('riwayat-surat') ? 'active' : '' }}" href="/riwayat-surat">
+                        <i class="bi bi-archive-fill"></i>
                         <span class="menu-title">Riwayat Surat</span>
                     </a>
                 </li>

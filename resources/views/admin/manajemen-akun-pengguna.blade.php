@@ -9,22 +9,16 @@
                         <h1 class="card-title text-center" style="font-size: 30px;">Daftar Akun Pengguna</h1>
                     </div>                                       
                     <div class="d-flex justify-content-end mb-3">
-                        <!-- Form Search -->
+                        {{-- <!-- Form Search -->
                         <form method="GET" class="d-flex me-2">
                             <input type="text" name="search" class="form-control me-2" placeholder="Cari..."
                                    value="{{ request('search') }}">
                             <button type="submit" class="btn btn-primary">Cari</button>
-                        </form>
+                        </form> --}}
                     <a href="{{ route('admin.create-pengguna') }}" class="btn btn-primary">Tambah</a>
                     </div>
                     <div class="table-responsive">
-                        <!-- Menampilkan notifikasi jika pencarian tidak ditemukan -->
-                        @if($users->isEmpty())
-                            <div class="alert alert-warning" role="alert">
-                                <strong>Perhatian!</strong> Tidak ada hasil ditemukan untuk pencarian ini.
-                            </div>
-                        @else
-                        <table class="table table-bordered">
+                        <table class="table datatable">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -55,7 +49,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        @endif
 
                         <script>
                             document.addEventListener('DOMContentLoaded', () => {

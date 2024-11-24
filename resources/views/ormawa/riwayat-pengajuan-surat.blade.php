@@ -5,57 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <div style="max-width: 1200px; margin: 0 auto; padding: 10px;">
-                        <h1 class="fs-4 fw-bold mb-4">Riwayat Pengajuan Surat</h1>
-
-                        {{-- Filter dan Pencarian --}}
-                        <div class="d-flex justify-content-end mb-3">
-                            <form method="GET" action="{{ route('ormawa.riwayat-pengajuan-surat') }}"
-                                class="d-flex gap-2 flex-wrap">
-                                <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
-                                    class="form-input">
-
-                                <select name="jenis_surat" class="form-input">
-                                    <option value="">Jenis Surat</option>
-                                    <option value="Permohonan Izin Kegiatan"
-                                        {{ request('jenis_surat') == 'Permohonan Izin Kegiatan' ? 'selected' : '' }}>
-                                        Permohonan Izin Kegiatan</option>
-                                    <option value="Proposal Permohonan Dana"
-                                        {{ request('jenis_surat') == 'Proposal Permohonan Dana' ? 'selected' : '' }}>
-                                        Proposal Permohonan Dana</option>
-                                    <option value="Peminjaman Ruangan"
-                                        {{ request('jenis_surat') == 'Peminjaman Ruangan' ? 'selected' : '' }}>Peminjaman
-                                        Ruangan</option>
-                                    <option value="Peminjaman Kamera"
-                                        {{ request('jenis_surat') == 'Peminjaman Kamera' ? 'selected' : '' }}>Peminjaman
-                                        Kamera</option>
-                                </select>
-
-                                <select name="status" class="form-input">
-                                    <option value="">Status</option>
-                                    <option value="Diproses" {{ request('status') == 'Diproses' ? 'selected' : '' }}>
-                                        Diproses</option>
-                                    <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak
-                                    </option>
-                                    <option value="Diterima" {{ request('status') == 'Disetujui' ? 'selected' : '' }}>
-                                        Disetujui</option>
-                                    <option value="Selesai" {{ request('status') == 'Selesai' ? 'selected' : '' }}>Selesai
-                                    </option>
-                                </select>
-
-                                <select name="sort" class="form-input">
-                                    <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>Terbaru
-                                    </option>
-                                    <option value="terlama" {{ request('sort') == 'terlama' ? 'selected' : '' }}>Terlama
-                                    </option>
-                                </select>
-
-                                <button type="submit" class="form-button form-button-primary">Filter</button>
-                            </form>
-                            <form method="GET" action="{{ route('ormawa.riwayat-pengajuan-surat') }}" class="ms-2">
-                                <button type="submit" class="form-button form-button-danger">Hapus Filter</button>
-                            </form>
-                        </div>
+                        <h1 class="justify-content-center text-align-center text-center fs-4 fw-bold mb-4" style="margin-top: 10px;">Riwayat Pengajuan Surat</h1>
 
                         {{-- Tabel Riwayat --}}
                         @if ($riwayat_pengajuan_surats->isEmpty())
@@ -63,45 +13,44 @@
                                 Belum ada data Riwayat Pengajuan Surat.
                             </div>
                         @else
-                            <div style="overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 20px;">
-                                <table
-                                    style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; white-space: nowrap;">
+                            <div class="table-responsive" >
+                                <table class="table datatable">
                                     <thead>
-                                        <tr class="table-header">
-                                            <th class="table-cell">No</th>
-                                            <th class="table-cell">Tanggal Diajukan</th>
-                                            <th class="table-cell">Nomor Surat</th>
-                                            <th class="table-cell">Jenis Surat</th>
-                                            <th class="table-cell">Nama Kegiatan</th>
-                                            <th class="table-cell">PJ</th>
-                                            <th class="table-cell">File Surat</th>
-                                            <th class="table-cell">Nominal Dana yang Diajukan</th>
-                                            <th class="table-cell">Status</th>
-                                            <th class="table-cell">Aksi</th>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Tanggal Diajukan</th>
+                                            <th>Nomor Surat</th>
+                                            <th>Jenis Surat</th>
+                                            <th>Nama Kegiatan</th>
+                                            <th>PJ</th>
+                                            <th>File Surat</th>
+                                            <th>Nominal Dana yang Diajukan</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($riwayat_pengajuan_surats as $dt)
                                             <tr>
-                                                <td class="table-cell">{{ $loop->iteration }}</td>
-                                                <td class="table-cell">
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>
                                                     {{ Carbon\Carbon::parse($dt->tanggal_diajukan)->format('d F Y') }}</td>
-                                                <td class="table-cell">{{ $dt->nomor_surat }}</td>
-                                                <td class="table-cell">{{ $dt->jenis_surat }}</td>
-                                                <td class="table-cell">{{ $dt->nama_kegiatan }}</td>
-                                                <td class="table-cell">{{ $dt->penanggung_jawab }}</td>
-                                                <td class="table-cell">
-                                                    <a href="{{ asset('storage/' . $dt->file_surat) }}" target="_blank"
-                                                        class="text-primary text-decoration-none">Lihat</a>
+                                                <td>{{ $dt->nomor_surat }}</td>
+                                                <td>{{ $dt->jenis_surat }}</td>
+                                                <td>{{ $dt->nama_kegiatan }}</td>
+                                                <td>{{ $dt->penanggung_jawab }}</td>
+                                                <td>
+                                                    <a href="{{ asset('storage/' . $dt->file_surat) }}" target="_blank" class="btn btn-info" style="padding: 2px 10px">
+                                                        <i class="bi bi-file-earmark-pdf"></i>File</a>
                                                 </td>
-                                                <td class="table-cell">
+                                                <td>
                                                     {{ $dt->nominal_dana !== null ? 'Rp ' . number_format($dt->nominal_dana, 0, ',', '.') : '-' }}
                                                 </td>                                                
-                                                <td class="table-cell">
+                                                <td>
                                                     <span
                                                         class="{{ $dt->status == 'Selesai' ? 'status-finish' : 'status-pending' }}">{{ $dt->status }}</span>
                                                 </td>
-                                                <td class="table-cell">
+                                                <td>
                                                     <a class="btn btn-sm btn-warning"
                                                         data-id="{{ $dt->id }}">Edit</a>
                                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
