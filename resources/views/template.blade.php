@@ -327,8 +327,9 @@
             @endif
             @if (Auth::user()->role == 'staff-kemahasiswaan')
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('riwayat-surat') ? 'active' : '' }}" href="/riwayat-surat">
-                        <i class="bi bi-archive-fill"></i>
+                    <a class="nav-link {{ request()->is('riwayat-surat') ? 'active' : '' }}"
+                        href="/riwayat-surat">
+                        <i class="fa-solid fa-user-group menu-icon"></i>
                         <span class="menu-title">Riwayat Surat</span>
                     </a>
                 </li>

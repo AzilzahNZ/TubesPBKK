@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\View\View;
 use App\Models\SuratMasuk;
+use App\Models\RiwayatSurat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -115,9 +116,20 @@ class StaffKemahasiswaanController extends Controller
             $filePath = $request->file('file_surat')->store('surat', 'public'); // Simpan di storage/public/surat
         }
 
-        // Simpan data ke tabel riwayat_pengajuan_surats
+        // Simpan data ke tabel surat masuk
         SuratMasuk::create([
             'tanggal_diajukan' => $validated['tanggal_surat'],
+            'nomor_surat' => $validated['nomor_surat'],
+            'jenis_surat' => $validated['jenis_surat'],
+            'nama_kegiatan' => $validated['nama_kegiatan'],
+            'penanggung_jawab' => $validated['penanggung_jawab'],
+            'file_surat' => $filePath,
+        ]);
+        
+        // Simpan data ke tabel surat masuk
+        RiwayatSurat::create([
+            'nama_oramawa' => Auth::user()->name,
+            'tanggal_surat_masuk_keluar' => $validated['tanggal_surat'],
             'nomor_surat' => $validated['nomor_surat'],
             'jenis_surat' => $validated['jenis_surat'],
             'nama_kegiatan' => $validated['nama_kegiatan'],

@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('riwayat_surats', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_ormawa');
+            $table->date('tanggal_surat_masuk_keluar');
+            $table->string('kategori');
+            $table->string('nomor_surat');
+            $table->string('jenis_surat');
+            $table->string('nama_kegiatan');
+            $table->string('penanggung_jawab');
+            $table->string('file_surat');
+            $table->enum('status', ['Ditolak', 'Disetujui']);
             $table->timestamps();
         });
     }
