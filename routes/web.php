@@ -63,10 +63,10 @@ Route::middleware(['auth', 'role:staff-kemahasiswaan'])->group(function () {
 
     Route::post('/staff-kemahasiswaan.surat-keluar.store', [StaffKemahasiswaanController::class, 'store'])->name('staff-kemahasiswaan.surat-keluar.store');
 
-    Route::get('/riwayat-surat', [StaffKemahasiswaanController::class, 'riwayat_surat'])->name('riwayat-surat');
+    // Route::get('/riwayat-surat', [StaffKemahasiswaanController::class, 'riwayat_surat'])->name('riwayat-surat');
 
-    Route::post('/staff-kemahasiswaan.surat-keluar.store', [StaffKemahasiswaanController::class, 'store'])->name('staff-kemahasiswaan.surat-keluar.store');
-    Route::get('/staff-kemahasiswaan.riwayat-surat', [StaffKemahasiswaanController::class, 'riwayat_surat'])->name('staff-kemahasiswaan.riwayat-surat');
+    // Route::post('/staff-kemahasiswaan.surat-keluar.store', [StaffKemahasiswaanController::class, 'store'])->name('staff-kemahasiswaan.surat-keluar.store');
+    // Route::get('/staff-kemahasiswaan.riwayat-surat', [StaffKemahasiswaanController::class, 'riwayat_surat'])->name('staff-kemahasiswaan.riwayat-surat');
 });
 
 Route::middleware(['auth'])->group(function () {
