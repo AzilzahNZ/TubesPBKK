@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RiwayatPengajuanSurat;
 use Illuminate\View\View;
 use App\Models\SuratMasuk;
 use App\Models\RiwayatSurat;
@@ -107,7 +108,8 @@ class StaffKemahasiswaanController extends Controller
             'jenis_surat' => 'required|string|max:255',
             'nama_kegiatan' => 'required|string|max:255',
             'penanggung_jawab' => 'required|string|max:255',
-            'file_surat' => 'required|file|mimes:pdf|max:2048', // File opsional
+            'file_surat' => 'required|file|mimes:pdf', // File opsional
+            'status' => 'nullable|string|max:255',
         ]);
 
         // Simpan file jika diunggah
@@ -124,6 +126,7 @@ class StaffKemahasiswaanController extends Controller
             'nama_kegiatan' => $validated['nama_kegiatan'],
             'penanggung_jawab' => $validated['penanggung_jawab'],
             'file_surat' => $filePath,
+            'status' => $validated['status'],
         ]);
         
         // Simpan data ke tabel surat masuk
@@ -135,10 +138,28 @@ class StaffKemahasiswaanController extends Controller
             'nama_kegiatan' => $validated['nama_kegiatan'],
             'penanggung_jawab' => $validated['penanggung_jawab'],
             'file_surat' => $filePath,
+            'status' => $validated['status'],
         ]);
 
         // Redirect dengan pesan sukses
         return redirect()->route('staff-kemahasiswaan.surat-keluar')->with('success', 'Surat keluar berhasil dikirim!');
+    }
+
+    // Menyetujuinya surat masuk
+    public function setujuiSurat($id)
+    {
+        // Menemukan surat yang akan disetujui
+        $suratMasuk = SuratMasuk::findOrFail($id);
+        
+        // Menyetujuinya surat
+        $suratMasuk->status = 'Disetujui';
+        $suratMasuk->save();
+
+        // Mengupdate status di riwayat pengajuan surat
+        RiwayatPengajuanSurat::where('surat_masuk_id', $suratMasuk->id)
+            ->update(['status' => 'Disetujui']);
+
+        return redirect()->route('riwayat-surat')->with('success', 'Surat disetujui');
     }
 
     /**

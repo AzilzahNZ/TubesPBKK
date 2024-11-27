@@ -8,6 +8,7 @@
         </div>
     @endif
 
+    <div style="margin-top: 20px; margin-bottom: 20px;">
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -70,4 +71,5 @@
             <button>
         </div>
     </form>
+    </div>
 </x-guest-layout>

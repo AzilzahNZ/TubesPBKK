@@ -81,6 +81,9 @@
                                     <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
                                         PJ</th>
                                     <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
+                                        Status
+                                    </th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
                                         Aksi</th>
                                 </tr>
                             </thead>
@@ -100,6 +103,8 @@
                                             {{ $dt->nama_kegiatan }}</td>
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                             {{ $dt->penanggung_jawab }}</td>
+                                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">
+                                            {{ $dt->status }}</td>
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                             <a href="{{ route('staff-kemahasiswaan.detail-surat', $dt->id) }}"
                                                 class="btn btn-sm btn-primary"

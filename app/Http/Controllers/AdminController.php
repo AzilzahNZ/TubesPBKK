@@ -119,8 +119,8 @@ class AdminController extends Controller
         $request->validate([
             'username' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'no_telepon' => 'required|string|max:15',
             'password' => 'nullable|string|min:8',
+            'no_telepon' => 'required|string|max:15',
         ]);
 
         // Temukan user berdasarkan ID

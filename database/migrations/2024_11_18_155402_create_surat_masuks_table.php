@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('surat_masuks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->date('tanggal_diajukan');
             $table->string('nomor_surat');
             $table->string('jenis_surat');
             $table->string('nama_kegiatan');
             $table->string('penanggung_jawab');
             $table->string('file_surat');
+            $table->enum('status', ['Ditolak', 'Disetujui', 'Diproses', 'Selesai', 'Dibatalkan'])->default('Diproses');
             $table->timestamps();
         });
     }

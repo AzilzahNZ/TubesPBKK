@@ -11,6 +11,7 @@ class SuratMasuk extends Model
 
     // Kolom yang diizinkan untuk mass assignment
     protected $fillable = [
+        'user_id',
         'tanggal_diajukan',
         'nomor_surat',
         'jenis_surat',
@@ -19,4 +20,16 @@ class SuratMasuk extends Model
         'file_surat',
         'status',
     ];
+
+    // Relasi dengan User (One-to-Many)
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+     // Relasi dengan RiwayatPengajuanSurat (One-to-Many)
+     public function RiwayatPengajuanSurat()
+     {
+         return $this->hasOne(RiwayatPengajuanSurat::class, 'surat_masuk_id');
+     }
 }

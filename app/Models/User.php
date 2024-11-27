@@ -27,6 +27,16 @@ class User extends Authenticatable
         'role',
     ];
 
+    public function SuratMasuk()
+    {
+        return $this->hasMany(SuratMasuk::class, 'user_id');
+    }
+
+    public function RiwayatPengajuanSurat()
+    {
+        return $this->hasMany(RiwayatPengajuanSurat::class, 'user_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
