@@ -17,16 +17,14 @@ class StaffKemahasiswaanController extends Controller
      */
     public function index(Request $request): View
     {
+        // Mendapatkan data user yang sedang login
         $user = Auth::user();
 
-        return view('staff-kemahasiswaan.index', compact('user'));
+        // Menghitung jumlah surat masuk
+        $totalSuratMasuk = DB::table('surat_masuks')->count();
 
-        // $user = Auth::user();
-        // $totalStatusDiproses = DB::table('surat_masuks')->where('status', 'Diproses')->count();
-        // $totalStatusDisetujui = DB::table('surat_masuks')->where('status', 'Disetujui')->count();
-        // $totalStatusDitolak = DB::table('surat_masuks')->where('status', 'Ditolak')->count();
-        // $totalStatusSelesai = DB::table('surat_masuks')->where('status', 'Selesai')->count();
-        // return view('staff-kemahasiswaan.index', compact('user', 'totalStatusDiproses', 'totalStatusDisetujui', 'totalStatusDitolak', 'totalStatusSelesai'));
+        // Mengembalikan view dengan data user dan total surat masuk
+        return view('staff-kemahasiswaan.index', compact('user', 'totalSuratMasuk'));
     }
 
     public function surat_masuk(Request $request): View
@@ -128,7 +126,7 @@ class StaffKemahasiswaanController extends Controller
             'file_surat' => $filePath,
             'status' => $validated['status'],
         ]);
-        
+
         // Simpan data ke tabel surat masuk
         RiwayatSurat::create([
             'nama_oramawa' => Auth::user()->name,

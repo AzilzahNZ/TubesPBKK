@@ -13,7 +13,7 @@
             <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title">Surat Masuk Terbaru</h5>
-                    <p class="card-text">Menunggu: 0</p>
+                    <p class="card-text"><b>Menunggu : {{ $totalSuratMasuk }}</b></p>
                 </div>
             </div>
         </div>

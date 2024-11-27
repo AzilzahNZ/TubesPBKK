@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Sales Card -->
-    <div class="col-xxl-12 col-md-6 ">
+    <div class="col-xxl-12 col-md-6" style="width: 100%;">
         <div class="card info-card sales-card ">
 
             <div class="card-body ">
