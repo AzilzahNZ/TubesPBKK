@@ -11,6 +11,7 @@ class RiwayatSurat extends Model
 
     // Kolom yang diizinkan untuk mass assignment
     protected $fillable = [
+        'surat_masuk_id',
         'nama_ormawa',
         'tanggal_surat_masuk_keluar',
         'kategori',
@@ -21,4 +22,9 @@ class RiwayatSurat extends Model
         'file_surat',
         'status',
     ];
+
+    public function suratMasuk()
+    {
+        return $this->belongsTo(SuratMasuk::class);
+    }
 }

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('riwayat_surats', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('surat_masuk_id')->constrained('surat_masuks')->onDelete('cascade');
             $table->string('nama_ormawa')->nullable(); // Izinkan kosong
             $table->date('tanggal_surat_masuk_keluar');
             $table->string('kategori');

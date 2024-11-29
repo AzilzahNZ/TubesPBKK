@@ -25,7 +25,7 @@ class SuratMasuk extends Model
     // Relasi dengan User (One-to-Many)
     public function User()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
      // Relasi dengan RiwayatPengajuanSurat (One-to-Many)
@@ -36,6 +36,6 @@ class SuratMasuk extends Model
 
      public function riwayatSurat()
     {
-        return $this->hasOne(RiwayatSurat::class);
+        return $this->hasOne(RiwayatSurat::class, 'surat_masuk_id');
     }
 }
