@@ -113,7 +113,6 @@ class OrmawaController extends Controller
             'file_surat' => $request->file('file_surat')->store('surat', 'public'),
             'nominal_dana' => $request->nominal_dana,
             'status' => 'Diproses', // Set the correct status
-            'nominal_dana' => $request->nominal_dana, // Ensure this is passed correctly
         ];
 
 

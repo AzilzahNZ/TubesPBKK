@@ -19,6 +19,7 @@ class SuratMasuk extends Model
         'penanggung_jawab',
         'file_surat',
         'status',
+        'alasan_penolakan',
     ];
 
     // Relasi dengan User (One-to-Many)
@@ -32,4 +33,9 @@ class SuratMasuk extends Model
      {
          return $this->hasOne(RiwayatPengajuanSurat::class, 'surat_masuk_id');
      }
+
+     public function riwayatSurat()
+    {
+        return $this->hasOne(RiwayatSurat::class);
+    }
 }

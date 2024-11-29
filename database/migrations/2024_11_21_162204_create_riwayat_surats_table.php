@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('riwayat_surats', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_ormawa');
+            $table->string('nama_ormawa')->nullable(); // Izinkan kosong
             $table->date('tanggal_surat_masuk_keluar');
             $table->string('kategori');
             $table->string('nomor_surat');
