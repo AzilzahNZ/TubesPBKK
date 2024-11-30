@@ -42,7 +42,9 @@ class SuratMasukController extends Controller
         }
 
         // Ambil data
-        $surat_masuks = SuratMasuk::where('status', '=', 'diproses')->get();
+        $surat_masuks = SuratMasuk::where('status', '!=', 'Disetujui')
+            ->where('status', '!=', 'Ditolak')
+            ->get();
 
         return view('staff-kemahasiswaan.surat-masuk', compact('surat_masuks'));
     }
