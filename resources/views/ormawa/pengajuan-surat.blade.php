@@ -69,9 +69,11 @@
         <div id="nominalDanaWrapper" style="display: none; margin-top: 20px;">
             <label for="nominal_dana" style="display: block; font-weight: bold; margin-bottom: 5px;">Nominal Dana yang
                 Diajukan</label>
-            <input type="text" id="nominal_dana" name="nominal_dana"
+            <input type="number" class="form-control" id="nominal_dana" name="nominal_dana"
+                placeholder="Masukkan nominal dana" min="0" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 40px;">
+            {{-- <input type="text" id="nominal_dana" name="nominal_dana"
                 style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 40px;"
-                placeholder="Masukkan nominal dalam format rupiah">
+                placeholder="Masukkan nominal dalam format rupiah"> --}}
         </div>
 
         <!-- Wrapper untuk tombol Kirim -->
@@ -82,7 +84,7 @@
     </form>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             // Mengisi input tanggal dengan tanggal hari ini
             const today = new Date().toISOString().split('T')[0];
             document.getElementById("tanggal_diajukan").value = today;
@@ -91,7 +93,7 @@
             const jenisSurat = document.getElementById("jenis_surat");
             const nominalDanaWrapper = document.getElementById("nominalDanaWrapper");
 
-            jenisSurat.addEventListener("change", function () {
+            jenisSurat.addEventListener("change", function() {
                 if (jenisSurat.value === "Proposal Permohonan Dana") {
                     nominalDanaWrapper.style.display = "block";
                 } else {
