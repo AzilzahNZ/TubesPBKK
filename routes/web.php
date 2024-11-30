@@ -73,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'role:staff-kemahasiswaan|staff-tu'])->group(function () {
     Route::get('/riwayat-surat', [RiwayatSuratController::class, 'index'])->name('riwayat-surat');
+    Route::get('/detail-riwayat-surat/{id}', [RiwayatSuratController::class, 'detail'])->name('detail-riwayat-surat');
 });
 
 require __DIR__ . '/auth.php';

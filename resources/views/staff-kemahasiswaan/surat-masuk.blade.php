@@ -1,21 +1,19 @@
 @extends('template')
 
 @section('content')
-    <div
-        style="max-width: 100%; margin: auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+    <div class="card card-body" style="max-width: 100%; margin: 0 auto; padding: 10px;">
         <h1 class="justify-content-center text-align-center text-center"
             style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">
             Surat Masuk
         </h1>
 
         {{-- Filter dan Pencarian --}}
-        <div class="d-flex justify-content-between mb-3 align-items-center" style="width: 100%; gap: 5px;">
-            <form method="GET" action="{{ route('staff-kemahasiswaan.surat-masuk') }}"
-                style="display: flex; gap: 5px; flex-wrap: wrap; width: 100%;">
+        <div class="d-flex justify-content-end mb-3">
+            <form method="GET" class="d-flex gap-2 flex-wrap">
                 <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
-                    style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px;">
+                    class="form-input">
 
-                <select name="jenis_surat" style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px;">
+                <select name="jenis_surat" class="form-input">
                     <option value="">Jenis Surat</option>
                     <option value="Permohonan Izin Kegiatan"
                         {{ request('jenis_surat') == 'Permohonan Izin Kegiatan' ? 'selected' : '' }}>
@@ -26,30 +24,34 @@
                     <option value="Peminjaman Ruangan"
                         {{ request('jenis_surat') == 'Peminjaman Ruangan' ? 'selected' : '' }}>Peminjaman
                         Ruangan</option>
-                    <option value="Peminjaman Kamera" {{ request('jenis_surat') == 'Peminjaman Kamera' ? 'selected' : '' }}>
-                        Peminjaman
+                    <option value="Peminjaman Kamera"
+                        {{ request('jenis_surat') == 'Peminjaman Kamera' ? 'selected' : '' }}>Peminjaman
                         Kamera</option>
                 </select>
 
-                <select name="sort" style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px;">
+                <select name="status" class="form-input">
+                    <option value="">Status</option>
+                    <option value="Diproses" {{ request('status') == 'Diproses' ? 'selected' : '' }}>
+                        Diproses</option>
+                    <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak
+                    </option>
+                    <option value="Diterima" {{ request('status') == 'Disetujui' ? 'selected' : '' }}>
+                        Disetujui</option>
+                    <option value="Selesai" {{ request('status') == 'Selesai' ? 'selected' : '' }}>Selesai
+                    </option>
+                </select>
+
+                <select name="sort" class="form-input">
                     <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>Terbaru
                     </option>
                     <option value="terlama" {{ request('sort') == 'terlama' ? 'selected' : '' }}>Terlama
                     </option>
                 </select>
 
-                <button type="submit"
-                    style="padding: 8px 16px; background-color: #0d6efd; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                    Filter
-                </button>
-                <div>
-                    <form method="GET" action="{{ route('staff-kemahasiswaan.surat-masuk') }}">
-                        <button type="submit"
-                            style="padding: 10px 16px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                            Hapus Filter
-                        </button>
-                    </form>
-                </div>
+                <button type="submit" class="form-button form-button-primary">Filter</button>
+            </form>
+            <form method="GET" action="{{ route('riwayat-surat') }}" class="ms-2">
+                <button type="submit" class="form-button form-button-danger">Hapus Filter</button>
             </form>
         </div>
 
@@ -68,22 +70,22 @@
                             style="width: 100%; border-collapse: collapse; background-color: white; border: 1px solid #ddd; white-space: nowrap;">
                             <thead>
                                 <tr style="background-color: #f8f9fa;">
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
+                                    <th style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">
                                         No</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
+                                    <th style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">
                                         Tanggal Diajukan</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
+                                    <th style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">
                                         Nomor Surat</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
+                                    <th style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">
                                         Jenis Surat</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
+                                    <th style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">
                                         Nama Kegiatan</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
+                                    <th style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">
                                         PJ</th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
+                                    <th style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">
                                         Status
                                     </th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
+                                    <th style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">
                                         Aksi</th>
                                 </tr>
                             </thead>

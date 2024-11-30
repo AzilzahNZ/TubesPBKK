@@ -21,10 +21,12 @@ class StaffKemahasiswaanController extends Controller
         $user = Auth::user();
 
         // Menghitung jumlah surat masuk
-        $totalSuratMasuk = DB::table('surat_masuks')->count();
+        $totalSuratMasuk = DB::table('surat_masuks')->where('status', 'Diproses')->count();
+        $totalSuratDisetujui = DB::table('riwayat_surats')->where('status', 'Disetujui')->count();
+        $totalSuratDitolak = DB::table('riwayat_surats')->where('status', 'Ditolak')->count();
 
         // Mengembalikan view dengan data user dan total surat masuk
-        return view('staff-kemahasiswaan.index', compact('user', 'totalSuratMasuk'));
+        return view('staff-kemahasiswaan.index', compact('user', 'totalSuratMasuk', 'totalSuratDisetujui', 'totalSuratDitolak'));
     }
 
     public function surat_masuk(Request $request): View
@@ -148,7 +150,7 @@ class StaffKemahasiswaanController extends Controller
     {
         // Menemukan surat yang akan disetujui
         $suratMasuk = SuratMasuk::findOrFail($id);
-        
+
         // Menyetujuinya surat
         $suratMasuk->status = 'Disetujui';
         $suratMasuk->save();
