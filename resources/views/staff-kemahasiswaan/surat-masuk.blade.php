@@ -109,17 +109,15 @@
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                             {{ $dt->status }}</td>
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-<<<<<<< HEAD
                                             {{ $dt->tanggal_diedit ? \Carbon\Carbon::parse($dt->tanggal_diedit)->timezone('Asia/Jakarta')->format('d M Y H:i') : '-' }}
                                         </td>                                                                                        
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                            <a href="{{ route('staff-kemahasiswaan.detail-surat', $dt->id) }}"
-=======
-                                            <a href="{{ route('staff-kemahasiswaan.detail-surat-masuk', $dt->id) }}"
->>>>>>> d694a37bfd008cd080ec1c305cc1dc07393592ef
-                                                class="btn btn-sm btn-primary"
-                                                style="padding: 6px 12px; text-decoration: none; color: white; background-color: #007bff; border-radius: 4px;">
-                                                Lihat
+                                            <a href="{{ route('staff-kemahasiswaan.detail-surat-masuk', $dt->id) }}">
+                                                <a href="{{ route('staff-kemahasiswaan.detail-surat-masuk', $dt->id) }}"
+                                                    class="btn btn-sm btn-primary"
+                                                    style="padding: 6px 12px; text-decoration: none; color: white; background-color: #007bff; border-radius: 4px;">
+                                                    Lihat
+                                                </a>
                                             </a>
                                         </td>
                                     </tr>

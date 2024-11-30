@@ -213,7 +213,7 @@ class OrmawaController extends Controller
         $pengajuanSurat->nominal_dana = $validatedData['nominal_dana'] ?? null;
 
         // Update status dan tanggal direvisi
-        $pengajuanSurat->status = 'Direvisi';
+        // $pengajuanSurat->status = 'Direvisi';
         $pengajuanSurat->tanggal_diedit = now();
 
         // Proses upload file jika ada

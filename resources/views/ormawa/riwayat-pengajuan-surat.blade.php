@@ -6,7 +6,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-center align-items-center mb-3">
-                        <h1 class="justify-content-center text-align-center text-center fs-4 fw-bold mb-4" style="margin-top: 30px; font-size: 30px;">Riwayat Pengajuan Surat</h1>
+                        <h1 class="justify-content-center text-align-center text-center fs-4 fw-bold mb-4"
+                            style="margin-top: 30px; font-size: 30px;">Riwayat Pengajuan Surat</h1>
                     </div>
 
                     {{-- Tabel Riwayat --}}
@@ -55,7 +56,7 @@
                                                     class="{{ $dt->status == 'Selesai' ? 'status-finish' : 'status-pending' }}">{{ $dt->status }}</span>
                                             </td>
                                             <td>
-                                                {{ $dt->tanggal_diedit ? \Carbon\Carbon::parse($dt->tanggal_diedit)->timezone('Asia/Jakarta')->format('d M Y H:i') : '-' }}
+                                                {{ $dt->tanggal_diedit? \Carbon\Carbon::parse($dt->tanggal_diedit)->timezone('Asia/Jakarta')->format('d M Y H:i'): '-' }}
                                             </td>
                                             <td>
                                                 <a class="btn btn-sm btn-warning" data-id="{{ $dt->id }}">Edit</a>
@@ -81,6 +82,20 @@
                             const penanggungJawabInput = document.getElementById('penanggung_jawab');
                             const fileSuratLink = document.getElementById('file_surat_link');
                             const nominalDanaInput = document.getElementById('nominal_dana'); // Tambahkan input nominal dana
+
+                            // Tambahkan event listener untuk Jenis Surat
+                            function toggleNominalDana() {
+                                if (jenisSuratInput.value === 'Proposal Permohonan Dana') {
+                                    nominalDanaInput.disabled = false; // Aktifkan input
+                                    nominalDanaInput.required = true; // Jadikan wajib diisi
+                                } else {
+                                    nominalDanaInput.disabled = true; // Nonaktifkan input
+                                    nominalDanaInput.required = false; // Tidak wajib diisi
+                                    nominalDanaInput.value = ''; // Kosongkan nilai input
+                                }
+                            }
+
+                            jenisSuratInput.addEventListener('change', toggleNominalDana);
 
                             editButtons.forEach(button => {
                                 button.addEventListener('click', function() {
@@ -119,6 +134,9 @@
                                     penanggungJawabInput.value = penanggungJawab;
                                     fileSuratLink.href = fileSuratPath;
                                     nominalDanaInput.value = nominalDanaValue; // Isi nominal dana
+
+                                    // Atur status input Nominal Dana berdasarkan Jenis Surat
+                                    toggleNominalDana();
 
                                     // Atur action form dengan ID pengajuan
                                     editForm.action = `/ormawa/edit-pengajuan-surat/${pengajuanId}`;
@@ -219,7 +237,8 @@
 
                                             <!-- Nominal Dana -->
                                             <div class="col-md-6">
-                                                <label for="nominal_dana" class="form-label">Nominal Dana yang Diajukan</label>
+                                                <label for="nominal_dana" class="form-label">Nominal Dana yang
+                                                    Diajukan</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text">Rp</span>
                                                     <input type="number" class="form-control" id="nominal_dana"

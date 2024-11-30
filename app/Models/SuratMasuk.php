@@ -20,11 +20,8 @@ class SuratMasuk extends Model
         'file_surat',
         'nominal_dana',
         'status',
-<<<<<<< HEAD
-        'tanggal_diedit'
-=======
+        'tanggal_diedit',
         'alasan_penolakan',
->>>>>>> d694a37bfd008cd080ec1c305cc1dc07393592ef
     ];
 
     // Relasi dengan User (One-to-Many)
