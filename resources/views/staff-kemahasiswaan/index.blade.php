@@ -2,16 +2,17 @@
 
 @section('content')
 <div class="container ">
-    <div class="card text-center mb-3">
-        <div class="info-card sales-card">
+    <!-- Sales Card -->
+    <div class="col-xxl-12 col-md-6" style="width: 100%;">
+        <div class="card info-card sales-card ">
             <div class="card-body ">
-                <h3 class="d-flex align-items-center justify-content-center"><br>Selamat Datang!</h3>
+                <h3 class="d-flex align-items-center justify-content-center"><br>Selamat Datang :)</h3>
                 <div class="d-flex align-items-center justify-content-center">
-                    <h6><strong>{{ Auth::user()->name }}</strong></h6>
+                    <h6>{{ Auth::user()->name }}</h6>
                 </div>
             </div>
         </div>
-    </div>
+    </div><!-- End Sales Card -->
     <div class="row">
         <div class="col-md-4">
             <div class="card text-center">
@@ -26,8 +27,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Riwayat Surat</h5>
                     <div class="d-flex justify-content-between">
-                        <p class="card-text mb-0">Disetujui: 0</p>
-                        <p class="card-text mb-0">Ditolak: 0</p>
+                        <p class="card-text mb-0"><b>Disetujui: {{ $totalSuratDisetujui }}</b></p>
+                        <p class="card-text mb-0"><b>Ditolak: {{ $totalSuratDitolak }}</b></p>
                     </div>
                 </div>
             </div>            

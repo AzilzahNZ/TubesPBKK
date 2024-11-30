@@ -5,32 +5,47 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <div style="max-width: 1200px; margin: 0 auto; padding: 10px;">
-                        <h1 class="fs-4 fw-bold mb-4">Riwayat Surat</h1>
+                    <div style="max-width: 100%; margin: 0 auto; padding: 10px;">
+                        <h1 class="fs-4 fw-bold mb-4 text-center">Riwayat Surat</h1>
 
                         {{-- Filter dan Pencarian --}}
-                        <div class="d-flex justify-content-end mb-3">
-                            <form method="GET" class="d-flex gap-2 flex-wrap">
+                        <div class="d-flex justify-content-end mb-3 group"
+                            style="position: relative; display: flex; justify-content: flex-start; margin-bottom: 1rem;">
+                            <form method="GET" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
                                 <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
-                                    class="form-input">
+                                    style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
 
-                                <select name="jenis_surat" class="form-input">
+                                <select name="kategori"
+                                    style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
+                                    <option value="">Kategori</option>
+                                    <option value="Surat Masuk"
+                                        {{ request('kategori') == 'Surat Masuk' ? 'selected' : '' }}>Surat Masuk</option>
+                                    <option value="Surat Keluar"
+                                        {{ request('kategori') == 'Surat Keluar' ? 'selected' : '' }}>Surat Keluar</option>
+                                </select>
+
+                                <select name="jenis_surat"
+                                    style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; width: 15%;">
                                     <option value="">Jenis Surat</option>
                                     <option value="Permohonan Izin Kegiatan"
                                         {{ request('jenis_surat') == 'Permohonan Izin Kegiatan' ? 'selected' : '' }}>
-                                        Permohonan Izin Kegiatan</option>
+                                        Permohonan Izin Kegiatan
+                                    </option>
                                     <option value="Proposal Permohonan Dana"
                                         {{ request('jenis_surat') == 'Proposal Permohonan Dana' ? 'selected' : '' }}>
-                                        Proposal Permohonan Dana</option>
+                                        Proposal Permohonan Dana
+                                    </option>
                                     <option value="Peminjaman Ruangan"
-                                        {{ request('jenis_surat') == 'Peminjaman Ruangan' ? 'selected' : '' }}>Peminjaman
-                                        Ruangan</option>
+                                        {{ request('jenis_surat') == 'Peminjaman Ruangan' ? 'selected' : '' }}>
+                                        Peminjaman Ruangan
+                                    </option>
                                     <option value="Peminjaman Kamera"
-                                        {{ request('jenis_surat') == 'Peminjaman Kamera' ? 'selected' : '' }}>Peminjaman
-                                        Kamera</option>
+                                        {{ request('jenis_surat') == 'Peminjaman Kamera' ? 'selected' : '' }}>
+                                        Peminjaman Kamera
+                                    </option>
                                 </select>
 
-                                <select name="status" class="form-input">
+                                <select name="status" style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
                                     <option value="">Status</option>
                                     <option value="Diproses" {{ request('status') == 'Diproses' ? 'selected' : '' }}>
                                         Diproses</option>
@@ -42,17 +57,21 @@
                                     </option>
                                 </select>
 
-                                <select name="sort" class="form-input">
+                                <select name="sort" style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
                                     <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>Terbaru
                                     </option>
                                     <option value="terlama" {{ request('sort') == 'terlama' ? 'selected' : '' }}>Terlama
                                     </option>
                                 </select>
 
-                                <button type="submit" class="form-button form-button-primary">Filter</button>
-                            </form>
-                            <form method="GET" action="{{ route('ormawa.riwayat-pengajuan-surat') }}" class="ms-2">
-                                <button type="submit" class="form-button form-button-danger">Hapus Filter</button>
+                                <button type="submit" class="btn btn-primary"
+                                    style="padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;">
+                                    Filter
+                                </button>
+                                <a href="{{ route('riwayat-surat') }}" class="btn btn-danger"
+                                    style="padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; text-align: center;">
+                                    Reset
+                                </a>
                             </form>
                         </div>
 
@@ -68,13 +87,11 @@
                                     <thead>
                                         <tr class="table-header">
                                             <th class="table-cell">No</th>
-                                            <th class="table-cell">Nama Ormawa</th>
-                                            <th class="table-cell">Tanggal Surat Masuk/Keluar</th>
+                                            <th class="table-cell" style="text-align: center;">Nama<br>Ormawa</br></th>
+                                            <th class="table-cell">Tanggal Surat<br>Masuk/Keluar</br></th>
                                             <th class="table-cell">Kategori</th>
                                             <th class="table-cell">Nomor Surat</th>
                                             <th class="table-cell">Jenis Surat</th>
-                                            <th class="table-cell">Nama Kegiatan</th>
-                                            <th class="table-cell">PJ</th>
                                             <th class="table-cell">Status</th>
                                             <th class="table-cell">Aksi</th>
                                         </tr>
@@ -90,16 +107,16 @@
                                                 <td class="table-cell">{{ $dt->kategori }}</td>
                                                 <td class="table-cell">{{ $dt->nomor_surat }}</td>
                                                 <td class="table-cell">{{ $dt->jenis_surat }}</td>
-                                                <td class="table-cell">{{ $dt->nama_kegiatan }}</td>
-                                                <td class="table-cell">{{ $dt->penanggung_jawab }}</td>
                                                 <td class="table-cell">
                                                     <span
                                                         class="{{ $dt->status == 'Disetujui' ? 'status-finish' : 'status-pending' }}">{{ $dt->status }}</span>
                                                 </td>
-                                                <td class="table-cell">
-                                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                        data-bs-target="#deleteModal"
-                                                        onclick="setDeleteData('{{ $dt->id }}')">Lihat</button>
+                                                <td style="padding: 12px; border-bottom: 1px solid #ddd;">
+                                                    <a href="{{ route('detail-riwayat-surat', $dt->id) }}"
+                                                        class="btn btn-sm btn-primary"
+                                                        style="padding: 6px 12px; text-decoration: none; color: white; background-color: #007bff; border-radius: 4px;">
+                                                        Lihat
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -114,6 +131,7 @@
                                 const editForm = document.getElementById('editForm'); // Formulir di modal
                                 const tanggalDiajukanInput = document.getElementById('tanggal_diajukan'); // Input Tanggal Diajukan
                                 const nomorSuratInput = document.getElementById('nomor_surat'); // Input Nomor Surat
+                                const kategori = document.getElementById('kategori'); // Input Kategori Surat
                                 const jenisSuratInput = document.getElementById('jenis_surat'); // Input Jenis Surat
                                 const namaKegiatanInput = document.getElementById('nama_kegiatan'); // Input Nama Kegiatan
                                 const penanggungJawabInput = document.getElementById('penanggung_jawab'); // Input Penanggung Jawab
@@ -137,29 +155,25 @@
 
                                         const nomorSurat = row.querySelector('td:nth-child(3)').textContent
                                             .trim(); // Ambil Nomor Surat
-                                        const jenisSurat = row.querySelector('td:nth-child(4)').textContent
+                                        const kategori = row.querySelector('td:nth-child(4)').textContent
+                                            .trim(); // Ambil Kategori Surat
+                                        const jenisSurat = row.querySelector('td:nth-child(5)').textContent
                                             .trim(); // Ambil Jenis Surat
-                                        const namaKegiatan = row.querySelector('td:nth-child(5)').textContent
+                                        const namaKegiatan = row.querySelector('td:nth-child(6)').textContent
                                             .trim(); // Ambil Nama Kegiatan
-                                        const penanggungJawab = row.querySelector('td:nth-child(6)').textContent
+                                        const penanggungJawab = row.querySelector('td:nth-child(7)').textContent
                                             .trim(); // Ambil Penanggung Jawab
-                                        const fileSuratPath = row.querySelector('td:nth-child(7) a').getAttribute(
+                                        const fileSuratPath = row.querySelector('td:nth-child(8)').getAttribute(
                                             'href'); // Ambil Link File Surat
 
                                         // Isi form dengan data lama
                                         // tanggalDiajukanInput.value = tanggalDiajukan; // Isi Tanggal Diajukan
                                         nomorSuratInput.value = nomorSurat; // Isi Nomor Surat
+                                        kategoriInput.value = kategori; // Isi Kategori Surat
                                         jenisSuratInput.value = jenisSurat; // Isi Jenis Surat
                                         namaKegiatanInput.value = namaKegiatan; // Isi Nama Kegiatan
                                         penanggungJawabInput.value = penanggungJawab; // Isi Penanggung Jawab
                                         fileSuratLink.href = fileSuratPath; // Tampilkan Link File Surat
-
-                                        // Atur action form dengan ID pengajuan
-                                        editForm.action = `/ormawa/edit-pengajuan-surat/${pengajuanId}`;
-
-                                        // Tampilkan modal
-                                        const editModal = new bootstrap.Modal(document.getElementById('editModal'));
-                                        editModal.show();
                                     });
                                 });
 
@@ -173,7 +187,7 @@
 
                             function setDeleteData(id) {
                                 const deleteForm = document.getElementById('deleteForm');
-                                deleteForm.action = `/ormawa/destroy-pengajuan-surat/${id}`;
+                                deleteForm.action = `/riwayat-surat/${id}`;
                             };
                         </script>
 

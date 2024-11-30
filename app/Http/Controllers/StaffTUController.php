@@ -3,20 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserRole;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class StaffTUController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index( Request $request): View
+    public function index(Request $request): View
     {
+        // Mendapatkan data user yang sedang login
         $user = Auth::user();
 
-        return view('staff-tu.index');
+        // Menghitung jumlah surat masuk
+        $totalSuratDisetujui = DB::table('riwayat_surats')->where('status', 'Disetujui')->count();
+        $totalSuratDitolak = DB::table('riwayat_surats')->where('status', 'Ditolak')->count();
+
+        // Mengembalikan view dengan data user dan total surat masuk
+        return view('staff-tu.index', compact('user',  'totalSuratDisetujui', 'totalSuratDitolak'));
     }
 
     public function riwayat_surat( Request $request): View

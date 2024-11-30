@@ -42,7 +42,7 @@ class SuratMasukController extends Controller
         }
 
         // Ambil data
-        $surat_masuks = SuratMasuk::where('status', '!=', 'disetujui')->get();
+        $surat_masuks = SuratMasuk::where('status', '=', 'diproses')->get();
 
         return view('staff-kemahasiswaan.surat-masuk', compact('surat_masuks'));
     }
@@ -84,7 +84,7 @@ class SuratMasukController extends Controller
 
         // Pindahkan surat ke riwayat surat (jika diperlukan untuk log riwayat)
         RiwayatSurat::create([
-            'surat_masuk_id' => $suratMasuk->id,  
+            'surat_masuk_id' => $suratMasuk->id,
             'nama_ormawa' => $suratMasuk->user->name,
             'tanggal_surat_masuk_keluar' => now(),
             'kategori' => $kategori,
@@ -108,6 +108,7 @@ class SuratMasukController extends Controller
 
         // Pindahkan data ke tabel riwayat_surat
         RiwayatSurat::create([
+            'surat_masuk_id' => $suratMasuk->id,
             'nama_ormawa' => $suratMasuk->user->name,
             'tanggal_surat_masuk_keluar' => now(),
             'kategori' => 'Surat Masuk',
@@ -119,14 +120,15 @@ class SuratMasukController extends Controller
             'status' => 'Ditolak',
         ]);
 
+        // Update status di tabel surat_masuk menjadi Ditolak
+        $suratMasuk->status = 'Ditolak';
+        $suratMasuk->save();
+
         // Update status di riwayat_pengajuan
         RiwayatPengajuanSurat::where('surat_masuk_id', $id)->update([
             'status' => 'Ditolak',
-            'keterangan' => $request->reason,
+            'keterangan' => $request->keterangan,
         ]);
-
-        // Hapus data dari tabel surat_masuk
-        $suratMasuk->delete();
 
         return redirect()->route('staff-kemahasiswaan.surat-masuk')->with('success', 'Surat berhasil ditolak.');
     }

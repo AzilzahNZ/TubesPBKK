@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RiwayatSurat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\SuratMasuk;
 
 class RiwayatSuratController extends Controller
 {
@@ -24,6 +25,11 @@ class RiwayatSuratController extends Controller
             });
         }
 
+        // Filter berdasarkan kategori
+        if ($request->filled('kategori')) {
+            $query->where('kategori', $request->kategori);
+        }
+
         // Filter berdasarkan jenis surat
         if ($request->filled('jenis_surat')) {
             $query->where('jenis_surat', $request->jenis_surat);
@@ -37,9 +43,9 @@ class RiwayatSuratController extends Controller
         // Sorting
         if ($request->filled('sort')) {
             if ($request->sort === 'terbaru') {
-                $query->orderBy('tanggal_diajukan', 'desc');
+                $query->orderBy('tanggal_surat_masuk_keluar', 'desc');
             } elseif ($request->sort === 'terlama') {
-                $query->orderBy('tanggal_diajukan', 'asc');
+                $query->orderBy('tanggal_surat_masuk_keluar', 'asc');
             }
         }
 
@@ -47,6 +53,12 @@ class RiwayatSuratController extends Controller
         $riwayat_surats = $query->get();
 
         return view('riwayat-surat', compact('riwayat_surats'));
+    }
+
+    public function detail($id)
+    {
+        $riwayat_surats = RiwayatSurat::findOrFail($id);
+        return view('detail-riwayat-surat', compact('riwayat_surats'));
     }
 
 
