@@ -20,13 +20,17 @@ class SuratMasuk extends Model
         'file_surat',
         'nominal_dana',
         'status',
+<<<<<<< HEAD
         'tanggal_diedit'
+=======
+        'alasan_penolakan',
+>>>>>>> d694a37bfd008cd080ec1c305cc1dc07393592ef
     ];
 
     // Relasi dengan User (One-to-Many)
     public function User()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
      // Relasi dengan RiwayatPengajuanSurat (One-to-Many)
@@ -34,4 +38,9 @@ class SuratMasuk extends Model
      {
          return $this->hasOne(RiwayatPengajuanSurat::class, 'surat_masuk_id');
      }
+
+     public function riwayatSurat()
+    {
+        return $this->hasOne(RiwayatSurat::class, 'surat_masuk_id');
+    }
 }
