@@ -38,6 +38,10 @@ h6 {
   font-family: "Nunito", sans-serif;
 }
 
+h6 {
+  font-weight: bold;
+}
+
 /*--------------------------------------------------------------
 # Main
 --------------------------------------------------------------*/
@@ -810,11 +814,19 @@ h6 {
 }
 
 .dashboard .info-card h6 {
-  font-size: 28px;
+  font-size: 26px;
   color: #012970;
   font-weight: 700;
   margin: 0;
   padding: 0;
+}
+
+.dashboard .info-card h3 {
+  margin: 20px;
+}
+
+.dashboard .info-card h5 {
+  margin: 20px;
 }
 
 .dashboard .card-icon {

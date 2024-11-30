@@ -40,9 +40,9 @@ Route::post('/admin/store-pengguna', [AdminController::class, 'store'])->name('a
 
 
 // Route::middleware(['auth', 'role:ormawa'])->group(function () {
-Route::get('/dashboard/ormawa', [OrmawaController::class, 'index'])->name('ormawa.index');
-Route::get('/ormawa.pengajuan-surat', [OrmawaController::class, 'pengajuan_surat'])->name('ormawa.pengajuan-surat');
-Route::get('/ormawa.riwayat-pengajuan-surat', [OrmawaController::class, 'riwayat_pengajuan_surat'])->name('ormawa.riwayat-pengajuan-surat');
+    Route::get('/dashboard/ormawa', [OrmawaController::class, 'index'])->name('ormawa.index');
+    Route::get('/ormawa.pengajuan-surat', [OrmawaController::class, 'pengajuan_surat'])->name('ormawa.pengajuan-surat');
+    Route::get('/ormawa.riwayat-pengajuan-surat', [OrmawaController::class, 'riwayat_pengajuan_surat'])->name('ormawa.riwayat-pengajuan-surat');
 // });
 
 Route::get('/ormawa.pengajuan-surat.create', [OrmawaController::class, 'create'])->name('ormawa.pengajuan-surat.create');
@@ -67,7 +67,7 @@ Route::middleware(['auth', 'role:staff-kemahasiswaan'])->group(function () {
     Route::post('/staff-kemahasiswaan.surat-keluar.store', [StaffKemahasiswaanController::class, 'store'])->name('staff-kemahasiswaan.surat-keluar.store');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:staff-tu'])->group(function () {
     Route::get('/dashboard/staff-tu', [StaffTUController::class, 'index'])->name('staff-tu.index');
 });
 

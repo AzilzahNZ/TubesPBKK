@@ -48,17 +48,7 @@ class AdminController extends Controller
         $user = Auth::user();
         $users = User::all();
 
-        $search = $request->input('search');
-
-        $users = User::query()
-            ->when($search, function ($query) use ($search) {
-                $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('no_telepon', 'like', "%{$search}%");
-            })
-            ->paginate(10);  // 10 data per halaman
-
-        return view('admin.manajemen-akun-pengguna', compact('users', 'search'));
+        return view('admin.manajemen-akun-pengguna', compact('users'));
     }
 
 

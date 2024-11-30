@@ -9,6 +9,7 @@ use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class OrmawaController extends Controller
@@ -81,14 +82,8 @@ class OrmawaController extends Controller
             'penanggung_jawab' => 'required|string',
             'file_surat' => 'required|file|mimes:pdf',
             'nominal_dana' => 'nullable|numeric|min:1',
+            'status' => 'nullable|string',
         ]);
-
-        // Tambahan validasi jika jenis surat adalah Proposal Permohonan Dana
-        if ($request->jenis_surat === 'Proposal Permohonan Dana') {
-            $request->validate([
-                'nominal_dana' => 'required|numeric|min:1',
-            ]);
-        }
 
         // Simpan data ke tabel surat_masuk
         $suratMasuk = new SuratMasuk;
@@ -193,39 +188,113 @@ class OrmawaController extends Controller
         return view('ormawa.edit-pengajuan-surat', compact('pengajuanSurat'));
     }
 
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'tanggal_diajukan' => 'required|date',
+            'nomor_surat' => 'required|string',
+            'jenis_surat' => 'required|string',
+            'nama_kegiatan' => 'required|string',
+            'penanggung_jawab' => 'required|string',
+            'file_surat' => 'nullable|file|mimes:pdf|max:2048',
+            'nominal_dana' => 'nullable|numeric|min:0'
+        ]);
+
+        $pengajuanSurat = RiwayatPengajuanSurat::findOrFail($id);
+
+        // Update data
+        $pengajuanSurat->tanggal_diajukan = $validatedData['tanggal_diajukan'];
+        $pengajuanSurat->nomor_surat = $validatedData['nomor_surat'];
+        $pengajuanSurat->jenis_surat = $validatedData['jenis_surat'];
+        $pengajuanSurat->nama_kegiatan = $validatedData['nama_kegiatan'];
+        $pengajuanSurat->penanggung_jawab = $validatedData['penanggung_jawab'];
+
+        // Update nominal dana (bisa null)
+        $pengajuanSurat->nominal_dana = $validatedData['nominal_dana'] ?? null;
+
+        // Update status dan tanggal direvisi
+        $pengajuanSurat->status = 'Direvisi';
+        $pengajuanSurat->tanggal_diedit = now();
+
+        // Proses upload file jika ada
+        if ($request->hasFile('file_surat')) {
+            // Hapus file lama jika ada
+            if ($pengajuanSurat->file_surat) {
+                Storage::delete('public/' . $pengajuanSurat->file_surat);
+            }
+
+            // Simpan file baru
+            $filePath = $request->file('file_surat')->store('pengajuan-surat', 'public');
+            $pengajuanSurat->file_surat = $filePath;
+        }
+
+        // // Sinkronkan dengan tabel surat masuk
+        // if ($pengajuanSurat->suratMasuk) {
+        //     $pengajuanSurat->suratMasuk->update([
+        //         'tanggal_diajukan' => $validatedData['tanggal_diajukan'],
+        //         'nomor_surat' => $validatedData['nomor_surat'],
+        //         'jenis_surat' => $validatedData['jenis_surat'],
+        //         'nama_kegiatan' => $validatedData['nama_kegiatan'],
+        //         'penanggung_jawab' => $validatedData['penanggung_jawab'],
+        //     ]);
+        // }
+
+        // Update data terkait di tabel Surat Masuk
+        $suratMasuk = SuratMasuk::find($pengajuanSurat->surat_masuk_id);
+        if ($suratMasuk) {
+            $suratMasuk->update([
+                'tanggal_diajukan' => $validatedData['tanggal_diajukan'],
+                'nomor_surat' => $validatedData['nomor_surat'],
+                'jenis_surat' => $validatedData['jenis_surat'],
+                'nama_kegiatan' => $validatedData['nama_kegiatan'],
+                'penanggung_jawab' => $validatedData['penanggung_jawab'],
+                'status' => 'Direvisi', // Set status menjadi "Direvisi"
+                'tanggal_diedit' => now() // Tambahkan tanggal revisi
+            ]);
+        }
+
+        $pengajuanSurat->save();
+
+        return redirect()->back()->with('success', 'Data berhasil diperbarui');
+    }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $request->validate([
-            'tanggal_diajukan' => 'required|date',
-            'nomor_surat' => 'required|string|max:255',
-            'jenis_surat' => 'required|string|max:255',
-            'nama_kegiatan' => 'required|string|max:255',
-            'penanggung_jawab' => 'required|string|max:255',
-            'file_surat' => 'required|file|mimes:pdf',
-            'nominal_dana' => 'nullable|numeric|min:1',
-            'status' => 'nullable|string|max:255',
-        ]);
+    // public function update(Request $request, string $id)
+    // {
+    //     $request->validate([
+    //         'tanggal_diajukan' => 'required|date',
+    //         'nomor_surat' => 'required|string|max:255',
+    //         'jenis_surat' => 'required|string|max:255',
+    //         'nama_kegiatan' => 'required|string|max:255',
+    //         'penanggung_jawab' => 'required|string|max:255',
+    //         'file_surat' => 'required|file|mimes:pdf',
+    //         'nominal_dana' => 'nullable|numeric',
+    //     ]);
 
-        // Temukan user berdasarkan ID
-        $pengajuanSurat = RiwayatPengajuanSurat::findOrFail($id);
+    //     // Temukan user berdasarkan ID
+    //     $pengajuanSurat = RiwayatPengajuanSurat::findOrFail($id);
+    //     $pengajuanSurat->update($request->all());
 
-        // Update data pengguna
-        $pengajuanSurat->update([
-            'tanggal_diajukan' => $request->tanggal_diajukan,
-            'nomor_surat' => $request->nomor_surat,
-            'jenis_surat' => $request->jenis_surat,
-            'nama_kegiatan' => $request->nama_kegiatan,
-            'penanggung_jawab' => $request->penanggung_jawab,
-            'file_surat' => $request->file('file_surat')->store('surat', 'public'),
-            'nominal_dana' => $request->nominal_dana,
-            'status' => $request->status,
-        ]);
+    //     if ($request->hasFile('file_surat')) {
+    //         $filePath = $request->file('file_surat')->store('surat_files', 'public');
+    //         $pengajuanSurat->file_surat = $filePath;
+    //         $pengajuanSurat->save();
+    //     }
 
-        return redirect()->back()->with('success', 'Data berhasil diperbarui!');
-    }
+    //     // Update data pengguna
+    //     $pengajuanSurat->update([
+    //         'tanggal_diajukan' => $request->tanggal_diajukan,
+    //         'nomor_surat' => $request->nomor_surat,
+    //         'jenis_surat' => $request->jenis_surat,
+    //         'nama_kegiatan' => $request->nama_kegiatan,
+    //         'penanggung_jawab' => $request->penanggung_jawab,
+    //         'nominal_dana' => $request->nominal_dana,
+    //         'status' => $request->status,
+    //     ]);
+
+    //     return redirect()->back()->with('success', 'Data berhasil diperbarui!');
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -247,6 +316,7 @@ class OrmawaController extends Controller
         if ($suratMasuk) {
             $suratMasuk->update([
                 'status' => 'Dibatalkan', // Ubah status surat menjadi 'Dibatalkan'
+                'tanggal_diedit' => now() // Tambahkan tanggal revisi
             ]);
         }
 

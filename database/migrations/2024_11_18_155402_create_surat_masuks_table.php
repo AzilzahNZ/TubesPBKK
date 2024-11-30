@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('nama_kegiatan');
             $table->string('penanggung_jawab');
             $table->string('file_surat');
-            $table->enum('status', ['Ditolak', 'Disetujui', 'Diproses', 'Selesai', 'Dibatalkan'])->default('Diproses');
+            $table->bigInteger('nominal_dana')->nullable(); // Nominal dana, opsional
+            $table->enum('status', ['Ditolak', 'Disetujui', 'Diproses', 'Selesai', 'Dibatalkan', 'Direvisi'])->default('Diproses');
+            $table->timestamp('tanggal_diedit')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +32,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('surat_masuks');
+        Schema::table('surat_masuks', function (Blueprint $table) {
+            $table->dropColumn('tanggal_diedit');
+        });
     }
 };

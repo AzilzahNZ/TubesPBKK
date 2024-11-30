@@ -5,8 +5,9 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="justify-content-center text-align-center text-center fs-4 fw-bold mb-4"
-                        style="margin-top: 10px;">Riwayat Pengajuan Surat</h1>
+                    <div class="d-flex justify-content-center align-items-center mb-3">
+                        <h1 class="justify-content-center text-align-center text-center fs-4 fw-bold mb-4" style="margin-top: 30px; font-size: 30px;">Riwayat Pengajuan Surat</h1>
+                    </div>
 
                     {{-- Tabel Riwayat --}}
                     @if ($riwayat_pengajuan_surats->isEmpty())
@@ -27,6 +28,7 @@
                                         <th>File Surat</th>
                                         <th>Nominal Dana yang Diajukan</th>
                                         <th>Status</th>
+                                        <th>Tanggal Diedit</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -53,6 +55,9 @@
                                                     class="{{ $dt->status == 'Selesai' ? 'status-finish' : 'status-pending' }}">{{ $dt->status }}</span>
                                             </td>
                                             <td>
+                                                {{ $dt->tanggal_diedit ? \Carbon\Carbon::parse($dt->tanggal_diedit)->timezone('Asia/Jakarta')->format('d M Y H:i') : '-' }}
+                                            </td>
+                                            <td>
                                                 <a class="btn btn-sm btn-warning" data-id="{{ $dt->id }}">Edit</a>
                                                 <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#deleteModal"
@@ -67,19 +72,20 @@
 
                     <script>
                         document.addEventListener('DOMContentLoaded', () => {
-                            const editButtons = document.querySelectorAll('.btn-warning'); // Tombol Edit
-                            const editForm = document.getElementById('editForm'); // Formulir di modal
-                            const tanggalDiajukanInput = document.getElementById('tanggal_diajukan'); // Input Tanggal Diajukan
-                            const nomorSuratInput = document.getElementById('nomor_surat'); // Input Nomor Surat
-                            const jenisSuratInput = document.getElementById('jenis_surat'); // Input Jenis Surat
-                            const namaKegiatanInput = document.getElementById('nama_kegiatan'); // Input Nama Kegiatan
-                            const penanggungJawabInput = document.getElementById('penanggung_jawab'); // Input Penanggung Jawab
-                            const fileSuratLink = document.getElementById('file_surat_link'); // Link File Surat
+                            const editButtons = document.querySelectorAll('.btn-warning');
+                            const editForm = document.getElementById('editForm');
+                            const tanggalDiajukanInput = document.getElementById('tanggal_diajukan');
+                            const nomorSuratInput = document.getElementById('nomor_surat');
+                            const jenisSuratInput = document.getElementById('jenis_surat');
+                            const namaKegiatanInput = document.getElementById('nama_kegiatan');
+                            const penanggungJawabInput = document.getElementById('penanggung_jawab');
+                            const fileSuratLink = document.getElementById('file_surat_link');
+                            const nominalDanaInput = document.getElementById('nominal_dana'); // Tambahkan input nominal dana
 
                             editButtons.forEach(button => {
                                 button.addEventListener('click', function() {
-                                    const row = this.closest('tr'); // Baris tabel
-                                    const pengajuanId = this.getAttribute('data-id'); // Ambil ID dari tombol
+                                    const row = this.closest('tr');
+                                    const pengajuanId = this.getAttribute('data-id');
 
                                     // Ambil tanggal dari tabel
                                     const tanggalText = row.querySelector('td:nth-child(2)').textContent.trim();
@@ -92,24 +98,27 @@
                                         `${year}-${monthNumber.toString().padStart(2, '0')}-${day.padStart(2, '0')}`;
                                     tanggalDiajukanInput.value = formattedTanggal;
 
-                                    const nomorSurat = row.querySelector('td:nth-child(3)').textContent
-                                        .trim(); // Ambil Nomor Surat
-                                    const jenisSurat = row.querySelector('td:nth-child(4)').textContent
-                                        .trim(); // Ambil Jenis Surat
-                                    const namaKegiatan = row.querySelector('td:nth-child(5)').textContent
-                                        .trim(); // Ambil Nama Kegiatan
-                                    const penanggungJawab = row.querySelector('td:nth-child(6)').textContent
-                                        .trim(); // Ambil Penanggung Jawab
+                                    // Ambil data dari tabel
+                                    const nomorSurat = row.querySelector('td:nth-child(3)').textContent.trim();
+                                    const jenisSurat = row.querySelector('td:nth-child(4)').textContent.trim();
+                                    const namaKegiatan = row.querySelector('td:nth-child(5)').textContent.trim();
+                                    const penanggungJawab = row.querySelector('td:nth-child(6)').textContent.trim();
                                     const fileSuratPath = row.querySelector('td:nth-child(7) a').getAttribute(
-                                        'href'); // Ambil Link File Surat
+                                        'href');
+
+                                    // Ambil nominal dana
+                                    const nominalDanaCell = row.querySelector('td:nth-child(8)').textContent.trim();
+                                    const nominalDanaValue = nominalDanaCell === '-' ?
+                                        '' :
+                                        nominalDanaCell.replace('Rp ', '').replace(/\./g, '');
 
                                     // Isi form dengan data lama
-                                    // tanggalDiajukanInput.value = tanggalDiajukan; // Isi Tanggal Diajukan
-                                    nomorSuratInput.value = nomorSurat; // Isi Nomor Surat
-                                    jenisSuratInput.value = jenisSurat; // Isi Jenis Surat
-                                    namaKegiatanInput.value = namaKegiatan; // Isi Nama Kegiatan
-                                    penanggungJawabInput.value = penanggungJawab; // Isi Penanggung Jawab
-                                    fileSuratLink.href = fileSuratPath; // Tampilkan Link File Surat
+                                    nomorSuratInput.value = nomorSurat;
+                                    jenisSuratInput.value = jenisSurat;
+                                    namaKegiatanInput.value = namaKegiatan;
+                                    penanggungJawabInput.value = penanggungJawab;
+                                    fileSuratLink.href = fileSuratPath;
+                                    nominalDanaInput.value = nominalDanaValue; // Isi nominal dana
 
                                     // Atur action form dengan ID pengajuan
                                     editForm.action = `/ormawa/edit-pengajuan-surat/${pengajuanId}`;
@@ -126,7 +135,6 @@
                                 document.getElementById('file_surat').value = '';
                             });
                         });
-
 
                         function setDeleteData(id) {
                             const deleteForm = document.getElementById('deleteForm');
@@ -207,6 +215,18 @@
                                                     File saat ini: <a href="#" target="_blank"
                                                         id="file_surat_link">Lihat File</a>
                                                 </small>
+                                            </div>
+
+                                            <!-- Nominal Dana -->
+                                            <div class="col-md-6">
+                                                <label for="nominal_dana" class="form-label">Nominal Dana yang Diajukan</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">Rp</span>
+                                                    <input type="number" class="form-control" id="nominal_dana"
+                                                        name="nominal_dana" placeholder="Masukkan nominal dana"
+                                                        min="0">
+                                                </div>
+                                                <small class="form-text text-muted">Kosongkan jika tidak ada dana</small>
                                             </div>
 
                                             {{-- <!-- Status -->

@@ -1,37 +1,49 @@
 @extends('template')
 
 @section('content')
-    <!-- Sales Card -->
-    <div class="col-xxl-12 col-md-6" style="width: 100%;">
-        <div class="card info-card sales-card ">
-
-            <div class="card-body ">
-                <h3 class="d-flex align-items-center justify-content-center"><br>Selamat Datang :)</h3>
-                <div class="d-flex align-items-center justify-content-center">
-                    <h6>{{ Auth::user()->name }}</h6>
+    <div class="row g-3">
+        <div class="col-12">
+            <div class="info-card sales-card">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3>Selamat Datang!</h3>
+                        <h6>{{ Auth::user()->name }}</h6>
+                    </div>
                 </div>
             </div>
-
         </div>
-    </div><!-- End Sales Card -->
 
-    <div class="d-flex align-items-center justify-content-center">
-            <div class="col-lg-6 col-md-6">
-                <div class="card info-card sales-card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-center" style="margin-bottom: 10px;">
-                            <h5><br>Riwayat Pengajuan Surat</h5>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <h5 class="me-3"><b>Diproses : {{ $totalStatusDiproses }}</b></h5>
-                            <h5 class="me-3"><b>Disetujui : {{ $totalStatusDisetujui }}</b></h5>
-                            <h5 class="me-3"><b>Ditolak : {{ $totalStatusDitolak }}</b></h5>
-                            <h5><b>Selesai : {{ $totalStatusSelesai }}</b></h5>
+        <div class="col-12 d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="info-card sales-card">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h3 class="mb-4">Riwayat Pengajuan Surat</h3>
+                            <div class="row row-cols-2 row-cols-md-4 g-3 justify-content-center">
+                                <div class="col text-center">
+                                    <h5 class="mb-1">Diproses</h5>
+                                    <h6>{{ $totalStatusDiproses }}</h6>
+                                </div>
+                                <div class="col text-center">
+                                    <h5 class="mb-1">Disetujui</h5>
+                                    <h6>{{ $totalStatusDisetujui }}</h6>
+                                </div>
+                                <div class="col text-center">
+                                    <h5 class="mb-1">Ditolak</h5>
+                                    <h6>{{ $totalStatusDitolak }}</h6>
+                                </div>
+                                <div class="col text-center">
+                                    <h5 class="mb-1">Selesai</h5>
+                                    <h6>{{ $totalStatusSelesai }}</h6>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>              
     </div>
+
 
     <!-- Accordion FAQ -->
     <div class="mt-3">
@@ -79,7 +91,8 @@
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                     data-bs-parent="#faqAccordion">
                     <div class="accordion-body">
-                        SIMPULS mendukung pengajuan Surat Permohonan Izin Kegiatan, Surat Proposal Dana Kegiatan, dan Surat
+                        SIMPULS mendukung pengajuan Surat Permohonan Izin Kegiatan, Surat Proposal Dana Kegiatan, dan
+                        Surat
                         Peminjaman Ruangan.
                     </div>
                 </div>
@@ -111,7 +124,8 @@
                 <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
                     data-bs-parent="#faqAccordion">
                     <div class="accordion-body">
-                        Ya, SIMPULS dirancang agar dapat diakses secara online dari mana saja dengan menggunakan kredensial
+                        Ya, SIMPULS dirancang agar dapat diakses secara online dari mana saja dengan menggunakan
+                        kredensial
                         login yang valid.
                     </div>
                 </div>

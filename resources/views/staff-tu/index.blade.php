@@ -4,7 +4,6 @@
     <!-- Sales Card -->
     <div class="col-xxl-12 col-md-6" style="width: 100%;">
         <div class="card info-card sales-card ">
-
             <div class="card-body ">
                 <h3 class="d-flex align-items-center justify-content-center"><br>Selamat Datang :)</h3>
                 <div class="d-flex align-items-center justify-content-center">
@@ -14,7 +13,6 @@
 
         </div>
     </div><!-- End Sales Card -->
-
     <div class="d-flex align-items-center justify-content-center">
         <div class="col-lg-6 col-md-6">
             <div class="card text-center">

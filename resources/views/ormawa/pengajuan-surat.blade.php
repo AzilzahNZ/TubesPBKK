@@ -2,10 +2,10 @@
 
 @section('content')
     <form action="/ormawa/pengajuan-surat/store" method="POST" enctype="multipart/form-data" id="formPengajuanSurat"
-        style="max-width: 800px; margin: auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        style="max-width: 800px; margin: auto; background-color: #f9f9f9; padding: 50px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
         @csrf
         <h1 class="justify-content-center text-align-center text-center"
-            style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">
+            style="font-size: 30px; font-weight: bold; margin-bottom: 50px;">
             Pengajuan Surat
         </h1>
         <div style="display: flex; gap: 20px;">
