@@ -12,14 +12,18 @@ return new class extends Migration
     public function up()
     {
         Schema::table('riwayat_surats', function (Blueprint $table) {
-            $table->dropColumn('kategori');
+            if (!Schema::hasColumn('riwayat_surats', 'nama_ormawa')) {
+                $table->string('nama_ormawa')->nullable();
+            }
         });
     }
 
     public function down()
     {
         Schema::table('riwayat_surats', function (Blueprint $table) {
-            $table->string('nama_ormawa')->nullable();
+            if (Schema::hasColumn('riwayat_surats', 'nama_ormawa')) {
+                $table->dropColumn('nama_ormawa');
+            }
         });
     }
 };

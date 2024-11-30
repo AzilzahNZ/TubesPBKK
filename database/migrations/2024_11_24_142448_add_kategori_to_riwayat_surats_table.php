@@ -13,9 +13,12 @@ class AddKategoriToRiwayatSuratsTable extends Migration
      */
     public function up()
     {
-        Schema::table('riwayat_surats', function (Blueprint $table) {
-            $table->string('kategori')->after('tanggal_surat_masuk_keluar');
-        });
+        // Menambahkan kolom kategori hanya jika kolom tersebut belum ada
+        if (!Schema::hasColumn('riwayat_surats', 'kategori')) {
+            Schema::table('riwayat_surats', function (Blueprint $table) {
+                $table->string('kategori')->after('tanggal_surat_masuk_keluar'); // Menambah kolom kategori
+            });
+        }
     }
 
     /**

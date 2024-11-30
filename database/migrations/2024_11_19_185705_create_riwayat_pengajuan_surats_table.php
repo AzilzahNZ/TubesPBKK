@@ -21,8 +21,11 @@ return new class extends Migration
             $table->string('nama_kegiatan')->default();
             $table->string('penanggung_jawab')->default();
             $table->string('file_surat')->default();
-            $table->unsignedBigInteger('nominal_dana')->nullable(); // Nominal dana, opsional
-            $table->enum('status', ['Ditolak', 'Disetujui', 'Diproses', 'Selesai'])->default('Diproses');
+            if (!Schema::hasColumn('riwayat_pengajuan_surats', 'nominal_dana')) {
+                $table->bigInteger('nominal_dana')->unsigned()->nullable()->comment('Nominal dana yang diajukan');
+            }
+            $table->enum('status', ['Ditolak', 'Disetujui', 'Diproses', 'Selesai', 'Direvisi'])->default('Diproses');
+            $table->timestamp('tanggal_diedit')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +35,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('riwayat_pengajuan_surats');
+        Schema::table('riwayat_pengajuan_surats', function (Blueprint $table) {
+            $table->dropColumn('tanggal_diedit');
+        });
     }
 };

@@ -14,7 +14,9 @@ class AddNominalDanaToRiwayatPengajuanSuratsTable extends Migration
     public function up()
     {
         Schema::table('riwayat_pengajuan_surats', function (Blueprint $table) {
-            $table->unsignedBigInteger('nominal_dana')->nullable()->after('file_surat')->comment('Nominal dana yang diajukan');
+            if (!Schema::hasColumn('riwayat_pengajuan_surats', 'nominal_dana')) {
+                $table->unsignedBigInteger('nominal_dana')->nullable()->comment('Nominal dana yang diajukan')->after('file_surat');
+            }
         });
     }
 
@@ -26,7 +28,9 @@ class AddNominalDanaToRiwayatPengajuanSuratsTable extends Migration
     public function down()
     {
         Schema::table('riwayat_pengajuan_surats', function (Blueprint $table) {
-            $table->dropColumn('nominal_dana');
+            if (Schema::hasColumn('riwayat_pengajuan_surats', 'nominal_dana')) {
+                $table->dropColumn('nominal_dana');
+            }
         });
     }
 }

@@ -18,7 +18,9 @@ class SuratMasuk extends Model
         'nama_kegiatan',
         'penanggung_jawab',
         'file_surat',
+        'nominal_dana',
         'status',
+        'tanggal_diedit'
     ];
 
     // Relasi dengan User (One-to-Many)

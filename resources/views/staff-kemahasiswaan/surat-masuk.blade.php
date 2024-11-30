@@ -56,7 +56,7 @@
         {{-- Tabel Riwayat --}}
         @if ($surat_masuks->isEmpty())
             <div class="alert alert-warning" role="alert" style="text-align: center;">
-                Tidak ada data yang ditemukan berdasarkan filter atau pencarian Anda.
+                Belum ada data Surat Masuk.
             </div>
         @else
             {{-- Tampilkan tabel jika data ditemukan --}}
@@ -83,6 +83,9 @@
                                     <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
                                         Status
                                     </th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;"> 
+                                        Tanggal Diedit
+                                    </th>
                                     <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
                                         Aksi</th>
                                 </tr>
@@ -105,6 +108,9 @@
                                             {{ $dt->penanggung_jawab }}</td>
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                             {{ $dt->status }}</td>
+                                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">
+                                            {{ $dt->tanggal_diedit ? \Carbon\Carbon::parse($dt->tanggal_diedit)->timezone('Asia/Jakarta')->format('d M Y H:i') : '-' }}
+                                        </td>                                                                                        
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                             <a href="{{ route('staff-kemahasiswaan.detail-surat', $dt->id) }}"
                                                 class="btn btn-sm btn-primary"

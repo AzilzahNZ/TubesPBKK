@@ -1,46 +1,43 @@
 @extends('template')
 
 @section('content')
-    <!-- Sales Card -->
-    <div class="col-xxl-12 col-md-6 ">
-        <div class="card info-card sales-card ">
-
-            <div class="card-body ">
-                <h3 class="d-flex align-items-center justify-content-center"><br>Selamat Datang :)</h3>
-                <div class="d-flex align-items-center justify-content-center">
-                    <h6>{{ Auth::user()->name }}</h6>
+    <div class="row g-3">
+        <div class="col-12">
+            <div class="info-card sales-card">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3>Selamat Datang!</h3>
+                        <h6>{{ Auth::user()->name }}</h6>
+                    </div>
                 </div>
             </div>
-
         </div>
-    </div><!-- End Card -->
 
-    <div class="row">
-        <div class="col-lg-6 col-md-6">
-            <div class="card info-card sales-card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-center">
-                        <h5><br>Jumlah akun pengguna</h5>
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center">
-                        <h5><b>{{ $totalUsers }}</b></h5>
+        <div class="col-md-6">
+            <div class="info-card sales-card">
+                <div class="col-12">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5>Jumlah akun pengguna</h5>
+                            <h6>{{ $totalUsers }}</h6>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div><!-- End Card -->
+        </div>
 
-        <div class="col-lg-6 col-md-6">
-            <div class="card info-card sales-card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-center">
-                        <h5><br>Jumlah akun ormawa</h5>
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center">
-                        <h5><b>{{ $totalOrmawa }}</b></h5>
+        <div class="col-md-6">
+            <div class="info-card sales-card">
+                <div class="col-12">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5>Jumlah akun ormawa</h5>
+                            <h6>{{ $totalOrmawa }}</h6>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div><!-- End Card -->
+        </div>
     </div>
 
     <!-- Accordion FAQ -->

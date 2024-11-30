@@ -3,9 +3,13 @@
 @section('content')
 <div class="container ">
     <div class="card text-center mb-3">
-        <div class="card-body">
-            <h5 class="card-title">Selamat Datang!</h5>
-            <p class="card-text"><strong>STAFF KEMAHASISWAAN</strong></p>
+        <div class="info-card sales-card">
+            <div class="card-body ">
+                <h3 class="d-flex align-items-center justify-content-center"><br>Selamat Datang!</h3>
+                <div class="d-flex align-items-center justify-content-center">
+                    <h6><strong>{{ Auth::user()->name }}</strong></h6>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
