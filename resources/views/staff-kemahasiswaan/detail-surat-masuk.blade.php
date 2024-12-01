@@ -33,6 +33,10 @@
             <td><a href="{{ asset('storage/' . $suratMasuk->file_surat) }}" target="_blank">Unduh</a></td>
         </tr>
         <tr>
+            <th>Nominal Dana yang Diajukan</th>
+            <td>{{ $suratMasuk->nominal_dana !== null ? 'Rp ' . number_format($suratMasuk->nominal_dana, 0, ',', '.') : '-' }}</td>
+        </tr>
+        <tr>
             <th>Status</th>
             <td>{{ $suratMasuk->status }}</td>
         </tr>

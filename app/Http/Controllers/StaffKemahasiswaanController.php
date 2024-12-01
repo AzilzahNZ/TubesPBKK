@@ -69,7 +69,8 @@ class StaffKemahasiswaanController extends Controller
         }
 
         // Ambil data
-        $surat_masuks = $query->get();
+        $surat_masuks = SuratMasuk::all();;
+        // $surat_masuks = $query->get();
 
         return view('staff-kemahasiswaan.surat-masuk', compact('surat_masuks'));
     }
@@ -109,6 +110,7 @@ class StaffKemahasiswaanController extends Controller
             'nama_kegiatan' => 'required|string|max:255',
             'penanggung_jawab' => 'required|string|max:255',
             'file_surat' => 'required|file|mimes:pdf', // File opsional
+            'nominal_dana' => 'nullable|numeric|min:0',
             'status' => 'nullable|string|max:255',
         ]);
 
@@ -126,6 +128,7 @@ class StaffKemahasiswaanController extends Controller
             'nama_kegiatan' => $validated['nama_kegiatan'],
             'penanggung_jawab' => $validated['penanggung_jawab'],
             'file_surat' => $filePath,
+            'nominal_dana' => $validated['nominal_dana'],
             'status' => $validated['status'],
         ]);
 
@@ -138,6 +141,7 @@ class StaffKemahasiswaanController extends Controller
             'nama_kegiatan' => $validated['nama_kegiatan'],
             'penanggung_jawab' => $validated['penanggung_jawab'],
             'file_surat' => $filePath,
+            'nominal_dana' => $validated['nominal_dana'],
             'status' => $validated['status'],
         ]);
 
