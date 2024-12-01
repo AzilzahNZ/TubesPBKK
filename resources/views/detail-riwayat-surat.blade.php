@@ -33,6 +33,10 @@
             <td><a href="{{ asset('storage/' . $riwayat_surats->file_surat) }}" target="_blank">Unduh</a></td>
         </tr>
         <tr>
+            <th>Nominal Dana yang Diajukan</th>
+            <td>{{ $riwayat_surats->nominal_dana !== null ? 'Rp ' . number_format($riwayat_surats->nominal_dana, 0, ',', '.') : '-' }}</td>
+        </tr>
+        <tr>
             <th>Status</th>
             <td>{{ $riwayat_surats->status }}</td>
         </tr>

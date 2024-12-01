@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,6 +21,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Atur locale Carbon ke bahasa Indonesia
+        Carbon::setLocale('id');
+
+        // Atur waktu PHP ke Indonesia
+        setlocale(LC_TIME, 'id_ID.UTF-8');
+
         $menu = [
             (object) ['role' => 'admin', 'link' => 'index',  'title' => 'Dashboard'],
             (object) ['role' => 'admin', 'link' => 'manajemen-akun-pengguna',  'title' => 'Manajemen Akun Pengguna'],

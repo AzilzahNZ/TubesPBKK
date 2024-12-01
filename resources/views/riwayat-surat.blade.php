@@ -11,7 +11,7 @@
                         {{-- Filter dan Pencarian --}}
                         <div class="d-flex justify-content-end mb-3"
                             style="position: relative; display: flex; margin-bottom: 1rem;">
-                            <form method="GET" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+                            <form method="GET" class="justify-content-end" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
                                 <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
                                     style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
 
@@ -100,7 +100,8 @@
                                         @foreach ($riwayat_surats as $dt)
                                             <tr>
                                                 <td class="table-cell">{{ $loop->iteration }}</td>
-                                                <td class="table-cell">{{ $dt->suratMasuk->user->name ?? 'Staff Kemahasiswaan' }}</td>
+                                                <td class="table-cell">
+                                                    {{ $dt->suratMasuk->user->name ?? 'Staff Kemahasiswaan' }}</td>
                                                 <td class="table-cell">
                                                     {{ Carbon\Carbon::parse($dt->tanggal_surat_masuk_keluar)->format('d F Y') }}
                                                 </td>
@@ -190,130 +191,6 @@
                                 deleteForm.action = `/riwayat-surat/${id}`;
                             };
                         </script>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-lg custom-modal-width">
-                                <div class="modal-content">
-                                    <!-- Header Modal -->
-                                    <div class="modal-header" style="border: none;">
-                                        <h5 class="modal-title w-100 text-center" id="editModalLabel"
-                                            style="font-weight: bold; font-size: 1.25rem;">
-                                            Edit Data Riwayat Pengajuan Surat
-                                        </h5>
-                                        <!-- Tombol X -->
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <!-- Form Modal -->
-                                    <div class="modal-body">
-                                        <form action="" method="POST" enctype="multipart/form-data" id="editForm">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="row g-4">
-                                                <!-- Tanggal Diajukan -->
-                                                <div class="col-md-6">
-                                                    <label for="tanggal_diajukan" class="form-label">Tanggal
-                                                        Diajukan</label>
-                                                    <input type="date" class="form-control" id="tanggal_diajukan"
-                                                        name="tanggal_diajukan" required readonly>
-                                                </div>
-
-                                                <!-- Nama Kegiatan -->
-                                                <div class="col-md-6">
-                                                    <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
-                                                    <input type="text" class="form-control" id="nama_kegiatan"
-                                                        name="nama_kegiatan" required>
-                                                </div>
-
-                                                <!-- Nomor Surat -->
-                                                <div class="col-md-6">
-                                                    <label for="nomor_surat" class="form-label">Nomor Surat</label>
-                                                    <input type="text" class="form-control" id="nomor_surat"
-                                                        name="nomor_surat" required>
-                                                </div>
-
-                                                <!-- Penanggung Jawab -->
-                                                <div class="col-md-6">
-                                                    <label for="penanggung_jawab" class="form-label">Penanggung
-                                                        Jawab</label>
-                                                    <input type="text" class="form-control" id="penanggung_jawab"
-                                                        name="penanggung_jawab" required>
-                                                </div>
-
-                                                <!-- Jenis Surat -->
-                                                <div class="col-md-6">
-                                                    <label for="jenis_surat" class="form-label">Jenis Surat</label>
-                                                    <select class="form-select" id="jenis_surat" name="jenis_surat"
-                                                        required>
-                                                        <option value="Permohonan Izin Kegiatan">Permohonan Izin Kegiatan
-                                                        </option>
-                                                        <option value="Proposal Permohonan Dana">Proposal Permohonan Dana
-                                                        </option>
-                                                        <option value="Peminjaman Ruangan">Peminjaman Ruangan</option>
-                                                        <option value="Peminjaman Kamera">Peminjaman Kamera</option>
-                                                    </select>
-                                                </div>
-
-                                                <!-- File Surat -->
-                                                <div class="col-md-6">
-                                                    <label for="file_surat" class="form-label">File Surat</label>
-                                                    <input type="file" class="form-control" id="file_surat"
-                                                        name="file_surat">
-                                                    <small id="current_file_surat" class="form-text text-muted">
-                                                        File saat ini: <a href="#" target="_blank"
-                                                            id="file_surat_link">Lihat File</a>
-                                                    </small>
-                                                </div>
-
-                                                {{-- <!-- Status -->
-                                                <div class="col-md-6">
-                                                    <label for="status" class="form-label">Status</label>
-                                                    <select class="form-select" id="status" name="status" required>
-                                                        <option value="Diproses">Diproses</option>
-                                                        <option value="Ditolak">Ditolak</option>
-                                                        <option value="Disetujui">Disetujui</option>
-                                                        <option value="Selesai">Selesai</option>
-                                                    </select>
-                                                </div> --}}
-                                            </div>
-                                            <div class="mt-3 text-end">
-                                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Modal Konfirmasi Delete -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header" style="border: none;">
-                                        <h5 class="modal-title w-100 text-center" id="deleteModalLabel"
-                                            style="font-weight: bold; font-size: 1.25rem;">
-                                            Konfirmasi Pembatalan Pengajuan Surat
-                                        </h5>
-                                    </div>
-                                    <div class="modal-body text-center" style="padding: 20px;">
-                                        <p>Apakah Anda yakin ingin membatalkan Pengajuan Surat ini?</p>
-                                    </div>
-                                    <div class="modal-footer" style="border: none; justify-content: center;">
-                                        <form id="deleteForm" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"
-                                                style="padding: 10px 30px;">Iya</button>
-                                        </form>
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                            style="padding: 10px 30px;">Kembali</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

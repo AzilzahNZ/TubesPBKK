@@ -25,12 +25,8 @@
                                         <th>Nomor Surat</th>
                                         <th>Jenis Surat</th>
                                         <th>Nama Kegiatan</th>
-                                        <th>PJ</th>
-                                        <th>File Surat</th>
-                                        <th>Nominal Dana yang Diajukan</th>
                                         <th>Status</th>
-                                        <th>Tanggal Diedit</th>
-                                        <th>Aksi</th>
+                                        <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -42,23 +38,15 @@
                                             <td>{{ $dt->nomor_surat }}</td>
                                             <td>{{ $dt->jenis_surat }}</td>
                                             <td>{{ $dt->nama_kegiatan }}</td>
-                                            <td>{{ $dt->penanggung_jawab }}</td>
-                                            <td>
-                                                <a href="{{ asset('storage/' . $dt->file_surat) }}" target="_blank"
-                                                    class="btn btn-info" style="padding: 2px 10px">
-                                                    <i class="bi bi-file-earmark-pdf"></i>File</a>
-                                            </td>
-                                            <td>
-                                                {{ $dt->nominal_dana !== null ? 'Rp ' . number_format($dt->nominal_dana, 0, ',', '.') : '-' }}
-                                            </td>
                                             <td>
                                                 <span
                                                     class="{{ $dt->status == 'Selesai' ? 'status-finish' : 'status-pending' }}">{{ $dt->status }}</span>
                                             </td>
                                             <td>
-                                                {{ $dt->tanggal_diedit? \Carbon\Carbon::parse($dt->tanggal_diedit)->timezone('Asia/Jakarta')->format('d M Y H:i'): '-' }}
-                                            </td>
-                                            <td>
+                                                <a href="{{ route('ormawa.detail-riwayat-pengajuan-surat', $dt->id) }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    Lihat
+                                                </a>
                                                 <a class="btn btn-sm btn-warning" data-id="{{ $dt->id }}">Edit</a>
                                                 <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#deleteModal"

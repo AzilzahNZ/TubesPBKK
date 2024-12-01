@@ -19,8 +19,8 @@
                 <div class="card-body">
                         <h5 class="card-title">Riwayat Surat</h5>
                         <div class="d-flex align-items-center justify-content-center">
-                            <h5 class="me-3"><b>Disetujui : {{ $totalSuratDisetujui }}</b></h5>
-                            <h5 class="me-3"><b>Ditolak : {{ $totalSuratDitolak }}</b></h5>
+                            <h5 class="me-3"><b>Surat Masuk : {{ $totalSuratKeluar }}</b></h5>
+                            <h5 class="me-3"><b>Surat Keluar : {{ $totalSuratKeluar }}</b></h5>
                         </div>
                     </div>
                 </div>

@@ -19,11 +19,11 @@ class StaffTUController extends Controller
         $user = Auth::user();
 
         // Menghitung jumlah surat masuk
-        $totalSuratDisetujui = DB::table('riwayat_surats')->where('status', 'Disetujui')->count();
-        $totalSuratDitolak = DB::table('riwayat_surats')->where('status', 'Ditolak')->count();
+        $totalSuratMasuk = DB::table('riwayat_surats')->where('kategori', 'Surat Masuk')->count();
+        $totalSuratKeluar = DB::table('riwayat_surats')->where('kategori', 'Surat Keluar')->count();
 
         // Mengembalikan view dengan data user dan total surat masuk
-        return view('staff-tu.index', compact('user',  'totalSuratDisetujui', 'totalSuratDitolak'));
+        return view('staff-tu.index', compact('user',  'totalSuratMasuk', 'totalSuratKeluar'));
     }
 
     public function riwayat_surat( Request $request): View

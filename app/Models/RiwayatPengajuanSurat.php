@@ -13,6 +13,7 @@ class RiwayatPengajuanSurat extends Model
     protected $fillable = [
         'user_id',
         'surat_masuk_id',
+        'nama_ormawa',
         'tanggal_diajukan',
         'nomor_surat',
         'jenis_surat',

@@ -2,7 +2,7 @@
 
 @section('content')
     <form action="/ormawa/pengajuan-surat/store" method="POST" enctype="multipart/form-data" id="formPengajuanSurat"
-        style="max-width: 800px; margin: auto; background-color: #f9f9f9; padding: 50px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        class="card card-body" style="max-width: 800px; margin: 0 auto; padding: 10px;">
         @csrf
         <h1 class="justify-content-center text-align-center text-center"
             style="font-size: 30px; font-weight: bold; margin-bottom: 50px;">
@@ -70,7 +70,8 @@
             <label for="nominal_dana" style="display: block; font-weight: bold; margin-bottom: 5px;">Nominal Dana yang
                 Diajukan</label>
             <input type="number" class="form-control" id="nominal_dana" name="nominal_dana"
-                placeholder="Masukkan nominal dana" min="0" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 40px;">
+                placeholder="Masukkan nominal dana" min="0"
+                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 40px;">
             {{-- <input type="text" id="nominal_dana" name="nominal_dana"
                 style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 40px;"
                 placeholder="Masukkan nominal dalam format rupiah"> --}}

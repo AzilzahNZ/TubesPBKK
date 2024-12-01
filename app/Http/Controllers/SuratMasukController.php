@@ -6,6 +6,7 @@ use App\Models\SuratMasuk;
 use App\Models\RiwayatSurat;
 use Illuminate\Http\Request;
 use App\Models\RiwayatPengajuanSurat;
+use Illuminate\Support\Facades\Schema;
 
 class SuratMasukController extends Controller
 {
@@ -13,12 +14,14 @@ class SuratMasukController extends Controller
     {
         $query = SuratMasuk::query();
 
-        // Filter pencarian
+        // Pencarian Global
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('nama_kegiatan', 'like', '%' . $search . '%')
-                    ->orWhere('nomor_surat', 'like', '%' . $search . '%');
+            $columns = Schema::getColumnListing('surat_masuks'); // Nama tabel
+            $query->where(function ($q) use ($columns, $search) {
+                foreach ($columns as $column) {
+                    $q->orWhere($column, 'like', '%' . $search . '%');
+                }
             });
         }
 
@@ -42,10 +45,18 @@ class SuratMasukController extends Controller
         }
 
         // Ambil data
-        $surat_masuks = SuratMasuk::where('status', '!=', 'Disetujui')
+        // $surat_masuks = SuratMasuk::where('status', '!=', 'Disetujui')
+        //     ->where('status', '!=', 'Ditolak')
+        //     ->where('status', '!=', 'Dibatalkan')
+        //     ->get();
+
+        // Menambahkan filter status yang tidak Disetujui, Ditolak, atau Dibatalkan
+        $query->where('status', '!=', 'Disetujui')
             ->where('status', '!=', 'Ditolak')
-            ->where('status', '!=', 'Dibatalkan')
-            ->get();
+            ->where('status', '!=', 'Dibatalkan');
+
+        // Ambil data yang sudah difilter
+        $surat_masuks = $query->get();
 
         return view('staff-kemahasiswaan.surat-masuk', compact('surat_masuks'));
     }

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SuratMasuk;
 use App\Models\RiwayatSurat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\SuratMasuk;
+use Illuminate\Support\Facades\Schema;
 
 class RiwayatSuratController extends Controller
 {
@@ -16,14 +17,17 @@ class RiwayatSuratController extends Controller
     {
         $query = RiwayatSurat::query();
 
-        // Filter pencarian
+        // Pencarian Global
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('nama_kegiatan', 'like', '%' . $search . '%')
-                    ->orWhere('nomor_surat', 'like', '%' . $search . '%');
+            $columns = Schema::getColumnListing('riwayat_surats'); // Nama tabel
+            $query->where(function ($q) use ($columns, $search) {
+                foreach ($columns as $column) {
+                    $q->orWhere($column, 'like', '%' . $search . '%');
+                }
             });
         }
+
 
         // Filter berdasarkan kategori
         if ($request->filled('kategori')) {

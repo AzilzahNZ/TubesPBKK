@@ -48,6 +48,12 @@ class RiwayatPengajuanSuratController extends Controller
         return view('ormawa.riwayat-pengajuan-surat', compact('riwayat_pengajuan_surats'));
     }
 
+    public function detail($id)
+    {
+        $riwayat_pengajuan_surats = RiwayatPengajuanSurat::findOrFail($id);
+        return view('ormawa.detail-riwayat-pengajuan-surat', compact('riwayat_pengajuan_surats'));
+    }
+
 
     /**
      * Show the form for creating a new resource.

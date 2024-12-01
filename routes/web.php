@@ -43,6 +43,7 @@ Route::post('/admin/store-pengguna', [AdminController::class, 'store'])->name('a
     Route::get('/dashboard/ormawa', [OrmawaController::class, 'index'])->name('ormawa.index');
     Route::get('/ormawa.pengajuan-surat', [OrmawaController::class, 'pengajuan_surat'])->name('ormawa.pengajuan-surat');
     Route::get('/ormawa.riwayat-pengajuan-surat', [OrmawaController::class, 'riwayat_pengajuan_surat'])->name('ormawa.riwayat-pengajuan-surat');
+    Route::get('/ormawa/detail-pengajuan-surat/{id}', [RiwayatPengajuanSuratController::class, 'detail'])->name('ormawa.detail-riwayat-pengajuan-surat');
 // });
 
 Route::get('/ormawa.pengajuan-surat.create', [OrmawaController::class, 'create'])->name('ormawa.pengajuan-surat.create');
