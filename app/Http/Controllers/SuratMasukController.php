@@ -42,9 +42,7 @@ class SuratMasukController extends Controller
         }
 
         // Ambil data
-        $surat_masuks = SuratMasuk::where('status', '!=', 'Disetujui')
-            ->where('status', '!=', 'Ditolak')
-            ->get();
+        $surat_masuks = SuratMasuk::where('status', '=', 'diproses')->get();
 
         return view('staff-kemahasiswaan.surat-masuk', compact('surat_masuks'));
     }
@@ -95,6 +93,7 @@ class SuratMasukController extends Controller
             'nama_kegiatan' => $suratMasuk->nama_kegiatan,
             'penanggung_jawab' => $suratMasuk->penanggung_jawab,
             'file_surat' => $suratMasuk->file_surat,
+            'nominal_dana' => $suratMasuk->nominal_dana,
             'status' => 'disetujui',
         ]);
 
@@ -119,6 +118,7 @@ class SuratMasukController extends Controller
             'nama_kegiatan' => $suratMasuk->nama_kegiatan,
             'penanggung_jawab' => $suratMasuk->penanggung_jawab,
             'file_surat' => $suratMasuk->file_surat,
+            'nominal_dana' => $suratMasuk->nominal_dana,
             'status' => 'Ditolak',
         ]);
 

@@ -72,7 +72,8 @@ class StaffKemahasiswaanController extends Controller
         }
 
         // Ambil data
-        $surat_masuks = $query->get();
+        $surat_masuks = SuratMasuk::all();;
+        // $surat_masuks = $query->get();
 
         return view('staff-kemahasiswaan.surat-masuk', compact('surat_masuks'));
     }

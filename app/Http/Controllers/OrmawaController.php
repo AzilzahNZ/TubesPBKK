@@ -248,6 +248,7 @@ class OrmawaController extends Controller
                 'jenis_surat' => $validatedData['jenis_surat'],
                 'nama_kegiatan' => $validatedData['nama_kegiatan'],
                 'penanggung_jawab' => $validatedData['penanggung_jawab'],
+                'nominal_dana' => $validatedData['nominal_dana'],
                 'status' => 'Direvisi', // Set status menjadi "Direvisi"
                 'tanggal_diedit' => now() // Tambahkan tanggal revisi
             ]);
