@@ -1,9 +1,9 @@
 @extends('template') <!-- Sesuaikan dengan layout utama Anda -->
 
 @section('content')
-<div class="container">
-    <h2>Detail Surat Masuk</h2>
-    <table class="table table-bordered">
+<div class="card card-body" style="max-width: 100%; margin: 0 auto; padding: 10px;">
+    <h1 class="fs-4 fw-bold mb-4 text-center">Detail Surat</h1>
+    <table class="table table-bordered" style="max-width: 100%;">
         <tr>
             <th>Nama Pengirim</th>
             <td>{{ $suratMasuk->user->name }}</td> <!-- Mengakses nama pengguna dari relasi -->
@@ -75,7 +75,7 @@
                 @csrf
                 <div class="modal-body">
                     <p>Masukkan alasan penolakan:</p>
-                    <textarea class="form-control" name="reason" rows="3" required></textarea>
+                    <textarea class="form-control" name="keterangan" rows="3" required></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>

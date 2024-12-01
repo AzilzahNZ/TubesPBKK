@@ -105,44 +105,42 @@ class StaffKemahasiswaanController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi data yang diterima
+        // Validasi umum untuk semua jenis surat
         $request->validate([
-            'tanggal_surat' => 'required|date',
-            'nomor_surat' => 'required|string|max:255',
-            'jenis_surat' => 'required|string|max:255',
-            'nama_kegiatan' => 'required|string|max:255',
-            'penanggung_jawab' => 'required|string|max:255',
-            'file_surat' => 'required|file|mimes:pdf', // File opsional
-            'status' => 'nullable|string|max:255',
+            'tanggal_diajukan' => 'required|date',
+            'nomor_surat' => 'required|string',
+            'jenis_surat' => 'required|string',
+            'nama_kegiatan' => 'required|string',
+            'penanggung_jawab' => 'required|string',
+            'file_surat' => 'required|file|mimes:pdf',
         ]);
 
-        // Simpan file jika diunggah
-        $filePath = $request->file('file_surat')->store('surat', 'public');
+        // Simpan data ke tabel surat_keluar
+        $suratKeluar = new SuratKeluar;
+        $suratKeluar->user_id = Auth::user()->id; // ID Ormawa berdasarkan akun yang login
+        $suratKeluar->tanggal_diajukan = $request->tanggal_diajukan;
+        $suratKeluar->nomor_surat = $request->nomor_surat;
+        $suratKeluar->jenis_surat = $request->jenis_surat;
+        $suratKeluar->nama_kegiatan = $request->nama_kegiatan;
+        $suratKeluar->penanggung_jawab = $request->penanggung_jawab;
+        $suratKeluar->file_surat = $request->file('file_surat')->store('surat', 'public');
+        $suratKeluar->nominal_dana = $request->nominal_dana ?? null;
+        $suratKeluar->tanggal_diedit = null;
+        $suratKeluar->save();
 
-        // Simpan data ke tabel surat masuk
-        SuratMasuk::create([
-            'tanggal_diajukan' => $request['tanggal_surat'],
-            'nomor_surat' => $request['nomor_surat'],
-            'jenis_surat' => $request['jenis_surat'],
-            'nama_kegiatan' => $request['nama_kegiatan'],
-            'penanggung_jawab' => $request['penanggung_jawab'],
-            'file_surat' => $filePath,
-            'status' => $request['status'],
-        ]);
-
-        // Simpan data ke tabel surat masuk
         RiwayatSurat::create([
-            'nama_oramawa' => Auth::user()->name,
-            'tanggal_surat_masuk_keluar' => $request['tanggal_surat'],
-            'nomor_surat' => $request['nomor_surat'],
-            'jenis_surat' => $request['jenis_surat'],
-            'nama_kegiatan' => $request['nama_kegiatan'],
-            'penanggung_jawab' => $request['penanggung_jawab'],
-            'file_surat' => $filePath,
-            'status' => $request['status'],
+            'surat_masuk_id' => null,
+            'nama_ormawa' => $suratKeluar->user->name,
+            'tanggal_surat_masuk_keluar' => now(),
+            'kategori' => 'Surat Keluar',
+            'nomor_surat' => $suratKeluar->nomor_surat,
+            'jenis_surat' => $suratKeluar->jenis_surat,
+            'nama_kegiatan' => $suratKeluar->nama_kegiatan,
+            'penanggung_jawab' => $suratKeluar->penanggung_jawab,
+            'file_surat' => $suratKeluar->file_surat,
+            'status' => 'Selesai',
         ]);
 
-        // Redirect dengan pesan sukses
         return redirect()->back()->with('success', 'Surat keluar berhasil diajukan!');
     }
 

@@ -87,7 +87,7 @@
                                     <thead>
                                         <tr class="table-header">
                                             <th class="table-cell">No</th>
-                                            <th class="table-cell" style="text-align: center;">Nama<br>Ormawa</br></th>
+                                            <th class="table-cell" style="text-align: center;">Pengirim</th>
                                             <th class="table-cell">Tanggal Surat<br>Masuk/Keluar</br></th>
                                             <th class="table-cell">Kategori</th>
                                             <th class="table-cell">Nomor Surat</th>
@@ -100,7 +100,7 @@
                                         @foreach ($riwayat_surats as $dt)
                                             <tr>
                                                 <td class="table-cell">{{ $loop->iteration }}</td>
-                                                <td class="table-cell">{{ $dt->suratMasuk->user->name ?? 'N/A' }}</td>
+                                                <td class="table-cell">{{ $dt->suratMasuk->user->name ?? 'Staff Kemahasiswaan' }}</td>
                                                 <td class="table-cell">
                                                     {{ Carbon\Carbon::parse($dt->tanggal_surat_masuk_keluar)->format('d F Y') }}
                                                 </td>

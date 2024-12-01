@@ -64,7 +64,7 @@ Route::middleware(['auth', 'role:staff-kemahasiswaan'])->group(function () {
     Route::post('/staff-kemahasiswaan/reject-surat/{id}', [SuratMasukController::class, 'reject'])->name('staff-kemahasiswaan.reject-surat');
 
     Route::get('/staff-kemahasiswaan.surat-keluar', [StaffKemahasiswaanController::class, 'surat_keluar'])->name('staff-kemahasiswaan.surat-keluar');
-    Route::post('/staff-kemahasiswaan.surat-keluar.store', [StaffKemahasiswaanController::class, 'store'])->name('staff-kemahasiswaan.store');
+    Route::post('/staff-kemahasiswaan.surat-keluar.store', [StaffKemahasiswaanController::class, 'store'])->name('staff-kemahasiswaan.surat-keluar.store');
     // Route::post('/staff-kemahasiswaan.surat-keluar.store', [StaffKemahasiswaanController::class, 'store'])->name('staff-kemahasiswaan.surat-keluar.store');
 });
 
