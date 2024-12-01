@@ -25,6 +25,9 @@
                                         <th>Nomor Surat</th>
                                         <th>Jenis Surat</th>
                                         <th>Nama Kegiatan</th>
+                                        <th>Penanggung Jawab</th>
+                                        <th>File Surat</th>
+                                        <th>Nominal Dana yang Diajukan</th>
                                         <th>Status</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
@@ -38,6 +41,15 @@
                                             <td>{{ $dt->nomor_surat }}</td>
                                             <td>{{ $dt->jenis_surat }}</td>
                                             <td>{{ $dt->nama_kegiatan }}</td>
+                                            <td>{{ $dt->penanggung_jawab }}</td>
+                                            <td>
+                                                <a href="{{ asset('storage/' . $dt->file_surat) }}" target="_blank"
+                                                    class="btn btn-info" style="padding: 2px 10px">
+                                                    <i class="bi bi-file-earmark-pdf"></i>File</a>
+                                            </td>
+                                            <td>
+                                                {{ $dt->nominal_dana !== null ? 'Rp ' . number_format($dt->nominal_dana, 0, ',', '.') : '-' }}
+                                            </td>
                                             <td>
                                                 <span
                                                     class="{{ $dt->status == 'Selesai' ? 'status-finish' : 'status-pending' }}">{{ $dt->status }}</span>
@@ -69,17 +81,17 @@
                             const namaKegiatanInput = document.getElementById('nama_kegiatan');
                             const penanggungJawabInput = document.getElementById('penanggung_jawab');
                             const fileSuratLink = document.getElementById('file_surat_link');
-                            const nominalDanaInput = document.getElementById('nominal_dana'); // Tambahkan input nominal dana
+                            const nominalDanaInput = document.getElementById('nominal_dana');
 
                             // Tambahkan event listener untuk Jenis Surat
                             function toggleNominalDana() {
                                 if (jenisSuratInput.value === 'Proposal Permohonan Dana') {
-                                    nominalDanaInput.disabled = false; // Aktifkan input
-                                    nominalDanaInput.required = true; // Jadikan wajib diisi
+                                    nominalDanaInput.disabled = false;
+                                    nominalDanaInput.required = true;
                                 } else {
-                                    nominalDanaInput.disabled = true; // Nonaktifkan input
-                                    nominalDanaInput.required = false; // Tidak wajib diisi
-                                    nominalDanaInput.value = ''; // Kosongkan nilai input
+                                    nominalDanaInput.disabled = true;
+                                    nominalDanaInput.required = false;
+                                    nominalDanaInput.value = '';
                                 }
                             }
 
@@ -106,32 +118,29 @@
                                     const jenisSurat = row.querySelector('td:nth-child(4)').textContent.trim();
                                     const namaKegiatan = row.querySelector('td:nth-child(5)').textContent.trim();
                                     const penanggungJawab = row.querySelector('td:nth-child(6)').textContent.trim();
-                                    const fileSuratPath = row.querySelector('td:nth-child(7) a').getAttribute(
-                                        'href');
+                                    const fileSurat = row.querySelector('td:nth-child(7)').querySelector('a').href;
+                                    const nominalDana = row.querySelector('td:nth-child(8)').textContent.trim();
+                                    
 
-                                    // Ambil nominal dana
-                                    const nominalDanaCell = row.querySelector('td:nth-child(8)').textContent.trim();
-                                    const nominalDanaValue = nominalDanaCell === '-' ?
-                                        '' :
-                                        nominalDanaCell.replace('Rp ', '').replace(/\./g, '');
-
-                                    // Isi form dengan data lama
+                                    // Perbaikan: Ubah cara pengambilan data penanggung jawab dan file surat
                                     nomorSuratInput.value = nomorSurat;
                                     jenisSuratInput.value = jenisSurat;
                                     namaKegiatanInput.value = namaKegiatan;
                                     penanggungJawabInput.value = penanggungJawab;
-                                    fileSuratLink.href = fileSuratPath;
-                                    nominalDanaInput.value = nominalDanaValue; // Isi nominal dana
+                                    fileSuratLink.href = fileSurat;
+                                    nominalDanaInput.value = nominalDana;
 
-                                    // Atur status input Nominal Dana berdasarkan Jenis Surat
-                                    toggleNominalDana();
+                                    // Tambahkan pemeriksaan untuk mencegah kesalahan
+                                    const editModal = new bootstrap.Modal(document.getElementById('editModal'));
 
                                     // Atur action form dengan ID pengajuan
                                     editForm.action = `/ormawa/edit-pengajuan-surat/${pengajuanId}`;
 
                                     // Tampilkan modal
-                                    const editModal = new bootstrap.Modal(document.getElementById('editModal'));
                                     editModal.show();
+
+                                    // Atur status input Nominal Dana berdasarkan Jenis Surat
+                                    toggleNominalDana();
                                 });
                             });
 
@@ -165,7 +174,7 @@
                                 </div>
                                 <!-- Form Modal -->
                                 <div class="modal-body">
-                                    <form action="" method="POST" enctype="multipart/form-data" id="editForm">
+                                    <form action="/ormawa/edit-pengajuan-surat/{{ $dt->id }}" method="POST" enctype="multipart/form-data" id="editForm">
                                         @csrf
                                         @method('PUT')
                                         <div class="row g-4">

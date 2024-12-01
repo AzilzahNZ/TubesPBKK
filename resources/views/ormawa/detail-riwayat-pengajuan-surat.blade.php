@@ -34,7 +34,7 @@
         </tr>
         <tr>
             <th>Nominal Dana yang Diajukan</th>
-            <td>{{ $riwayat_pengajuan_surats->nominal_dana !== null ? 'Rp ' . number_format($riwayat_surats->nominal_dana, 0, ',', '.') : '-' }}</td>
+            <td>{{ $riwayat_pengajuan_surats->nominal_dana !== null ? 'Rp ' . number_format($riwayat_pengajuan_surats->nominal_dana, 0, ',', '.') : '-' }}</td>
         </tr>
         <tr>
             <th>Status</th>
