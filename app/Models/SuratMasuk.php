@@ -21,7 +21,6 @@ class SuratMasuk extends Model
         'nominal_dana',
         'status',
         'tanggal_diedit',
-        'alasan_penolakan',
     ];
 
     // Relasi dengan User (One-to-Many)

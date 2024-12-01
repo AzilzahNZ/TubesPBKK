@@ -113,6 +113,7 @@ class StaffKemahasiswaanController extends Controller
             'nama_kegiatan' => 'required|string',
             'penanggung_jawab' => 'required|string',
             'file_surat' => 'required|file|mimes:pdf',
+            'nominal_dana' => 'nullable|numeric|min:1',
         ]);
 
         // Simpan data ke tabel surat_keluar

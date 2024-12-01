@@ -22,7 +22,9 @@ return new class extends Migration
             $table->string('nama_kegiatan');
             $table->string('penanggung_jawab');
             $table->string('file_surat');
-            $table->enum('status', ['Ditolak', 'Disetujui', 'Selesai']);
+            $table->string('nominal_dana')->nullable();
+            $table->enum('status', ['Ditolak', 'Disetujui', 'Selesai', 'Dibatalkan']);
+            $table->timestamp('tanggal_diedit')->nullable();
             $table->timestamps();
         });
     }

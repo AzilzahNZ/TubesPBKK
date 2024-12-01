@@ -44,6 +44,7 @@ class SuratMasukController extends Controller
         // Ambil data
         $surat_masuks = SuratMasuk::where('status', '!=', 'Disetujui')
             ->where('status', '!=', 'Ditolak')
+            ->where('status', '!=', 'Dibatalkan')
             ->get();
 
         return view('staff-kemahasiswaan.surat-masuk', compact('surat_masuks'));

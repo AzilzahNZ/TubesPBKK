@@ -20,7 +20,9 @@ class RiwayatSurat extends Model
         'nama_kegiatan',
         'penanggung_jawab',
         'file_surat',
+        'nominal_dana',
         'status',
+        'tanggal_diedit',
     ];
 
     public function suratMasuk()

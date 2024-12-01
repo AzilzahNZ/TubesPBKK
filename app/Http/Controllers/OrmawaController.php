@@ -82,7 +82,6 @@ class OrmawaController extends Controller
             'penanggung_jawab' => 'required|string',
             'file_surat' => 'required|file|mimes:pdf',
             'nominal_dana' => 'nullable|numeric|min:1',
-            'status' => 'nullable|string',
         ]);
 
         // Simpan data ke tabel surat_masuk
@@ -94,6 +93,8 @@ class OrmawaController extends Controller
         $suratMasuk->nama_kegiatan = $request->nama_kegiatan;
         $suratMasuk->penanggung_jawab = $request->penanggung_jawab;
         $suratMasuk->file_surat = $request->file('file_surat')->store('surat', 'public');
+        $suratMasuk->nominal_dana = $request->nominal_dana;
+        $suratMasuk->status = $request->status ?? 'Diproses'; // Nilai default
         $suratMasuk->save();
 
         // Siapkan data untuk riwayat_pengajuan_surat
@@ -209,13 +210,6 @@ class OrmawaController extends Controller
         $pengajuanSurat->nama_kegiatan = $validatedData['nama_kegiatan'];
         $pengajuanSurat->penanggung_jawab = $validatedData['penanggung_jawab'];
 
-        // Update nominal dana (bisa null)
-        $pengajuanSurat->nominal_dana = $validatedData['nominal_dana'] ?? null;
-
-        // Update status dan tanggal direvisi
-        // $pengajuanSurat->status = 'Direvisi';
-        $pengajuanSurat->tanggal_diedit = now();
-
         // Proses upload file jika ada
         if ($request->hasFile('file_surat')) {
             // Hapus file lama jika ada
@@ -227,6 +221,13 @@ class OrmawaController extends Controller
             $filePath = $request->file('file_surat')->store('pengajuan-surat', 'public');
             $pengajuanSurat->file_surat = $filePath;
         }
+
+        // Update nominal dana (bisa null)
+        $pengajuanSurat->nominal_dana = $validatedData['nominal_dana'] ?? null;
+
+        // Update status dan tanggal direvisi
+        //$pengajuanSurat->status = 'Direvisi';
+        $pengajuanSurat->tanggal_diedit = now();
 
         // // Sinkronkan dengan tabel surat masuk
         // if ($pengajuanSurat->suratMasuk) {
@@ -324,16 +325,16 @@ class OrmawaController extends Controller
                 'status' => 'Dibatalkan',
                 'tanggal_diedit' => now(),
             ]);
-    
+
             // Ubah status surat masuk menjadi "Dibatalkan"
             $suratMasuk->update([
                 'status' => 'Dibatalkan',
                 'tanggal_diedit' => now(),
             ]);
-        }
 
-        // Menghapus data di tabel riwayat_pengajuan_surat setelah pembatalan
-        $riwayat_pengajuan_surat->delete();
+            // Menghapus data di tabel riwayat_pengajuan_surat setelah pembatalan
+            $riwayat_pengajuan_surat->delete();
+        }
 
         // Redirect dengan pesan sukses
         return redirect()->back()->with('success', 'Pengajuan surat dibatalkan dan status surat diubah menjadi "Dibatalkan"!');
