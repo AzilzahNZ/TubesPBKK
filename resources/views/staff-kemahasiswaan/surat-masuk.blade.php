@@ -85,9 +85,6 @@
                                     <th style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">
                                         Status
                                     </th>
-                                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;"> 
-                                        Tanggal Diedit
-                                    </th>
                                     <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">
                                         Aksi</th>
                                 </tr>
@@ -98,7 +95,7 @@
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                             {{ $loop->iteration }}</td>
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                            {{ \Carbon\Carbon::parse($dt->tanggal_diajukan)->format('d F Y') }}
+                                            {{ $dt->tanggal_diajukan ? \Carbon\Carbon::parse($dt->tanggal_diajukan)->timezone('Asia/Jakarta')->format('d M Y') : '-' }}
                                         </td>
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                             {{ $dt->nomor_surat }}</td>
@@ -109,10 +106,7 @@
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                             {{ $dt->penanggung_jawab }}</td>
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                            {{ $dt->status }}</td>
-                                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                            {{ $dt->tanggal_diedit ? \Carbon\Carbon::parse($dt->tanggal_diedit)->timezone('Asia/Jakarta')->format('d M Y H:i') : '-' }}
-                                        </td>                                                                                        
+                                            {{ $dt->status }}</td>                                      
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                             <a href="{{ route('staff-kemahasiswaan.detail-surat-masuk', $dt->id) }}">
                                                 <a href="{{ route('staff-kemahasiswaan.detail-surat-masuk', $dt->id) }}"

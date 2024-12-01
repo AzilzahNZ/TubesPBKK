@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RiwayatPengajuanSurat;
 use Illuminate\View\View;
 use App\Models\SuratMasuk;
+use App\Models\SuratKeluar;
 use App\Models\RiwayatSurat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\RiwayatPengajuanSurat;
+use Illuminate\Support\Facades\Log;
 
 class StaffKemahasiswaanController extends Controller
 {
@@ -24,9 +26,10 @@ class StaffKemahasiswaanController extends Controller
         $totalSuratMasuk = DB::table('surat_masuks')->where('status', 'Diproses')->count();
         $totalSuratDisetujui = DB::table('riwayat_surats')->where('status', 'Disetujui')->count();
         $totalSuratDitolak = DB::table('riwayat_surats')->where('status', 'Ditolak')->count();
+        $totalSuratKeluar = DB::table('surat_keluars')->count();
 
         // Mengembalikan view dengan data user dan total surat masuk
-        return view('staff-kemahasiswaan.index', compact('user', 'totalSuratMasuk', 'totalSuratDisetujui', 'totalSuratDitolak'));
+        return view('staff-kemahasiswaan.index', compact('user', 'totalSuratMasuk', 'totalSuratDisetujui', 'totalSuratDitolak', 'totalSuratKeluar'));
     }
 
     public function surat_masuk(Request $request): View
@@ -102,23 +105,19 @@ class StaffKemahasiswaanController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi data dari form
-        $validated = $request->validate([
+        // Validasi data yang diterima
+        $request->validate([
             'tanggal_surat' => 'required|date',
             'nomor_surat' => 'required|string|max:255',
             'jenis_surat' => 'required|string|max:255',
             'nama_kegiatan' => 'required|string|max:255',
             'penanggung_jawab' => 'required|string|max:255',
             'file_surat' => 'required|file|mimes:pdf', // File opsional
-            'nominal_dana' => 'nullable|numeric|min:0',
             'status' => 'nullable|string|max:255',
         ]);
 
         // Simpan file jika diunggah
-        $filePath = null;
-        if ($request->hasFile('file_surat')) {
-            $filePath = $request->file('file_surat')->store('surat', 'public'); // Simpan di storage/public/surat
-        }
+        $filePath = $request->file('file_surat')->store('surat', 'public');
 
         // Simpan data ke tabel surat masuk
         SuratMasuk::create([
@@ -128,7 +127,6 @@ class StaffKemahasiswaanController extends Controller
             'nama_kegiatan' => $validated['nama_kegiatan'],
             'penanggung_jawab' => $validated['penanggung_jawab'],
             'file_surat' => $filePath,
-            'nominal_dana' => $validated['nominal_dana'],
             'status' => $validated['status'],
         ]);
 
@@ -141,12 +139,11 @@ class StaffKemahasiswaanController extends Controller
             'nama_kegiatan' => $validated['nama_kegiatan'],
             'penanggung_jawab' => $validated['penanggung_jawab'],
             'file_surat' => $filePath,
-            'nominal_dana' => $validated['nominal_dana'],
             'status' => $validated['status'],
         ]);
 
         // Redirect dengan pesan sukses
-        return redirect()->route('staff-kemahasiswaan.surat-keluar')->with('success', 'Surat keluar berhasil dikirim!');
+        return redirect()->back()->with('success', 'Surat keluar berhasil diajukan!');
     }
 
     // Menyetujuinya surat masuk

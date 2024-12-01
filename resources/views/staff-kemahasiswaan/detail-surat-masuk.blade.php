@@ -10,7 +10,7 @@
         </tr>
         <tr>
             <th>Tanggal Diajukan</th>
-            <td>{{ $suratMasuk->tanggal_diajukan }}</td>
+            <td>{{ $suratMasuk->tanggal_diajukan ? \Carbon\Carbon::parse($suratMasuk->tanggal_diajukan)->timezone('Asia/Jakarta')->format('d M Y H:i') : '-' }}</td>
         </tr>
         <tr>
             <th>Nomor Surat</th>
@@ -39,6 +39,10 @@
         <tr>
             <th>Status</th>
             <td>{{ $suratMasuk->status }}</td>
+        </tr>
+        <tr>
+            <th>Tanggal Diedit</th>
+            <td>{{ $suratMasuk->tanggal_diedit ? \Carbon\Carbon::parse($suratMasuk->tanggal_diedit)->timezone('Asia/Jakarta')->format('d M Y H:i') : '-' }}</td>
         </tr>
     </table>
 

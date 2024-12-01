@@ -9,8 +9,8 @@
                         <h1 class="fs-4 fw-bold mb-4 text-center">Riwayat Surat</h1>
 
                         {{-- Filter dan Pencarian --}}
-                        <div class="d-flex justify-content-end mb-3 group"
-                            style="position: relative; display: flex; justify-content: flex-start; margin-bottom: 1rem;">
+                        <div class="d-flex justify-content-end mb-3"
+                            style="position: relative; display: flex; margin-bottom: 1rem;">
                             <form method="GET" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
                                 <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
                                     style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">

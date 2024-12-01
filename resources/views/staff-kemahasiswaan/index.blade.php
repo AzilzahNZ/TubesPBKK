@@ -37,7 +37,7 @@
             <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title">Surat Keluar</h5>
-                    <p class="card-text">0</p>
+                    <p class="card-text"><b>Selesai : {{ $totalSuratKeluar }}</p>
                 </div>
             </div>
         </div>
