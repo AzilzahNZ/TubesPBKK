@@ -302,22 +302,33 @@ class OrmawaController extends Controller
      */
     public function destroy(string $id)
     {
-        // $riwayat_pengajuan_surats = RiwayatPengajuanSurat::findOrFail($id); // Cari data berdasarkan ID
-        // $riwayat_pengajuan_surats->delete(); // Hapus data
-
-        // return redirect()->back()->with('success', 'Pengajuan surat berhasil dihapus!');
-
         // Temukan RiwayatPengajuanSurat berdasarkan ID
         $riwayat_pengajuan_surat = RiwayatPengajuanSurat::findOrFail($id);
 
         // Temukan SuratMasuk terkait dengan RiwayatPengajuanSurat
-        $suratMasuk = $riwayat_pengajuan_surat->suratMasuk; // Akses data suratMasuk yang terkait
+        $suratMasuk = SuratMasuk::find($riwayat_pengajuan_surat->surat_masuk_id);
 
-        // Jika suratMasuk ditemukan, ubah statusnya menjadi 'Dibatalkan'
         if ($suratMasuk) {
+            // Pindahkan data ke tabel RiwayatSurat
+            DB::table('riwayat_surats')->insert([
+                'surat_masuk_id' => $suratMasuk->id,
+                'nama_ormawa' => $suratMasuk->user->name,
+                'tanggal_surat_masuk_keluar' => now(),
+                'kategori' => 'Surat Masuk',
+                'nomor_surat' => $suratMasuk->nomor_surat,
+                'jenis_surat' => $suratMasuk->jenis_surat,
+                'nama_kegiatan' => $suratMasuk->nama_kegiatan,
+                'penanggung_jawab' => $suratMasuk->penanggung_jawab,
+                'file_surat' => $suratMasuk->file_surat,
+                'nominal_dana' => $suratMasuk->nominal_dana,
+                'status' => 'Dibatalkan',
+                'tanggal_diedit' => now(),
+            ]);
+    
+            // Ubah status surat masuk menjadi "Dibatalkan"
             $suratMasuk->update([
-                'status' => 'Dibatalkan', // Ubah status surat menjadi 'Dibatalkan'
-                'tanggal_diedit' => now() // Tambahkan tanggal revisi
+                'status' => 'Dibatalkan',
+                'tanggal_diedit' => now(),
             ]);
         }
 

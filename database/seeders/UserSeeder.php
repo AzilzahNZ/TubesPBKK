@@ -26,12 +26,83 @@ class UserSeeder extends Seeder
     
             //ormawa
             [
+                'name' =>  'BEM Fakultas Teknik',
+                'email' => 'bemft@gmail.com',
+                'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
+                'role' => 'ormawa',
+            ],
+            [
+                'name' =>  'DPM Fakultas Teknik',
+                'email' => 'dpmft@gmail.com',
+                'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
+                'role' => 'ormawa',
+            ],
+            [
                 'name' =>  'HIMATIF',
                 'email' => 'himatif@gmail.com',
                 'password' => Hash::make('password'),
                 'no_telepon' => '08123456789',
                 'role' => 'ormawa',
             ],
+            [
+                'name' =>  'HMTS',
+                'email' => 'hmts@gmail.com',
+                'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
+                'role' => 'ormawa',
+            ],
+            [
+                'name' =>  'HMM',
+                'email' => 'hmm@gmail.com',
+                'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
+                'role' => 'ormawa',
+            ],
+            [
+                'name' =>  'HIMATRO',
+                'email' => 'himatro@gmail.com',
+                'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
+                'role' => 'ormawa',
+            ],
+            [
+                'name' =>  'HMAR',
+                'email' => 'hmar@gmail.com',
+                'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
+                'role' => 'ormawa',
+            ],
+            [
+                'name' =>  'HIMASIF',
+                'email' => 'himasif@gmail.com',
+                'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
+                'role' => 'ormawa',
+            ],
+            [
+                'name' =>  'MOSTANEER',
+                'email' => 'mostaneer@gmail.com',
+                'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
+                'role' => 'ormawa',
+            ],
+            [
+                'name' =>  'PULKANIK',
+                'email' => 'pulkanik@gmail.com',
+                'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
+                'role' => 'ormawa',
+            ],
+            [
+                'name' =>  'ERCOM',
+                'email' => 'ercom@gmail.com',
+                'password' => Hash::make('password'),
+                'no_telepon' => '08123456789',
+                'role' => 'ormawa',
+            ],
+
 
             //staff-kemahasiswaan
             [

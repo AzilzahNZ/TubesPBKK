@@ -121,25 +121,25 @@ class StaffKemahasiswaanController extends Controller
 
         // Simpan data ke tabel surat masuk
         SuratMasuk::create([
-            'tanggal_diajukan' => $validated['tanggal_surat'],
-            'nomor_surat' => $validated['nomor_surat'],
-            'jenis_surat' => $validated['jenis_surat'],
-            'nama_kegiatan' => $validated['nama_kegiatan'],
-            'penanggung_jawab' => $validated['penanggung_jawab'],
+            'tanggal_diajukan' => $request['tanggal_surat'],
+            'nomor_surat' => $request['nomor_surat'],
+            'jenis_surat' => $request['jenis_surat'],
+            'nama_kegiatan' => $request['nama_kegiatan'],
+            'penanggung_jawab' => $request['penanggung_jawab'],
             'file_surat' => $filePath,
-            'status' => $validated['status'],
+            'status' => $request['status'],
         ]);
 
         // Simpan data ke tabel surat masuk
         RiwayatSurat::create([
             'nama_oramawa' => Auth::user()->name,
-            'tanggal_surat_masuk_keluar' => $validated['tanggal_surat'],
-            'nomor_surat' => $validated['nomor_surat'],
-            'jenis_surat' => $validated['jenis_surat'],
-            'nama_kegiatan' => $validated['nama_kegiatan'],
-            'penanggung_jawab' => $validated['penanggung_jawab'],
+            'tanggal_surat_masuk_keluar' => $request['tanggal_surat'],
+            'nomor_surat' => $request['nomor_surat'],
+            'jenis_surat' => $request['jenis_surat'],
+            'nama_kegiatan' => $request['nama_kegiatan'],
+            'penanggung_jawab' => $request['penanggung_jawab'],
             'file_surat' => $filePath,
-            'status' => $validated['status'],
+            'status' => $request['status'],
         ]);
 
         // Redirect dengan pesan sukses

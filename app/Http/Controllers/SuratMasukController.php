@@ -42,7 +42,9 @@ class SuratMasukController extends Controller
         }
 
         // Ambil data
-        $surat_masuks = SuratMasuk::where('status', '=', 'diproses')->get();
+        $surat_masuks = SuratMasuk::where('status', '!=', 'Disetujui')
+            ->where('status', '!=', 'Ditolak')
+            ->get();
 
         return view('staff-kemahasiswaan.surat-masuk', compact('surat_masuks'));
     }
@@ -82,7 +84,7 @@ class SuratMasukController extends Controller
             $riwayatPengajuan->save();
         }
 
-        // Pindahkan surat ke riwayat surat (jika diperlukan untuk log riwayat)
+        // Pindahkan surat ke riwayat surat (jika 6erlukan untuk log riwayat)
         RiwayatSurat::create([
             'surat_masuk_id' => $suratMasuk->id,
             'nama_ormawa' => $suratMasuk->user->name,
