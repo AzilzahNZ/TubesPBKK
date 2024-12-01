@@ -102,16 +102,16 @@
                                     const row = this.closest('tr');
                                     const pengajuanId = this.getAttribute('data-id');
 
-                                    // Ambil tanggal dari tabel
-                                    const tanggalText = row.querySelector('td:nth-child(2)').textContent.trim();
-                                    const [day, month, year] = tanggalText.split(" ");
-                                    const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
-                                        "Agustus", "September", "Oktober", "November", "Desember"
-                                    ];
-                                    const monthNumber = months.indexOf(month) + 1;
-                                    const formattedTanggal =
-                                        `${year}-${monthNumber.toString().padStart(2, '0')}-${day.padStart(2, '0')}`;
-                                    tanggalDiajukanInput.value = formattedTanggal;
+                                    // // Ambil tanggal dari tabel
+                                    // const tanggalText = row.querySelector('td:nth-child(2)').textContent.trim();
+                                    // const [day, month, year] = tanggalText.split(" ");
+                                    // const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
+                                    //     "Agustus", "September", "Oktober", "November", "Desember"
+                                    // ];
+                                    // const monthNumber = months.indexOf(month) + 1;
+                                    // const formattedTanggal =
+                                    //     `${year}-${monthNumber.toString().padStart(2, '0')}-${day.padStart(2, '0')}`;
+                                    // tanggalDiajukanInput.value = formattedTanggal; // Format to YYYY-MM-DD
 
                                     // Ambil data dari tabel
                                     const nomorSurat = row.querySelector('td:nth-child(3)').textContent.trim();
@@ -120,9 +120,10 @@
                                     const penanggungJawab = row.querySelector('td:nth-child(6)').textContent.trim();
                                     const fileSurat = row.querySelector('td:nth-child(7)').querySelector('a').href;
                                     const nominalDana = row.querySelector('td:nth-child(8)').textContent.trim();
-                                    
+
 
                                     // Perbaikan: Ubah cara pengambilan data penanggung jawab dan file surat
+
                                     nomorSuratInput.value = nomorSurat;
                                     jenisSuratInput.value = jenisSurat;
                                     namaKegiatanInput.value = namaKegiatan;
@@ -174,17 +175,18 @@
                                 </div>
                                 <!-- Form Modal -->
                                 <div class="modal-body">
-                                    <form action="/ormawa/edit-pengajuan-surat/{{ $dt->id }}" method="POST" enctype="multipart/form-data" id="editForm">
+                                    <form action=""/ormawa/edit-pengajuan-surat/{{ $dt->id }}"" method="POST"
+                                        enctype="multipart/form-data" id="editForm">
                                         @csrf
                                         @method('PUT')
                                         <div class="row g-4">
-                                            <!-- Tanggal Diajukan -->
+                                            {{-- <!-- Tanggal Diajukan -->
                                             <div class="col-md-6">
                                                 <label for="tanggal_diajukan" class="form-label">Tanggal
                                                     Diajukan</label>
                                                 <input type="date" class="form-control" id="tanggal_diajukan"
                                                     name="tanggal_diajukan" required readonly>
-                                            </div>
+                                            </div> --}}
 
                                             <!-- Nama Kegiatan -->
                                             <div class="col-md-6">
