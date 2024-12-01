@@ -49,10 +49,10 @@ class SuratMasukController extends Controller
         return view('staff-kemahasiswaan.surat-masuk', compact('surat_masuks'));
     }
 
-    public function create()
-    {
-        return view('staff-kemahasiswaan.surat-keluar');
-    }
+    // public function create()
+    // {
+    //     return view('staff-kemahasiswaan.surat-keluar');
+    // }
 
     public function detail($id)
     {
