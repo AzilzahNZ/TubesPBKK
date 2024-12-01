@@ -26,6 +26,7 @@ return new class extends Migration
             }
             $table->enum('status', ['Ditolak', 'Disetujui', 'Diproses', 'Selesai', 'Direvisi'])->default('Diproses');
             $table->timestamp('tanggal_diedit')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }

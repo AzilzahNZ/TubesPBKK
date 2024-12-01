@@ -1,11 +1,11 @@
 @extends('template') <!-- Sesuaikan dengan layout utama Anda -->
 
 @section('content')
-<div class="container">
-    <h2>Detail Surat</h2>
-    <table class="table table-bordered">
+<div class="card card-body" style="max-width: 100%; margin: 0 auto; padding: 10px;">
+    <h1 class="fs-4 fw-bold mb-4 text-center">Detail Surat</h1>
+    <table class="table table-bordered" style="max-width: 100%;">
         <tr>
-            <th>Nama Pengirim</th>
+            <th>Pengirim</th>
             <td>{{ $riwayat_surats->nama_ormawa }}</td> <!-- Mengakses nama pengguna dari relasi -->
         </tr>
         <tr>

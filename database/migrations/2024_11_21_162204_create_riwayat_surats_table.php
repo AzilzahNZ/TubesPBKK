@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('riwayat_surats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('surat_masuk_id')->constrained('surat_masuks')->onDelete('cascade');
+            $table->foreignId('surat_masuk_id')->nullable()->constrained('surat_masuks')->onDelete('cascade');
             $table->string('nama_ormawa')->nullable(); // Izinkan kosong
             $table->date('tanggal_surat_masuk_keluar');
             $table->string('kategori');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('nama_kegiatan');
             $table->string('penanggung_jawab');
             $table->string('file_surat');
-            $table->enum('status', ['Ditolak', 'Disetujui']);
+            $table->enum('status', ['Ditolak', 'Disetujui', 'Selesai']);
             $table->timestamps();
         });
     }

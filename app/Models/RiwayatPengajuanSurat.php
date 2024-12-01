@@ -22,6 +22,7 @@ class RiwayatPengajuanSurat extends Model
         'nominal_dana',
         'status',
         'tanggal_diedit',
+        'keterangan',
     ];
 
     public function User()
