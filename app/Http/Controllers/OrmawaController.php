@@ -192,7 +192,6 @@ class OrmawaController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'tanggal_diajukan' => 'required|date',
             'nomor_surat' => 'required|string',
             'jenis_surat' => 'required|string',
             'nama_kegiatan' => 'required|string',
@@ -204,7 +203,6 @@ class OrmawaController extends Controller
         $pengajuanSurat = RiwayatPengajuanSurat::findOrFail($id);
 
         // Update data
-        $pengajuanSurat->tanggal_diajukan = $validatedData['tanggal_diajukan'];
         $pengajuanSurat->nomor_surat = $validatedData['nomor_surat'];
         $pengajuanSurat->jenis_surat = $validatedData['jenis_surat'];
         $pengajuanSurat->nama_kegiatan = $validatedData['nama_kegiatan'];
@@ -225,7 +223,11 @@ class OrmawaController extends Controller
         // Update nominal dana (bisa null)
         $pengajuanSurat->nominal_dana = $validatedData['nominal_dana'] ?? null;
 
-        // Update status dan tanggal direvisi
+        // Update status
+        if ($pengajuanSurat->status === 'Disetujui') {
+            return response()->json(['error' => 'Surat ini sudah disetujui dan tidak dapat diedit.'], 400);
+        }
+
         //$pengajuanSurat->status = 'Direvisi';
         $pengajuanSurat->tanggal_diedit = now();
 
@@ -244,12 +246,11 @@ class OrmawaController extends Controller
         $suratMasuk = SuratMasuk::find($pengajuanSurat->surat_masuk_id);
         if ($suratMasuk) {
             $suratMasuk->update([
-                'tanggal_diajukan' => $validatedData['tanggal_diajukan'],
                 'nomor_surat' => $validatedData['nomor_surat'],
                 'jenis_surat' => $validatedData['jenis_surat'],
                 'nama_kegiatan' => $validatedData['nama_kegiatan'],
                 'penanggung_jawab' => $validatedData['penanggung_jawab'],
-                'nominal_dana' => $validatedData['nominal_dana'],
+                'nominal_dana' => $validatedData['nominal_dana'] ?? null,
                 'status' => 'Direvisi', // Set status menjadi "Direvisi"
                 'tanggal_diedit' => now() // Tambahkan tanggal revisi
             ]);

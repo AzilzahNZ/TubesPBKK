@@ -96,7 +96,7 @@
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                             {{ $loop->iteration }}</td>
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                            {{ $dt->tanggal_diajukan? \Carbon\Carbon::parse($dt->tanggal_diajukan)->timezone('Asia/Jakarta')->format('d M Y'): '-' }}
+                                            {{ $dt->tanggal_diajukan? \Carbon\Carbon::parse($dt->tanggal_diajukan)->timezone('Asia/Jakarta')->translatedFormat('d F Y'): '-' }}
                                         </td>
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                             {{ $dt->nomor_surat }}</td>

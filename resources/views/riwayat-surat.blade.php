@@ -51,7 +51,7 @@
                                         Diproses</option>
                                     <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak
                                     </option>
-                                    <option value="Diterima" {{ request('status') == 'Disetujui' ? 'selected' : '' }}>
+                                    <option value="Disetujui" {{ request('status') == 'Disetujui' ? 'selected' : '' }}>
                                         Disetujui</option>
                                     <option value="Selesai" {{ request('status') == 'Selesai' ? 'selected' : '' }}>Selesai
                                     </option>
@@ -103,7 +103,7 @@
                                                 <td class="table-cell">
                                                     {{ $dt->suratMasuk->user->name ?? 'Staff Kemahasiswaan' }}</td>
                                                 <td class="table-cell">
-                                                    {{ Carbon\Carbon::parse($dt->tanggal_surat_masuk_keluar)->format('d F Y') }}
+                                                    {{ Carbon\Carbon::parse($dt->tanggal_surat_masuk_keluar)->translatedFormat('d F Y') }}
                                                 </td>
                                                 <td class="table-cell">{{ $dt->kategori }}</td>
                                                 <td class="table-cell">{{ $dt->nomor_surat }}</td>

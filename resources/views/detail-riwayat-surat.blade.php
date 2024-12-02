@@ -10,7 +10,7 @@
         </tr>
         <tr>
             <th>Tanggal Diajukan</th>
-            <td>{{ $riwayat_surats->tanggal_surat_masuk_keluar }}</td>
+            <td>{{ \Carbon\Carbon::parse($riwayat_surats->tanggal_diajukan)->translatedFormat('d F Y') }}</td>
         </tr>
         <tr>
             <th>Nomor Surat</th>

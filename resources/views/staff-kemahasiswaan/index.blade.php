@@ -5,7 +5,7 @@
     <div class="col-xxl-12 col-md-6" style="width: 100%;">
         <div class="card info-card sales-card ">
             <div class="card-body ">
-                <h3 class="d-flex align-items-center justify-content-center"><br>Selamat Datang :)</h3>
+                <h3 class="d-flex align-items-center justify-content-center"><br>Selamat Datang!</h3>
                 <div class="d-flex align-items-center justify-content-center">
                     <h6>{{ Auth::user()->name }}</h6>
                 </div>
@@ -145,7 +145,7 @@
                 <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
                     data-bs-parent="#faqAccordion">
                     <div class="accordion-body">
-                        Apabila pengajuan surat "Disetujui" maka status pengajuan surat akan berubah menjadi "Disetujui" dan akan segera dikirimkan notifikasi kepada ORMAWA terkait apabila surat balasan telah selesai.
+                        Apabila pengajuan surat "Disetujui" maka status pengajuan surat akan berubah menjadi "Disetujui" dan surat tidak bisa lagi diedit atau dibatalkan, serta akan segera dikirimkan notifikasi kepada ORMAWA terkait apabila surat balasan telah selesai.
                     </div>
                 </div>
             </div>
@@ -160,7 +160,7 @@
                 <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven"
                     data-bs-parent="#faqAccordion">
                     <div class="accordion-body">
-                        Apabila pengajuan surat "Ditolak" maka status pengajuan surat akan berubah menjadi "Ditolak" dan akan dikirimkan alasan penolakannya, serta surat harus diajukan ulang.
+                        Apabila pengajuan surat "Ditolak" maka status pengajuan surat akan berubah menjadi "Ditolak" dan akan dikirimkan alasan penolakannya, serta surat tidak bisa lagi diedit atau dibatalkan dan harus diajukan ulang.
                     </div>
                 </div>
             </div>

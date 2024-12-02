@@ -37,7 +37,8 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                {{ Carbon\Carbon::parse($dt->tanggal_diajukan)->format('d F Y') }}</td>
+                                                {{ Carbon\Carbon::parse($dt->tanggal_diajukan)->translatedFormat('d F Y') }}
+                                            </td>
                                             <td>{{ $dt->nomor_surat }}</td>
                                             <td>{{ $dt->jenis_surat }}</td>
                                             <td>{{ $dt->nama_kegiatan }}</td>
@@ -55,14 +56,22 @@
                                                     class="{{ $dt->status == 'Selesai' ? 'status-finish' : 'status-pending' }}">{{ $dt->status }}</span>
                                             </td>
                                             <td>
-                                                <a href="{{ route('ormawa.detail-riwayat-pengajuan-surat', $dt->id) }}"
-                                                    class="btn btn-sm btn-primary">
-                                                    Lihat
-                                                </a>
-                                                <a class="btn btn-sm btn-warning" data-id="{{ $dt->id }}">Edit</a>
-                                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteModal"
-                                                    onclick="setDeleteData('{{ $dt->id }}')">Batal</button>
+                                                @if ($dt->status === 'Disetujui' || $dt->status === 'Ditolak')
+                                                    <a href="{{ route('ormawa.detail-riwayat-pengajuan-surat', $dt->id) }}"
+                                                        class="btn btn-sm btn-primary d-flex justify-content-center">
+                                                        Lihat
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('ormawa.detail-riwayat-pengajuan-surat', $dt->id) }}"
+                                                        class="btn btn-sm btn-primary">
+                                                        Lihat
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-warning"
+                                                        data-id="{{ $dt->id }}">Edit</a>
+                                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                        data-bs-target="#deleteModal"
+                                                        onclick="setDeleteData('{{ $dt->id }}')">Batal</button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -82,6 +91,7 @@
                             const penanggungJawabInput = document.getElementById('penanggung_jawab');
                             const fileSuratLink = document.getElementById('file_surat_link');
                             const nominalDanaInput = document.getElementById('nominal_dana');
+                            const statusInput = document.getElementById('status');
 
                             // Tambahkan event listener untuk Jenis Surat
                             function toggleNominalDana() {
@@ -120,16 +130,25 @@
                                     const penanggungJawab = row.querySelector('td:nth-child(6)').textContent.trim();
                                     const fileSurat = row.querySelector('td:nth-child(7)').querySelector('a').href;
                                     const nominalDana = row.querySelector('td:nth-child(8)').textContent.trim();
+                                    // // Ambil status surat
+                                    // const status = row.querySelector('td:nth-child(9)').textContent.trim()
 
+                                    // // Cek status surat
+                                    // if (status === 'Disetujui' || status === 'Ditolak') {
+                                    //     // Tampilkan pop-up jika surat sudah disetujui atau ditolak
+                                    //     showModal('Surat tidak dapat diedit karena sudah ' + status.toLowerCase() +
+                                    //         '. Silakan ajukan ulang.');
+                                    //     return; // Hentikan eksekusi lebih lanjut
+                                    // }
 
                                     // Perbaikan: Ubah cara pengambilan data penanggung jawab dan file surat
-
                                     nomorSuratInput.value = nomorSurat;
                                     jenisSuratInput.value = jenisSurat;
                                     namaKegiatanInput.value = namaKegiatan;
                                     penanggungJawabInput.value = penanggungJawab;
                                     fileSuratLink.href = fileSurat;
                                     nominalDanaInput.value = nominalDana;
+                                    // statusInput.value = status;
 
                                     // Tambahkan pemeriksaan untuk mencegah kesalahan
                                     const editModal = new bootstrap.Modal(document.getElementById('editModal'));
@@ -175,8 +194,7 @@
                                 </div>
                                 <!-- Form Modal -->
                                 <div class="modal-body">
-                                    <form action=""/ormawa/edit-pengajuan-surat/{{ $dt->id }}"" method="POST"
-                                        enctype="multipart/form-data" id="editForm">
+                                    <form action="" method="POST" enctype="multipart/form-data" id="editForm">
                                         @csrf
                                         @method('PUT')
                                         <div class="row g-4">

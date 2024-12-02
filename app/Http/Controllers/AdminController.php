@@ -73,6 +73,7 @@ class AdminController extends Controller
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             'no_telepon' => 'required|string|max:15',
+            'role' => 'required|string',
         ]);
 
         // Menyimpan data pengguna baru
@@ -81,6 +82,7 @@ class AdminController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password); // Enkripsi password
         $user->no_telepon = $request->no_telepon;
+        $user->role = $request->role;
         $user->save();
 
         // Redirect atau tampilkan notifikasi sukses
@@ -111,6 +113,7 @@ class AdminController extends Controller
             'email' => 'required|email|max:255',
             'password' => 'nullable|string|min:8',
             'no_telepon' => 'required|string|max:15',
+            'role' => 'required|string',
         ]);
 
         // Temukan user berdasarkan ID
@@ -122,6 +125,7 @@ class AdminController extends Controller
             'email' => $request->email,
             'password' => $request->password ? bcrypt($request->password) : $user->password,
             'no_telepon' => $request->no_telepon,
+            'role' => $request->role,
         ]);
 
         // // Update data tambahan (misalnya no_telepon jika ada relasi)

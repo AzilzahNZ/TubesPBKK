@@ -19,6 +19,7 @@
                                     <th>Username</th>
                                     <th>Email</th>
                                     <th>No. Telepon</th>
+                                    <th>Role</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -29,6 +30,7 @@
                                         <td>{{ $dt->name }}</td>
                                         <td>{{ $dt->email }}</td>
                                         <td>{{ $dt->no_telepon }}</td>
+                                        <td>{{ $dt->role }}</td>
                                         <td>
                                             <!-- Tombol Edit -->
                                             <a class="btn btn-sm btn-warning" data-id="{{ $dt->id }}">Edit</a>
@@ -52,6 +54,7 @@
                                 const passwordInput = document.getElementById('password');
                                 const emailInput = document.getElementById('email');
                                 const noTeleponInput = document.getElementById('no_telepon');
+                                const roleInput = document.getElementById('role');
 
                                 // Event listener untuk tombol Edit
                                 editButtons.forEach(button => {
@@ -61,11 +64,13 @@
                                         const username = row.querySelector('td:nth-child(2)').textContent.trim();
                                         const email = row.querySelector('td:nth-child(3)').textContent.trim();
                                         const noTelepon = row.querySelector('td:nth-child(4)').textContent.trim();
+                                        const role = row.querySelector('td:nth-child(5)').textContent.trim();
 
                                         // Isi form modal dengan data pengguna
                                         usernameInput.value = username;
                                         emailInput.value = email;
                                         noTeleponInput.value = noTelepon;
+                                        roleInput.values = role;
 
                                         // Set action URL form dengan ID pengguna
                                         editForm.action = `/admin/edit-pengguna/${userId}`;
@@ -131,6 +136,18 @@
                                                 <input type="text" class="form-control" id="no_telepon" name="no_telepon"
                                                     required style="border-radius: 5px;">
                                             </div>
+                                            
+                                            <!-- Role -->
+                                            <div class="mb-3">
+                                                <label for="role" class="form-label" style="font-weight: bold;">Role</label>
+                                                <select type="text" class="form-control" id="role" name="role" required style="border-radius: 5px;">
+                                                    <option value="admin">admin</option>
+                                                    <option value="ormawa">ormawa</option>
+                                                    <option value="staff-kemahasiswaan">staff-kemahasiswaan</option>
+                                                    <option value="staff-tu">staff-tu</option>
+                                                </select>
+                                            </div>
+
                                         </div>
                                         <!-- Footer Modal -->
                                         <div class="modal-footer"

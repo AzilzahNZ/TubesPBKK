@@ -47,6 +47,18 @@
                         <input type="text" class="form-control" id="no_telepon" name="no_telepon" required>
                     </div>
 
+                    <!-- Role -->
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <select type="text" class="form-control" id="role" name="role" required>
+                            <option value="">Pilih pengguna sebagai apa</option>
+                            <option value="admin">admin</option>
+                            <option value="ormawa">ormawa</option>
+                            <option value="staff-kemahasiswaan">staff-kemahasiswaan</option>
+                            <option value="staff-tu">staff-tu</option>
+                        </select>
+                    </div>
+
                     <!-- Tombol Kirim -->
                     <div class="d-flex justify-content-center align-items-center">
                         <button type="submit" class="btn btn-primary">Simpan</button>
