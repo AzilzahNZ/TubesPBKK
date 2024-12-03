@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RiwayatPengajuanSurat;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class StaffKemahasiswaanController extends Controller
@@ -144,7 +145,31 @@ class StaffKemahasiswaanController extends Controller
             'status' => 'Selesai',
         ]);
 
-        return redirect()->back()->with('success', 'Surat keluar berhasil diajukan!');
+        // Kirim pesan WhatsApp menggunakan Fonnte
+        $nomorTelepon = $suratKeluar->user->no_telepon;
+        try {
+            if (!$nomorTelepon) {
+                Log::warning('Nomor telepon tidak ditemukan.');
+                return redirect()->back()->with('error', 'Nomor telepon pengguna tidak ditemukan!');
+            }
+
+            $response = Http::withHeaders([
+                'Authorization' => '1gDkUvyVMXaej64QEsrZ', // Ganti dengan API Key Fonnte Anda
+            ])->post('https://api.fonnte.com/send', [
+                'target' => '6282185026149', // Ganti dengan nomor WhatsApp tujuan, atau ambil dari database
+                'message' => "Hai, ini SIMPULS. Surat sudah selesai dan bisa diambil di Loket Kemahasiswaan:\n\nNomor Surat: {$suratKeluar->nomor_surat}\nJenis Surat: {$suratKeluar->jenis_surat}\nNama Kegiatan: {$suratKeluar->nama_kegiatan}.",
+            ]);
+
+            if ($response->successful()) {
+                Log::info('Pesan WhatsApp berhasil dikirim.');
+            } else {
+                Log::warning('Pesan WhatsApp gagal dikirim: ' . $response->body());
+            }
+        } catch (\Exception $e) {
+            Log::error('Terjadi kesalahan saat mengirim pesan WhatsApp: ' . $e->getMessage());
+        }
+
+        return redirect()->back()->with('success', 'Surat keluar berhasil dibuat dan notifikasi WhatsApp dikirim!');
     }
 
     // Menyetujuinya surat masuk

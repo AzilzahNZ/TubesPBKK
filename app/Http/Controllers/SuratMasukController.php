@@ -6,6 +6,8 @@ use App\Models\SuratMasuk;
 use App\Models\RiwayatSurat;
 use Illuminate\Http\Request;
 use App\Models\RiwayatPengajuanSurat;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
 class SuratMasukController extends Controller
@@ -87,6 +89,10 @@ class SuratMasukController extends Controller
         $suratMasuk->status = 'disetujui';
         $suratMasuk->save();  // Menyimpan perubahan status surat masuk
 
+        // Kirim notifikasi WhatsApp
+        $this->sendWhatsAppNotification($suratMasuk->user->no_telepon, $suratMasuk);
+
+
         // Cari data riwayat pengajuan yang terkait dengan surat ini
         $riwayatPengajuan = RiwayatPengajuanSurat::where('surat_masuk_id', $suratMasuk->id)->first();
 
@@ -115,7 +121,33 @@ class SuratMasukController extends Controller
         return redirect()->route('staff-kemahasiswaan.surat-masuk')->with('success', 'Surat telah disetujui');
     }
 
+    public function sendWhatsAppNotification($nomorTelepon, $suratMasuk)
+    {
+        try {
+            if (!$nomorTelepon) {
+                Log::warning('Nomor telepon tidak ditemukan.');
+                return false;
+            }
 
+            $response = Http::withHeaders([
+                'Authorization' => '1gDkUvyVMXaej64QEsrZ', // Ganti dengan API Key Fonnte Anda
+            ])->post('https://api.fonnte.com/send', [
+                'target' => $nomorTelepon,
+                'message' => "Haloo {$suratMasuk->user->name}, ini SIMPULS. \nSurat Anda telah *DISETUJUI* dan bisa diambil 2 hari kedepan di Loket Kemahasiswaan:\n\nNomor Surat: {$suratMasuk->nomor_surat}\nJenis Surat: {$suratMasuk->jenis_surat}\nNama Kegiatan: {$suratMasuk->nama_kegiatan}\nPenanggung Jawab: {$suratMasuk->penanggung_jawab}",
+            ]);
+
+            if ($response->successful()) {
+                Log::info('Pesan WhatsApp berhasil dikirim.');
+                return true;
+            } else {
+                Log::warning('Pesan WhatsApp gagal dikirim: ' . $response->body());
+                return false;
+            }
+        } catch (\Exception $e) {
+            Log::error('Terjadi kesalahan saat mengirim pesan WhatsApp: ' . $e->getMessage());
+            return false;
+        }
+    }
 
     public function reject(Request $request, $id)
     {
@@ -146,6 +178,37 @@ class SuratMasukController extends Controller
             'keterangan' => $request->keterangan,
         ]);
 
+        // Kirim notifikasi WhatsApp
+        $this->sendWhatsAppNotificationRejected($suratMasuk->user->no_telepon, $suratMasuk, $request->keterangan);
+
         return redirect()->route('staff-kemahasiswaan.surat-masuk')->with('success', 'Surat berhasil ditolak.');
+    }
+
+    public function sendWhatsAppNotificationRejected($nomorTelepon, $suratMasuk, $keterangan)
+    {
+        try {
+            if (!$nomorTelepon) {
+                Log::warning('Nomor telepon tidak ditemukan.');
+                return false;
+            }
+
+            $response = Http::withHeaders([
+                'Authorization' => '1gDkUvyVMXaej64QEsrZ', // Ganti dengan API Key Fonnte Anda
+            ])->post('https://api.fonnte.com/send', [
+                'target' => $nomorTelepon,
+                'message' => "Haloo {$suratMasuk->user->name}, ini SIMPULS. \nMaaf, surat Anda telah *DITOLAK* dengan alasan berikut:\n\n*Keterangan Penolakan*: {$keterangan}\n\nNomor Surat: {$suratMasuk->nomor_surat}\nJenis Surat: {$suratMasuk->jenis_surat}\nNama Kegiatan: {$suratMasuk->nama_kegiatan}\nPenanggung Jawab: {$suratMasuk->penanggung_jawab}\n\nSilakan perbaiki atau ajukan ulang jika memungkinkan.",
+            ]);
+
+            if ($response->successful()) {
+                Log::info('Pesan WhatsApp berhasil dikirim.');
+                return true;
+            } else {
+                Log::warning('Pesan WhatsApp gagal dikirim: ' . $response->body());
+                return false;
+            }
+        } catch (\Exception $e) {
+            Log::error('Terjadi kesalahan saat mengirim pesan WhatsApp: ' . $e->getMessage());
+            return false;
+        }
     }
 }

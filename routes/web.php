@@ -7,9 +7,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffTUController;
 use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\RiwayatSuratController;
-use App\Http\Controllers\PengajuanSuratController;
 use App\Http\Controllers\StaffKemahasiswaanController;
 use App\Http\Controllers\RiwayatPengajuanSuratController;
+use Illuminate\Support\Facades\Http;
 
 Route::get('/', function () {
     return view('auth.login');

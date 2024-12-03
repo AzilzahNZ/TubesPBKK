@@ -1,6 +1,18 @@
 @extends('template')
 
 @section('content')
+@if(session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+
+@if(session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
+
     <form action="{{ route('staff-kemahasiswaan.surat-keluar.store') }}" method="POST" enctype="multipart/form-data"
         class="card card-body" style="max-width: 800px; margin: 0 auto; padding: 10px;">
         @csrf
