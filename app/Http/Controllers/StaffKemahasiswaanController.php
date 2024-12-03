@@ -23,7 +23,9 @@ class StaffKemahasiswaanController extends Controller
         $user = Auth::user();
 
         // Menghitung jumlah surat masuk
-        $totalSuratMasuk = DB::table('surat_masuks')->where('status', 'Diproses')->count();
+        $totalSuratMasuk = DB::table('surat_masuks')->where('status', 'Diproses')
+            ->orWhere('status', 'Direvisi')
+            ->count();
         $totalSuratDisetujui = DB::table('riwayat_surats')->where('status', 'Disetujui')->count();
         $totalSuratDitolak = DB::table('riwayat_surats')->where('status', 'Ditolak')->count();
         $totalSuratKeluar = DB::table('surat_keluars')->count();
