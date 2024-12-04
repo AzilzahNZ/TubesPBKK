@@ -15,6 +15,7 @@ class SuratMasukController extends Controller
     public function index(Request $request)
     {
         $query = SuratMasuk::query();
+        $perPage = $request->input('per_page', 10); // Default 10 entri per halaman
 
         // Pencarian Global
         if ($request->filled('search')) {
@@ -46,22 +47,15 @@ class SuratMasukController extends Controller
             }
         }
 
-        // Ambil data
-        // $surat_masuks = SuratMasuk::where('status', '!=', 'Disetujui')
-        //     ->where('status', '!=', 'Ditolak')
-        //     ->where('status', '!=', 'Dibatalkan')
-        //     ->get();
-
         // Menambahkan filter status yang tidak Disetujui, Ditolak, atau Dibatalkan
-        $query->where('status', '!=', 'Disetujui')
-            ->where('status', '!=', 'Ditolak')
-            ->where('status', '!=', 'Dibatalkan');
+        $query->whereNotIn('status', ['Disetujui', 'Ditolak', 'Dibatalkan']);
 
-        // Ambil data yang sudah difilter
-        $surat_masuks = $query->get();
+        // Implementasi Pagination dengan appends()
+        $surat_masuks = $query->paginate($perPage)->appends($request->query());
 
-        return view('staff-kemahasiswaan.surat-masuk', compact('surat_masuks'));
+        return view('staff-kemahasiswaan.surat-masuk', compact('surat_masuks', 'perPage'));
     }
+
 
     // public function create()
     // {

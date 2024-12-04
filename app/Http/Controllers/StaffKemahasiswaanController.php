@@ -29,7 +29,7 @@ class StaffKemahasiswaanController extends Controller
             ->count();
         $totalSuratDisetujui = DB::table('riwayat_surats')->where('status', 'Disetujui')->count();
         $totalSuratDitolak = DB::table('riwayat_surats')->where('status', 'Ditolak')->count();
-        $totalSuratKeluar = DB::table('surat_keluars')->count();
+        $totalSuratKeluar = DB::table('riwayat_surats')->where('status', 'Selesai')->count();
 
         // Mengembalikan view dengan data user dan total surat masuk
         return view('staff-kemahasiswaan.index', compact('user', 'totalSuratMasuk', 'totalSuratDisetujui', 'totalSuratDitolak', 'totalSuratKeluar'));

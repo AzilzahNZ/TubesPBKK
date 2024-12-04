@@ -16,6 +16,7 @@ class RiwayatSuratController extends Controller
     public function index(Request $request)
     {
         $query = RiwayatSurat::query();
+        $perPage = $request->input('per_page', 10); // Default 10 entri per halaman
 
         // Pencarian Global
         if ($request->filled('search')) {
@@ -27,7 +28,6 @@ class RiwayatSuratController extends Controller
                 }
             });
         }
-
 
         // Filter berdasarkan kategori
         if ($request->filled('kategori')) {
@@ -53,11 +53,12 @@ class RiwayatSuratController extends Controller
             }
         }
 
-        // Ambil data
-        $riwayat_surats = $query->get();
+        // Implementasi Pagination dengan appends()
+        $riwayat_surats = $query->paginate($perPage)->appends($request->query());
 
-        return view('riwayat-surat', compact('riwayat_surats'));
+        return view('riwayat-surat', compact('riwayat_surats', 'perPage'));
     }
+
 
     public function detail($id)
     {

@@ -8,7 +8,20 @@
         </h1>
 
         {{-- Filter dan Pencarian --}}
-        <div class="d-flex justify-content-end mb-3" style="position: relative; display: flex; justify-content: end; margin-bottom: 1rem;">
+        <div class="d-flex justify-content-between mb-3" style="position: relative; display: flex; justify-content: end; margin-bottom: 1rem;">
+            <div class="justify-content-start">
+                <!-- Bagian Tampilkan -->
+                <form method="GET" class="d-flex justify-content-start align-items-center">
+                    <label for="per_page" class="me-2">Tampilkan</label>
+                    <select name="per_page" id="per_page" class="form-select me-3" style="width: auto;"
+                        onchange="this.form.submit()">
+                        <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                        <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
+                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                    </select>
+                </form>
+            </div>
             <form method="GET" class="justify-content-end" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
                 <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
                     style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
@@ -94,7 +107,7 @@
                                 @foreach ($surat_masuks as $dt)
                                     <tr>
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                            {{ $loop->iteration }}</td>
+                                            {{ $loop->iteration + ($surat_masuks->currentPage() - 1) * $surat_masuks->perPage() }}</td>
                                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                             {{ $dt->tanggal_diajukan? \Carbon\Carbon::parse($dt->tanggal_diajukan)->timezone('Asia/Jakarta')->translatedFormat('d F Y'): '-' }}
                                         </td>
@@ -123,6 +136,9 @@
                 </table>
             </div>
         @endif
+        <div class="d-flex justify-content-center mt-3">
+            {{ $surat_masuks->links('pagination::bootstrap-4') }}
+        </div>        
 
         <script>
             document.addEventListener('DOMContentLoaded', () => {

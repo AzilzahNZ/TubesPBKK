@@ -9,8 +9,21 @@
                         <h1 class="fs-4 fw-bold mb-4 text-center">Riwayat Surat</h1>
 
                         {{-- Filter dan Pencarian --}}
-                        <div class="d-flex justify-content-end mb-3"
+                        <div class="d-flex justify-content-between mb-3"
                             style="position: relative; display: flex; margin-bottom: 1rem;">
+                            <div class="justify-content-start">
+                                <!-- Bagian Tampilkan -->
+                                <form method="GET" class="d-flex justify-content-start align-items-center">
+                                    <label for="per_page" class="me-2">Tampilkan</label>
+                                    <select name="per_page" id="per_page" class="form-select me-3" style="width: auto;"
+                                        onchange="this.form.submit()">
+                                        <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                                        <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
+                                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                                    </select>
+                                </form>
+                            </div>
                             <form method="GET" class="justify-content-end" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
                                 <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
                                     style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
@@ -99,7 +112,7 @@
                                     <tbody>
                                         @foreach ($riwayat_surats as $dt)
                                             <tr>
-                                                <td class="table-cell">{{ $loop->iteration }}</td>
+                                                <td class="table-cell">{{ $loop->iteration + ($riwayat_surats->currentPage() - 1) * $riwayat_surats->perPage() }}</td>
                                                 <td class="table-cell">
                                                     {{ $dt->suratMasuk->user->name ?? 'Staff Kemahasiswaan' }}</td>
                                                 <td class="table-cell">
@@ -113,8 +126,8 @@
                                                         {{ $dt->status }}
                                                     </span>                                                    
                                                 </td>
-                                                <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                                                    <a href="{{ route('detail-riwayat-surat', $dt->id) }}"
+                                                <td class="justify-content-center" style="padding: 12px; border-bottom: 1px solid #ddd;">
+                                                    <a class="justify-content-center" href="{{ route('detail-riwayat-surat', $dt->id) }}"
                                                         class="btn btn-sm btn-primary"
                                                         style="padding: 6px 12px; text-decoration: none; color: white; background-color: #007bff; border-radius: 4px;">
                                                         Lihat
@@ -126,6 +139,9 @@
                                 </table>
                             </div>
                         @endif
+                        <div class="d-flex justify-content-center mt-3">
+                            {{ $riwayat_surats->links('pagination::bootstrap-4') }}
+                        </div> 
 
                         <script>
                             document.addEventListener('DOMContentLoaded', () => {

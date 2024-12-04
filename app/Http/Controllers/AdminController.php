@@ -43,25 +43,43 @@ class AdminController extends Controller
     //     return view('admin.manajemen-akun-pengguna', compact('users'));
     // }
 
+    // public function manajemen_akun_pengguna(Request $request)
+    // {
+    //     $user = Auth::user();
+    //     $users = User::all();
+
+    //     $search = $request->input('search');
+    //     $users = User::when($search, function($query) use ($search) {
+    //         return $query->where('name', 'like', "%{$search}%")
+    //                      ->orWhere('email', 'like', "%{$search}%")
+    //                      ->orWhere('no_telepon', 'like', "%{$search}%")
+    //                      ->orWhere('role', 'like', "%{$search}%");
+    //     })->get();
+
+    //     // Jika hasil pencarian kosong, kirimkan notifikasi
+    //     if ($search && $users->isEmpty()) {
+    //         session()->flash('message', 'Tidak ada data yang ditemukan.');
+    //     }
+    //     return view('admin.manajemen-akun-pengguna', compact('users'));
+    // }
+
     public function manajemen_akun_pengguna(Request $request)
     {
-        $user = Auth::user();
-        $users = User::all();
-
         $search = $request->input('search');
-        $users = User::when($search, function($query) use ($search) {
+        $perPage = $request->input('per_page', 10); // Default 10 entri per halaman
+
+        // Query dengan pencarian dan pagination
+        $users = User::when($search, function ($query) use ($search) {
             return $query->where('name', 'like', "%{$search}%")
-                         ->orWhere('email', 'like', "%{$search}%")
-                         ->orWhere('no_telepon', 'like', "%{$search}%")
-                         ->orWhere('role', 'like', "%{$search}%");
-        })->get();
-    
-        // Jika hasil pencarian kosong, kirimkan notifikasi
-        if ($search && $users->isEmpty()) {
-            session()->flash('message', 'Tidak ada data yang ditemukan.');
-        }
-        return view('admin.manajemen-akun-pengguna', compact('users'));
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere('no_telepon', 'like', "%{$search}%")
+                ->orWhere('role', 'like', "%{$search}%");
+        })->paginate($perPage)->withQueryString(); // Pertahankan query string
+
+        return view('admin.manajemen-akun-pengguna', compact('users', 'perPage'));
     }
+
+
 
 
     /**
