@@ -9,15 +9,25 @@
                         <h1 class="fs-4 fw-bold mb-4 text-center">Riwayat Pengajuan Surat</h1>
 
                         {{-- Filter dan Pencarian --}}
-                        <div class="d-flex justify-content-end mb-3"
-                            style="position: relative; display: flex; margin-bottom: 1rem;">
-                            <form method="GET" class="justify-content-end"
-                                style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="justify-content-start">
+                                <!-- Bagian Tampilkan -->
+                                <form method="GET" class="d-flex justify-content-start align-items-center">
+                                    <label for="per_page" class="me-2">Tampilkan</label>
+                                    <select name="per_page" id="per_page" class="form-select me-3" style="width: auto;"
+                                        onchange="this.form.submit()">
+                                        <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                                        <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
+                                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                                    </select>
+                                </form>
+                            </div>
+                            <form method="GET" class="d-flex justify-content-end flex-wrap gap-2 align-items-center">
                                 <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}"
-                                    style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
+                                    class="form-control" style="width: auto;">
 
-                                <select name="jenis_surat"
-                                    style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; width: 15%;">
+                                <select name="jenis_surat" class="form-select" style="width: 15%;">
                                     <option value="">Jenis Surat</option>
                                     <option value="Permohonan Izin Kegiatan"
                                         {{ request('jenis_surat') == 'Permohonan Izin Kegiatan' ? 'selected' : '' }}>
@@ -37,7 +47,7 @@
                                     </option>
                                 </select>
 
-                                <select name="status" style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
+                                <select name="status" class="form-select" style="width: auto;">
                                     <option value="">Status</option>
                                     <option value="Diproses" {{ request('status') == 'Diproses' ? 'selected' : '' }}>
                                         Diproses</option>
@@ -45,25 +55,17 @@
                                     </option>
                                     <option value="Disetujui" {{ request('status') == 'Disetujui' ? 'selected' : '' }}>
                                         Disetujui</option>
-                                    <option value="Selesai" {{ request('status') == 'Selesai' ? 'selected' : '' }}>Selesai
-                                    </option>
                                 </select>
 
-                                <select name="sort" style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
+                                <select name="sort" class="form-select" style="width: auto;">
                                     <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>Terbaru
                                     </option>
                                     <option value="terlama" {{ request('sort') == 'terlama' ? 'selected' : '' }}>Terlama
                                     </option>
                                 </select>
 
-                                <button type="submit" class="btn btn-primary"
-                                    style="padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;">
-                                    Filter
-                                </button>
-                                <a href="{{ route('ormawa.riwayat-pengajuan-surat') }}" class="btn btn-danger"
-                                    style="padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; text-align: center;">
-                                    Reset
-                                </a>
+                                <button type="submit" class="btn btn-primary">Filter</button>
+                                <a href="{{ route('ormawa.riwayat-pengajuan-surat') }}" class="btn btn-danger">Reset</a>
                             </form>
                         </div>
 
@@ -96,7 +98,7 @@
                                     <tbody>
                                         @foreach ($riwayat_pengajuan_surats as $dt)
                                             <tr>
-                                                <td class="table-cell">{{ $loop->iteration }}</td>
+                                                <td class="table-cell">{{ $loop->iteration + ($riwayat_pengajuan_surats->currentPage() - 1) * $riwayat_pengajuan_surats->perPage() }}</td>
                                                 <td class="table-cell">
                                                     {{ Carbon\Carbon::parse($dt->tanggal_diajukan)->translatedFormat('d F Y') }}
                                                 </td>
@@ -142,6 +144,9 @@
                                 </table>
                             </div>
                         @endif
+                        <div class="d-flex justify-content-center mt-3">
+                            {{ $riwayat_pengajuan_surats->links('pagination::bootstrap-4') }}
+                        </div> 
 
                         <script>
                             document.addEventListener('DOMContentLoaded', () => {

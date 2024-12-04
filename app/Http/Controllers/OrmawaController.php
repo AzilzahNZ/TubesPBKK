@@ -55,16 +55,16 @@ class OrmawaController extends Controller
     public function riwayat_pengajuan_surat(Request $request): View
     {
         $user = Auth::user();
-        // $riwayat_pengajuan_surats = RiwayatPengajuanSurat::where('user_id', $user->id)->get();
+        $query = RiwayatPengajuanSurat::with('suratMasuk') // Eager loading jika diperlukan
+            ->where('user_id', $user->id); // Filter untuk user yang sedang login
 
-        $query = RiwayatPengajuanSurat::query();
+        $perPage = $request->input('per_page', 10); // Default 10 entri per halaman
 
         // Pencarian Global
         if ($request->filled('search')) {
             $search = $request->search;
             $columns = Schema::getColumnListing('riwayat_pengajuan_surats'); // Nama tabel
-            $query->where(function ($q) use ($columns, $search, $user) {
-                $q->where('user_id', $user->id); // Tambahkan filter user_id
+            $query->where(function ($q) use ($columns, $search) {
                 foreach ($columns as $column) {
                     $q->orWhere($column, 'like', '%' . $search . '%');
                 }
@@ -90,12 +90,13 @@ class OrmawaController extends Controller
             }
         }
 
-        // Ambil data
-        $riwayat_pengajuan_surats = $query->get();
-        $riwayat_pengajuan_surats = RiwayatPengajuanSurat::with('suratMasuk')->where('user_id', $user->id)->get();
+        // Implementasi Pagination dengan appends()
+        $riwayat_pengajuan_surats = $query->paginate($perPage)->appends($request->query());
 
-        return view('ormawa.riwayat-pengajuan-surat', compact('riwayat_pengajuan_surats', 'user'));
+        return view('ormawa.riwayat-pengajuan-surat', compact('riwayat_pengajuan_surats', 'user', 'perPage'));
     }
+
+
 
 
     /**
