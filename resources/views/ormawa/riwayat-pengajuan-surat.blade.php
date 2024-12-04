@@ -81,16 +81,16 @@
                                     style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; white-space: nowrap;">
                                     <thead>
                                         <tr class="table-header">
-                                            <th class="table-cell">No</th>
-                                            <th class="table-cell">Tanggal Diajukan</th>
-                                            <th class="table-cell">Nomor Surat</th>
-                                            <th class="table-cell">Jenis Surat</th>
-                                            <th class="table-cell">Nama Kegiatan</th>
-                                            <th class="table-cell">Penanggung Jawab</th>
-                                            <th class="table-cell">File Surat</th>
-                                            <th class="table-cell">Nominal Dana yang Diajukan</th>
-                                            <th class="table-cell">Status</th>
-                                            <th class="table-cell">Aksi</th>
+                                            <th class="table-cell text-center">No</th>
+                                            <th class="table-cell text-center">Tanggal Diajukan</th>
+                                            <th class="table-cell text-center">Nomor Surat</th>
+                                            <th class="table-cell text-center">Jenis Surat</th>
+                                            <th class="table-cell text-center">Nama Kegiatan</th>
+                                            <th class="table-cell text-center">Penanggung Jawab</th>
+                                            <th class="table-cell text-center">File Surat</th>
+                                            <th class="table-cell text-center">Nominal Dana yang Diajukan</th>
+                                            <th class="table-cell text-center">Status</th>
+                                            <th class="table-cell text-center">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
