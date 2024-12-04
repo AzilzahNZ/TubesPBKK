@@ -119,35 +119,27 @@ class StaffKemahasiswaanController extends Controller
             'nominal_dana' => 'nullable|numeric|min:1',
         ]);
 
-        // Simpan data ke tabel surat_keluar
-        $suratKeluar = new SuratKeluar;
-        $suratKeluar->user_id = Auth::user()->id; // ID Ormawa berdasarkan akun yang login
-        $suratKeluar->tanggal_diajukan = $request->tanggal_diajukan;
-        $suratKeluar->nomor_surat = $request->nomor_surat;
-        $suratKeluar->jenis_surat = $request->jenis_surat;
-        $suratKeluar->nama_kegiatan = $request->nama_kegiatan;
-        $suratKeluar->penanggung_jawab = $request->penanggung_jawab;
-        $suratKeluar->file_surat = $request->file('file_surat')->store('surat', 'public');
-        $suratKeluar->nominal_dana = $request->nominal_dana ?? null;
-        $suratKeluar->tanggal_diedit = null;
-        $suratKeluar->save();
+        // Simpan file surat dan dapatkan path-nya
+        $filePath = $request->file('file_surat')->store('surat', 'public');
 
-        RiwayatSurat::create([
+        // Simpan data langsung ke tabel RiwayatSurat
+        $riwayatSurat = RiwayatSurat::create([
             'surat_masuk_id' => null,
-            'nama_ormawa' => $suratKeluar->user->name,
+            'nama_ormawa' => Auth::user()->name, // Nama Ormawa berdasarkan akun yang login
             'tanggal_surat_masuk_keluar' => now(),
             'kategori' => 'Surat Keluar',
-            'nomor_surat' => $suratKeluar->nomor_surat,
-            'jenis_surat' => $suratKeluar->jenis_surat,
-            'nama_kegiatan' => $suratKeluar->nama_kegiatan,
-            'penanggung_jawab' => $suratKeluar->penanggung_jawab,
-            'file_surat' => $suratKeluar->file_surat,
+            'nomor_surat' => $request->nomor_surat,
+            'jenis_surat' => $request->jenis_surat,
+            'nama_kegiatan' => $request->nama_kegiatan,
+            'penanggung_jawab' => $request->penanggung_jawab,
+            'file_surat' => $filePath,
             'status' => 'Selesai',
-            'nominal_dana_disetujui' => $suratKeluar->nominal_dana_disetujui,
+            'nominal_dana_disetujui' => $request->nominal_dana ?? null,
         ]);
 
         // Kirim pesan WhatsApp menggunakan Fonnte
-        $nomorTelepon = $suratKeluar->user->no_telepon;
+        $nomorTelepon = Auth::user()->no_telepon; // Ambil nomor telepon dari pengguna yang sedang login
+
         try {
             if (!$nomorTelepon) {
                 Log::warning('Nomor telepon tidak ditemukan.');
@@ -157,8 +149,11 @@ class StaffKemahasiswaanController extends Controller
             $response = Http::withHeaders([
                 'Authorization' => '1gDkUvyVMXaej64QEsrZ', // Ganti dengan API Key Fonnte Anda
             ])->post('https://api.fonnte.com/send', [
-                'target' => '6282185026149', // Ganti dengan nomor WhatsApp tujuan, atau ambil dari database
-                'message' => "Hai, ini SIMPULS. Surat sudah selesai dan bisa diambil di Loket Kemahasiswaan:\n\nNomor Surat: {$suratKeluar->nomor_surat}\nJenis Surat: {$suratKeluar->jenis_surat}\nNama Kegiatan: {$suratKeluar->nama_kegiatan}.",
+                'target' => $nomorTelepon, // Nomor WhatsApp tujuan
+                'message' => "Hai, ini SIMPULS. Surat sudah selesai dan bisa diambil di Loket Kemahasiswaan:\n\n" .
+                    "Nomor Surat: {$riwayatSurat->nomor_surat}\n" .
+                    "Jenis Surat: {$riwayatSurat->jenis_surat}\n" .
+                    "Nama Kegiatan: {$riwayatSurat->nama_kegiatan}.",
             ]);
 
             if ($response->successful()) {
@@ -170,8 +165,9 @@ class StaffKemahasiswaanController extends Controller
             Log::error('Terjadi kesalahan saat mengirim pesan WhatsApp: ' . $e->getMessage());
         }
 
-        return redirect()->back()->with('success', 'Surat keluar berhasil dibuat dan notifikasi WhatsApp dikirim!');
+        return redirect()->route('riwayat-surat')->with('success', 'Surat keluar berhasil dibuat dan notifikasi WhatsApp dikirim!');
     }
+
 
     // Menyetujuinya surat masuk
     public function setujuiSurat($id)
