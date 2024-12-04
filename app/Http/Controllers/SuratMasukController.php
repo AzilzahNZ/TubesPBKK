@@ -6,6 +6,7 @@ use App\Models\SuratMasuk;
 use App\Models\RiwayatSurat;
 use Illuminate\Http\Request;
 use App\Models\RiwayatPengajuanSurat;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
@@ -14,6 +15,9 @@ class SuratMasukController extends Controller
 {
     public function index(Request $request)
     {
+        $user = Auth::user();
+        $riwayat_pengajuan_surats = RiwayatPengajuanSurat::with('suratMasuk')->where('user_id', $user->id)->get();
+    
         $query = SuratMasuk::query();
         $perPage = $request->input('per_page', 10); // Default 10 entri per halaman
 

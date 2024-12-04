@@ -21,10 +21,6 @@ class OrmawaController extends Controller
     public function index(Request $request): View
     {
         $user = Auth::user();
-        // Ambil riwayat pengajuan surat sesuai dengan user_id pengguna login
-        // $riwayat_pengajuan_surats = RiwayatPengajuanSurat::where('user_id', $user->id)->get();
-        $riwayat_pengajuan_surats = RiwayatPengajuanSurat::with('suratMasuk')->where('user_id', $user->id)->get();
-
 
         // Hitung total status berdasarkan user_id pengguna login
         $totalStatusDiproses = DB::table('riwayat_pengajuan_surats')
@@ -47,7 +43,7 @@ class OrmawaController extends Controller
             ->where('status', 'Selesai')
             ->count();
 
-        return view('ormawa.index', compact('user', 'riwayat_pengajuan_surats', 'totalStatusDiproses', 'totalStatusDisetujui', 'totalStatusDitolak', 'totalStatusSelesai'));
+        return view('ormawa.index', compact('user', 'totalStatusDiproses', 'totalStatusDisetujui', 'totalStatusDitolak', 'totalStatusSelesai'));
     }
 
     public function pengajuan_surat(Request $request): View
@@ -59,8 +55,7 @@ class OrmawaController extends Controller
     public function riwayat_pengajuan_surat(Request $request): View
     {
         $user = Auth::user();
-
-        $riwayat_pengajuan_surats = RiwayatPengajuanSurat::where('user_id', $user->id)->get();
+        // $riwayat_pengajuan_surats = RiwayatPengajuanSurat::where('user_id', $user->id)->get();
 
         $query = RiwayatPengajuanSurat::query();
 
@@ -68,30 +63,13 @@ class OrmawaController extends Controller
         if ($request->filled('search')) {
             $search = $request->search;
             $columns = Schema::getColumnListing('riwayat_pengajuan_surats'); // Nama tabel
-            $query->where(function ($q) use ($columns, $search) {
+            $query->where(function ($q) use ($columns, $search, $user) {
+                $q->where('user_id', $user->id); // Tambahkan filter user_id
                 foreach ($columns as $column) {
                     $q->orWhere($column, 'like', '%' . $search . '%');
                 }
             });
         }
-
-        // if ($request->filled('search')) {
-        //     $search = $request->search;
-
-        //     // Dapatkan daftar kolom tabel
-        //     $columns = Schema::getColumnListing('riwayat_pengajuan_surats');
-
-        //     // Pencarian tidak case-sensitive
-        //     $query->where(function ($q) use ($columns, $search) {
-        //         foreach ($columns as $column) {
-        //             // Escape karakter '%' dan '_' untuk mencegah SQL injection
-        //             $searchEscaped = addcslashes($search, '%_');
-
-        //             // Mencari kecocokan di semua kolom tabel
-        //             $q->orWhereRaw("LOWER(`$column`) LIKE ?", ['%' . strtolower($searchEscaped) . '%']);
-        //         }
-        //     });
-        // }
 
         // Filter berdasarkan jenis surat
         if ($request->filled('jenis_surat')) {
@@ -114,8 +92,9 @@ class OrmawaController extends Controller
 
         // Ambil data
         $riwayat_pengajuan_surats = $query->get();
+        $riwayat_pengajuan_surats = RiwayatPengajuanSurat::with('suratMasuk')->where('user_id', $user->id)->get();
 
-        return view('ormawa.riwayat-pengajuan-surat', compact('riwayat_pengajuan_surats'));
+        return view('ormawa.riwayat-pengajuan-surat', compact('riwayat_pengajuan_surats', 'user'));
     }
 
 
@@ -129,6 +108,7 @@ class OrmawaController extends Controller
 
     public function store(Request $request)
     {
+        $user = Auth::user();
         // Validasi umum untuk semua jenis surat
         $request->validate([
             'tanggal_diajukan' => 'required|date',
@@ -143,7 +123,7 @@ class OrmawaController extends Controller
 
         // Simpan data ke tabel surat_masuk
         $suratMasuk = new SuratMasuk;
-        $suratMasuk->user_id = Auth::user()->id; // ID Ormawa berdasarkan akun yang login
+        $suratMasuk->user_id = $user->id; // ID Ormawa berdasarkan akun yang login
         $suratMasuk->tanggal_diajukan = $request->tanggal_diajukan;
         $suratMasuk->nomor_surat = $request->nomor_surat;
         $suratMasuk->jenis_surat = $request->jenis_surat;

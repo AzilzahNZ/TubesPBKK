@@ -193,16 +193,6 @@
                                         const penanggungJawab = row.querySelector('td:nth-child(6)').textContent.trim();
                                         const fileSurat = row.querySelector('td:nth-child(7)').querySelector('a').href;
                                         const nominalDana = row.querySelector('td:nth-child(8)').textContent.trim();
-                                        // // Ambil status surat
-                                        // const status = row.querySelector('td:nth-child(9)').textContent.trim()
-
-                                        // // Cek status surat
-                                        // if (status === 'Disetujui' || status === 'Ditolak') {
-                                        //     // Tampilkan pop-up jika surat sudah disetujui atau ditolak
-                                        //     showModal('Surat tidak dapat diedit karena sudah ' + status.toLowerCase() +
-                                        //         '. Silakan ajukan ulang.');
-                                        //     return; // Hentikan eksekusi lebih lanjut
-                                        // }
 
                                         // Perbaikan: Ubah cara pengambilan data penanggung jawab dan file surat
                                         nomorSuratInput.value = nomorSurat;

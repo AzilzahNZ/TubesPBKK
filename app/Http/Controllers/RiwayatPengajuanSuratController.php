@@ -10,43 +10,43 @@ class RiwayatPengajuanSuratController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-        $query = RiwayatPengajuanSurat::query();
+    // public function index(Request $request)
+    // {
+    //     $query = RiwayatPengajuanSurat::query();
 
-        // Filter pencarian
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('nama_kegiatan', 'like', '%' . $search . '%')
-                    ->orWhere('nomor_surat', 'like', '%' . $search . '%');
-            });
-        }
+    //     // Filter pencarian
+    //     if ($request->filled('search')) {
+    //         $search = $request->search;
+    //         $query->where(function ($q) use ($search) {
+    //             $q->where('nama_kegiatan', 'like', '%' . $search . '%')
+    //                 ->orWhere('nomor_surat', 'like', '%' . $search . '%');
+    //         });
+    //     }
 
-        // Filter berdasarkan jenis surat
-        if ($request->filled('jenis_surat')) {
-            $query->where('jenis_surat', $request->jenis_surat);
-        }
+    //     // Filter berdasarkan jenis surat
+    //     if ($request->filled('jenis_surat')) {
+    //         $query->where('jenis_surat', $request->jenis_surat);
+    //     }
 
-        // Filter berdasarkan status
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
+    //     // Filter berdasarkan status
+    //     if ($request->filled('status')) {
+    //         $query->where('status', $request->status);
+    //     }
 
-        // Sorting
-        if ($request->filled('sort')) {
-            if ($request->sort === 'terbaru') {
-                $query->orderBy('tanggal_diajukan', 'desc');
-            } elseif ($request->sort === 'terlama') {
-                $query->orderBy('tanggal_diajukan', 'asc');
-            }
-        }
+    //     // Sorting
+    //     if ($request->filled('sort')) {
+    //         if ($request->sort === 'terbaru') {
+    //             $query->orderBy('tanggal_diajukan', 'desc');
+    //         } elseif ($request->sort === 'terlama') {
+    //             $query->orderBy('tanggal_diajukan', 'asc');
+    //         }
+    //     }
 
-        // Ambil data
-        $riwayat_pengajuan_surats = $query->get();
+    //     // Ambil data
+    //     $riwayat_pengajuan_surats = $query->get();
 
-        return view('ormawa.riwayat-pengajuan-surat', compact('riwayat_pengajuan_surats'));
-    }
+    //     return view('ormawa.riwayat-pengajuan-surat', compact('riwayat_pengajuan_surats'));
+    // }
 
     public function detail($id)
     {

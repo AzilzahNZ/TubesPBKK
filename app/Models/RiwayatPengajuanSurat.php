@@ -27,13 +27,13 @@ class RiwayatPengajuanSurat extends Model
         'keterangan',
     ];
 
-    public function User()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
     // Relasi dengan SuratMasuk (Many-to-One)
-    public function SuratMasuk()
+    public function suratMasuk()
     {
         return $this->belongsTo(SuratMasuk::class, 'surat_masuk_id');
     }
