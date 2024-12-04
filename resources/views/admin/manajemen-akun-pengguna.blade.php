@@ -22,12 +22,12 @@
                         <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; white-space: nowrap;">
                             <thead>
                                 <tr class="table-header">
-                                    <th class="table-cell">No</th>
-                                    <th class="table-cell">Username</th>
-                                    <th class="table-cell">Email</th>
-                                    <th class="table-cell">No. Telepon</th>
-                                    <th class="table-cell">Role</th>
-                                    <th class="table-cell">Aksi</th>
+                                    <th class="table-cell text-center">No</th>
+                                    <th class="table-cell text-center">Username</th>
+                                    <th class="table-cell text-center">Email</th>
+                                    <th class="table-cell text-center">No. Telepon</th>
+                                    <th class="table-cell text-center">Role</th>
+                                    <th class="table-cell text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>

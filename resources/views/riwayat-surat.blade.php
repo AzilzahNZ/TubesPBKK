@@ -86,14 +86,14 @@
                                     style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; white-space: nowrap;">
                                     <thead>
                                         <tr class="table-header">
-                                            <th class="table-cell">No</th>
-                                            <th class="table-cell" style="text-align: center;">Pengirim</th>
-                                            <th class="table-cell">Tanggal Surat<br>Masuk/Keluar</br></th>
-                                            <th class="table-cell">Kategori</th>
-                                            <th class="table-cell">Nomor Surat</th>
-                                            <th class="table-cell">Jenis Surat</th>
-                                            <th class="table-cell">Status</th>
-                                            <th class="table-cell">Aksi</th>
+                                            <th class="table-cell text-center">No</th>
+                                            <th class="table-cell text-center" style="text-align: center;">Pengirim</th>
+                                            <th class="table-cell text-center">Tanggal Surat<br>Masuk/Keluar</br></th>
+                                            <th class="table-cell text-center">Kategori</th>
+                                            <th class="table-cell text-center">Nomor Surat</th>
+                                            <th class="table-cell text-center">Jenis Surat</th>
+                                            <th class="table-cell text-center">Status</th>
+                                            <th class="table-cell text-center">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
