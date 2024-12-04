@@ -25,7 +25,7 @@ class SuratMasuk extends Model
     ];
 
     // Relasi dengan User (One-to-Many)
-    public function User()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
