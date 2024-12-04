@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('nominal_dana')->nullable();
             $table->enum('status', ['Ditolak', 'Disetujui', 'Selesai', 'Dibatalkan']);
             $table->timestamp('tanggal_diedit')->nullable();
+            $table->decimal('nominal_dana_disetujui', 15, 2)->nullable();
             $table->timestamps();
         });
     }

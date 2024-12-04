@@ -23,10 +23,13 @@ class RiwayatSurat extends Model
         'nominal_dana',
         'status',
         'tanggal_diedit',
+        'nominal_dana_disetujui'
     ];
 
     public function suratMasuk()
     {
         return $this->belongsTo(SuratMasuk::class);
     }
+
+    
 }

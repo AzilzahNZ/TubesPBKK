@@ -41,6 +41,10 @@
             <td>{{ $riwayat_pengajuan_surats->status }}</td>
         </tr>
         <tr>
+            <th>Nominal Dana yang Disetujui</th>
+            <td>{{ $riwayat_pengajuan_surats->nominal_dana_disetujui !== null ? 'Rp ' . number_format($riwayat_pengajuan_surats->nominal_dana_disetujui, 0, ',', '.') : '-' }}</td>
+        </tr>
+        <tr>
             <th>Keterangan</th>
             <td>{{ $riwayat_pengajuan_surats->keterangan }}</td>
         </tr>

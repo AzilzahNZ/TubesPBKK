@@ -23,6 +23,7 @@ return new class extends Migration
             $table->bigInteger('nominal_dana')->nullable(); // Nominal dana, opsional
             $table->enum('status', ['Ditolak', 'Disetujui', 'Diproses', 'Selesai', 'Dibatalkan', 'Direvisi'])->default('Diproses');
             $table->timestamp('tanggal_diedit')->nullable();
+            $table->decimal('nominal_dana_disetujui', 15, 2)->nullable();
             $table->timestamps();
         });
     }

@@ -109,8 +109,9 @@
                                                 <td class="table-cell">{{ $dt->nomor_surat }}</td>
                                                 <td class="table-cell">{{ $dt->jenis_surat }}</td>
                                                 <td class="table-cell">
-                                                    <span
-                                                        class="{{ $dt->status == 'Disetujui' ? 'status-finish' : 'status-pending' }}">{{ $dt->status }}</span>
+                                                    <span class="{{ $dt->status == 'Disetujui' || $dt->status == 'Selesai' ? 'status-finish' : ($dt->status == 'Ditolak' ? 'status-tolak' : '') }}">
+                                                        {{ $dt->status }}
+                                                    </span>                                                    
                                                 </td>
                                                 <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                                                     <a href="{{ route('detail-riwayat-surat', $dt->id) }}"

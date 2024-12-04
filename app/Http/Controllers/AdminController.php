@@ -48,6 +48,18 @@ class AdminController extends Controller
         $user = Auth::user();
         $users = User::all();
 
+        $search = $request->input('search');
+        $users = User::when($search, function($query) use ($search) {
+            return $query->where('name', 'like', "%{$search}%")
+                         ->orWhere('email', 'like', "%{$search}%")
+                         ->orWhere('no_telepon', 'like', "%{$search}%")
+                         ->orWhere('role', 'like', "%{$search}%");
+        })->get();
+    
+        // Jika hasil pencarian kosong, kirimkan notifikasi
+        if ($search && $users->isEmpty()) {
+            session()->flash('message', 'Tidak ada data yang ditemukan.');
+        }
         return view('admin.manajemen-akun-pengguna', compact('users'));
     }
 

@@ -151,6 +151,10 @@
             color: #198754;
         }
 
+        .status-tolak {
+            color: #dc3545;
+        }
+
         .status-pending {
             color: #fd7e14;
         }

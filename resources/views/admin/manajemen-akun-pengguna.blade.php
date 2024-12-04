@@ -5,44 +5,57 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-center align-items-center mb-3">
-                        <h1 class="card-title text-center" style="font-size: 30px;">Daftar Akun Pengguna</h1>
-                    </div>                                       
-                    <div class="d-flex justify-content-end mb-3">
-                    <a href="{{ route('admin.create-pengguna') }}" class="btn btn-primary">Tambah</a>
+                    <div style="max-width: 100%; margin: 0 auto; padding: 10px;">
+                        <h1 class="fs-4 fw-bold mb-4 text-center">Daftar Akun Pengguna</h1>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table datatable">
+                    <div class="d-flex justify-content-end mb-3">
+                        <a href="{{ route('admin.create-pengguna') }}" class="btn btn-primary">Tambah</a>
+                    </div>
+                    <div class="d-flex justify-content-end mb-3">
+                        <form method="GET" class="d-flex">
+                            <input type="text" name="search" class="form-control me-2" placeholder="Cari..."
+                                value="{{ request('search') }}">
+                            <button type="submit" class="btn btn-primary">Cari</button>
+                        </form>
+                    </div>
+                    <div style="overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 20px;">
+                        <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; white-space: nowrap;">
                             <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>No. Telepon</th>
-                                    <th>Role</th>
-                                    <th>Aksi</th>
+                                <tr class="table-header">
+                                    <th class="table-cell">No</th>
+                                    <th class="table-cell">Username</th>
+                                    <th class="table-cell">Email</th>
+                                    <th class="table-cell">No. Telepon</th>
+                                    <th class="table-cell">Role</th>
+                                    <th class="table-cell">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $dt)
+                                @if ($users->isEmpty())
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $dt->name }}</td>
-                                        <td>{{ $dt->email }}</td>
-                                        <td>{{ $dt->no_telepon }}</td>
-                                        <td>{{ $dt->role }}</td>
-                                        <td>
-                                            <!-- Tombol Edit -->
-                                            <a class="btn btn-sm btn-warning" data-id="{{ $dt->id }}">Edit</a>
-                                            <!-- Tombol Delete -->
-                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#deleteModal"
-                                                onclick="setDeleteData('{{ $dt->id }}')">
-                                                Hapus
-                                            </button>
-                                        </td>
+                                        <td colspan="6" class="text-center">Tidak ada data yang ditemukan.</td>
                                     </tr>
-                                @endforeach
+                                @else
+                                    @foreach ($users as $dt)
+                                        <tr>
+                                            <td class="table-cell">{{ $loop->iteration }}</td>
+                                            <td class="table-cell">{{ $dt->name }}</td>
+                                            <td class="table-cell">{{ $dt->email }}</td>
+                                            <td class="table-cell">{{ $dt->no_telepon }}</td>
+                                            <td class="table-cell">{{ $dt->role }}</td>
+                                            <td class="table-cell">
+                                                <!-- Tombol Edit -->
+                                                <a class="btn btn-sm btn-warning" data-id="{{ $dt->id }}">Edit</a>
+                                                <!-- Tombol Delete -->
+                                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal"
+                                                    onclick="setDeleteData('{{ $dt->id }}')">
+                                                    Hapus
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
 
@@ -136,11 +149,13 @@
                                                 <input type="text" class="form-control" id="no_telepon" name="no_telepon"
                                                     required style="border-radius: 5px;">
                                             </div>
-                                            
+
                                             <!-- Role -->
                                             <div class="mb-3">
-                                                <label for="role" class="form-label" style="font-weight: bold;">Role</label>
-                                                <select type="text" class="form-control" id="role" name="role" required style="border-radius: 5px;">
+                                                <label for="role" class="form-label"
+                                                    style="font-weight: bold;">Role</label>
+                                                <select type="text" class="form-control" id="role" name="role"
+                                                    required style="border-radius: 5px;">
                                                     <option value="admin">admin</option>
                                                     <option value="ormawa">ormawa</option>
                                                     <option value="staff-kemahasiswaan">staff-kemahasiswaan</option>

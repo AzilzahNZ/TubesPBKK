@@ -40,6 +40,10 @@
             <th>Status</th>
             <td>{{ $riwayat_surats->status }}</td>
         </tr>
+        <tr>
+            <th>Nominal Dana yang Disetujui</th>
+            <td>{{ $riwayat_surats->nominal_dana_disetujui !== null ? 'Rp ' . number_format($riwayat_surats->nominal_dana_disetujui, 0, ',', '.') : '-' }}</td>
+        </tr>
     </table>
 
     <div class="d-flex justify-content-between">

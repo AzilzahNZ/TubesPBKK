@@ -9,6 +9,7 @@ use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -21,7 +22,9 @@ class OrmawaController extends Controller
     {
         $user = Auth::user();
         // Ambil riwayat pengajuan surat sesuai dengan user_id pengguna login
-        $riwayat_pengajuan_surats = RiwayatPengajuanSurat::where('user_id', $user->id)->get();
+        // $riwayat_pengajuan_surats = RiwayatPengajuanSurat::where('user_id', $user->id)->get();
+        $riwayat_pengajuan_surats = RiwayatPengajuanSurat::with('suratMasuk')->where('user_id', $user->id)->get();
+
 
         // Hitung total status berdasarkan user_id pengguna login
         $totalStatusDiproses = DB::table('riwayat_pengajuan_surats')
@@ -58,7 +61,60 @@ class OrmawaController extends Controller
         $user = Auth::user();
 
         $riwayat_pengajuan_surats = RiwayatPengajuanSurat::where('user_id', $user->id)->get();
-        // dd($riwayat_pengajuan_surats);
+
+        $query = RiwayatPengajuanSurat::query();
+
+        // Pencarian Global
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $columns = Schema::getColumnListing('riwayat_pengajuan_surats'); // Nama tabel
+            $query->where(function ($q) use ($columns, $search) {
+                foreach ($columns as $column) {
+                    $q->orWhere($column, 'like', '%' . $search . '%');
+                }
+            });
+        }
+
+        // if ($request->filled('search')) {
+        //     $search = $request->search;
+
+        //     // Dapatkan daftar kolom tabel
+        //     $columns = Schema::getColumnListing('riwayat_pengajuan_surats');
+
+        //     // Pencarian tidak case-sensitive
+        //     $query->where(function ($q) use ($columns, $search) {
+        //         foreach ($columns as $column) {
+        //             // Escape karakter '%' dan '_' untuk mencegah SQL injection
+        //             $searchEscaped = addcslashes($search, '%_');
+
+        //             // Mencari kecocokan di semua kolom tabel
+        //             $q->orWhereRaw("LOWER(`$column`) LIKE ?", ['%' . strtolower($searchEscaped) . '%']);
+        //         }
+        //     });
+        // }
+
+        // Filter berdasarkan jenis surat
+        if ($request->filled('jenis_surat')) {
+            $query->where('jenis_surat', $request->jenis_surat);
+        }
+
+        // Filter berdasarkan status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Sorting
+        if ($request->filled('sort')) {
+            if ($request->sort === 'terbaru') {
+                $query->orderBy('tanggal_diajukan', 'desc');
+            } elseif ($request->sort === 'terlama') {
+                $query->orderBy('tanggal_diajukan', 'asc');
+            }
+        }
+
+        // Ambil data
+        $riwayat_pengajuan_surats = $query->get();
+
         return view('ormawa.riwayat-pengajuan-surat', compact('riwayat_pengajuan_surats'));
     }
 
@@ -82,6 +138,7 @@ class OrmawaController extends Controller
             'penanggung_jawab' => 'required|string',
             'file_surat' => 'required|file|mimes:pdf',
             'nominal_dana' => 'nullable|numeric|min:1',
+            'nominal_dana_disetujui' => 'nullable|numeric|min:0',
         ]);
 
         // Simpan data ke tabel surat_masuk
@@ -95,6 +152,7 @@ class OrmawaController extends Controller
         $suratMasuk->file_surat = $request->file('file_surat')->store('surat', 'public');
         $suratMasuk->nominal_dana = $request->nominal_dana;
         $suratMasuk->status = $request->status ?? 'Diproses'; // Nilai default
+        $suratMasuk->nominal_dana_disetujui = $request->nominal_dana_disetujui ?? 0;
         $suratMasuk->save();
 
         // Siapkan data untuk riwayat_pengajuan_surat
@@ -109,13 +167,22 @@ class OrmawaController extends Controller
             'file_surat' => $request->file('file_surat')->store('surat', 'public'),
             'nominal_dana' => $request->nominal_dana,
             'status' => 'Diproses', // Set the correct status
+            'nominal_dana_disetujui' => $request->nominal_dana_disetujui
         ];
-
 
         // Jika jenis surat adalah Proposal Permohonan Dana, tambahkan nominal dana
         if ($request->jenis_surat === 'Proposal Permohonan Dana') {
             $data['nominal_dana'] = $request->nominal_dana;
         }
+
+        // // Cari data riwayat pengajuan yang terkait dengan surat ini
+        // $pengajuanSurat = RiwayatPengajuanSurat::where('surat_masuk_id', $suratMasuk->id)->first();
+        // if ($pengajuanSurat) {
+        //     // Update status riwayat pengajuan menjadi "disetujui"
+        //     $pengajuanSurat->status = 'disetujui';
+        //     $pengajuanSurat->nominal_dana_disetujui = $suratMasuk->nominal_dana_disetujui;
+        //     $pengajuanSurat->save();
+        // }
 
         // Simpan data ke tabel riwayat_pengajuan_surat
         RiwayatPengajuanSurat::create($data);

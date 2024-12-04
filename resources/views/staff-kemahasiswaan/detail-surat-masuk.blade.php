@@ -54,7 +54,7 @@
             <!-- Form untuk Setuju -->
             <form action="{{ route('staff-kemahasiswaan.approve-surat', $suratMasuk->id) }}" method="POST" style="display: inline;">
                 @csrf
-                <button type="submit" class="btn btn-success">Setujui</button>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approveModal">Setujui</button>
             </form>
 
             <!-- Tombol Tolak -->
@@ -62,6 +62,41 @@
         </div>
     </div>
 </div>
+
+    <!-- Modal untuk Input Nominal Dana -->
+    <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="approveModalLabel">Setujui Proposal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('staff-kemahasiswaan.approve-surat', $suratMasuk->id) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        @if ($suratMasuk->jenis_surat === 'Proposal Permohonan Dana')
+                            <div class="form-group">
+                                <label for="nominal_dana_disetujui">Nominal Dana Disetujui (Rp)</label>
+                                <input type="number" name="nominal_dana_disetujui" id="nominal_dana_disetujui" class="form-control"
+                                    placeholder="Masukkan nominal dana yang disetujui" value="{{ old('nominal_dana_disetujui') }}" step="1000" required>
+                            </div>
+                        @else
+                            <p class="text-info">Jenis surat ini tidak memerlukan input nominal dana, surat bisa langsung disetujui.</p>
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success">
+                            Setujui
+                        </button>
+                    </div>
+                </form>                
+            </div>
+        </div>
+    </div>
+    
+
+
 
 <!-- Modal untuk Penolakan -->
 <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">

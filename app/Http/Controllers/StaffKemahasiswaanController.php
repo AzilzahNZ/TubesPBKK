@@ -143,6 +143,7 @@ class StaffKemahasiswaanController extends Controller
             'penanggung_jawab' => $suratKeluar->penanggung_jawab,
             'file_surat' => $suratKeluar->file_surat,
             'status' => 'Selesai',
+            'nominal_dana_disetujui' => $suratKeluar->nominal_dana_disetujui,
         ]);
 
         // Kirim pesan WhatsApp menggunakan Fonnte

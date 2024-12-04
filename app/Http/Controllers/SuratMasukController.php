@@ -78,32 +78,32 @@ class SuratMasukController extends Controller
 
     // App\Http\Controllers\SuratMasukController.php
 
-    public function approve($id)
+    public function approve(Request $request, $id)
     {
         // Ambil data surat masuk
         $suratMasuk = SuratMasuk::findOrFail($id);
 
         $kategori = 'Surat Masuk';
 
-        // Ubah status surat masuk menjadi "disetujui"
-        $suratMasuk->status = 'disetujui';
-        $suratMasuk->save();  // Menyimpan perubahan status surat masuk
-
-        // Kirim notifikasi WhatsApp
-        $this->sendWhatsAppNotification($suratMasuk->user->no_telepon, $suratMasuk);
-
+        if ($suratMasuk->jenis_surat === 'Proposal Permohonan Dana') {
+            $request->validate([
+                'nominal_dana_disetujui' => 'required|numeric|min:0',
+            ]);
+            $suratMasuk->nominal_dana_disetujui = $request->input('nominal_dana_disetujui'); // Menyimpan nominal dana
+            $suratMasuk->save();
+        }
 
         // Cari data riwayat pengajuan yang terkait dengan surat ini
         $riwayatPengajuan = RiwayatPengajuanSurat::where('surat_masuk_id', $suratMasuk->id)->first();
-
         if ($riwayatPengajuan) {
             // Update status riwayat pengajuan menjadi "disetujui"
             $riwayatPengajuan->status = 'disetujui';
+            $riwayatPengajuan->nominal_dana_disetujui = $suratMasuk->nominal_dana_disetujui;
             $riwayatPengajuan->save();
         }
 
         // Pindahkan surat ke riwayat surat (jika 6erlukan untuk log riwayat)
-        RiwayatSurat::create([
+        $test = RiwayatSurat::create([
             'surat_masuk_id' => $suratMasuk->id,
             'nama_ormawa' => $suratMasuk->user->name,
             'tanggal_surat_masuk_keluar' => now(),
@@ -115,7 +115,16 @@ class SuratMasukController extends Controller
             'file_surat' => $suratMasuk->file_surat,
             'nominal_dana' => $suratMasuk->nominal_dana,
             'status' => 'disetujui',
+            'nominal_dana_disetujui' => $suratMasuk->nominal_dana_disetujui
         ]);
+        $test->save();
+
+        // Ubah status surat masuk menjadi "disetujui"
+        $suratMasuk->status = 'disetujui';
+        $suratMasuk->save();  // Menyimpan perubahan status surat masuk
+
+        // Kirim notifikasi WhatsApp
+        $this->sendWhatsAppNotification($suratMasuk->user->no_telepon, $suratMasuk);
 
         // Redirect kembali ke halaman surat masuk
         return redirect()->route('staff-kemahasiswaan.surat-masuk')->with('success', 'Surat telah disetujui');
@@ -129,11 +138,31 @@ class SuratMasukController extends Controller
                 return false;
             }
 
+            // Format pesan berdasarkan jenis surat
+            $message = match ($suratMasuk->jenis_surat) {
+                'Proposal Permohonan Dana' =>
+                "Haloo {$suratMasuk->user->name}, ini SIMPULS.\n"
+                    . "Proposal permohonan dana Anda telah *DISETUJUI* dengan rincian sebagai berikut:\n\n"
+                    . "Nomor Surat: {$suratMasuk->nomor_surat}\n"
+                    . "Jenis Surat: {$suratMasuk->jenis_surat}\n"
+                    . "Nama Kegiatan: {$suratMasuk->nama_kegiatan}\n"
+                    . "Penanggung Jawab: {$suratMasuk->penanggung_jawab}\n"
+                    . "Nominal Dana Disetujui: Rp " . number_format($suratMasuk->nominal_dana_disetujui, 0, ',', '.') . "\n\n"
+                    . "Silakan mengumpulkan Laporan Pertanggung Jawaban(LPJ) Kegiatan setelah kegiatan selesai dilaksanakan ke Loket Kemahasiswaan.",
+                default =>
+                "Haloo {$suratMasuk->user->name}, ini SIMPULS.\n"
+                    . "Surat Anda telah *DISETUJUI* dan bisa diambil 2 hari ke depan di Loket Kemahasiswaan:\n\n"
+                    . "Nomor Surat: {$suratMasuk->nomor_surat}\n"
+                    . "Jenis Surat: {$suratMasuk->jenis_surat}\n"
+                    . "Nama Kegiatan: {$suratMasuk->nama_kegiatan}\n"
+                    . "Penanggung Jawab: {$suratMasuk->penanggung_jawab}\n",
+            };
+
             $response = Http::withHeaders([
-                'Authorization' => '1gDkUvyVMXaej64QEsrZ', // Ganti dengan API Key Fonnte Anda
+                'Authorization' => '1gDkUvyVMXaej64QEsrZ',
             ])->post('https://api.fonnte.com/send', [
                 'target' => $nomorTelepon,
-                'message' => "Haloo {$suratMasuk->user->name}, ini SIMPULS. \nSurat Anda telah *DISETUJUI* dan bisa diambil 2 hari kedepan di Loket Kemahasiswaan:\n\nNomor Surat: {$suratMasuk->nomor_surat}\nJenis Surat: {$suratMasuk->jenis_surat}\nNama Kegiatan: {$suratMasuk->nama_kegiatan}\nPenanggung Jawab: {$suratMasuk->penanggung_jawab}",
+                'message' => $message,
             ]);
 
             if ($response->successful()) {
@@ -193,7 +222,7 @@ class SuratMasukController extends Controller
             }
 
             $response = Http::withHeaders([
-                'Authorization' => '1gDkUvyVMXaej64QEsrZ', // Ganti dengan API Key Fonnte Anda
+                'Authorization' => '1gDkUvyVMXaej64QEsrZ',
             ])->post('https://api.fonnte.com/send', [
                 'target' => $nomorTelepon,
                 'message' => "Haloo {$suratMasuk->user->name}, ini SIMPULS. \nMaaf, surat Anda telah *DITOLAK* dengan alasan berikut:\n\n*Keterangan Penolakan*: {$keterangan}\n\nNomor Surat: {$suratMasuk->nomor_surat}\nJenis Surat: {$suratMasuk->jenis_surat}\nNama Kegiatan: {$suratMasuk->nama_kegiatan}\nPenanggung Jawab: {$suratMasuk->penanggung_jawab}\n\nSilakan perbaiki atau ajukan ulang jika memungkinkan.",

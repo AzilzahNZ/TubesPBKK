@@ -26,6 +26,7 @@ return new class extends Migration
             }
             $table->enum('status', ['Ditolak', 'Disetujui', 'Diproses', 'Selesai', 'Direvisi'])->default('Diproses');
             $table->timestamp('tanggal_diedit')->nullable();
+            $table->decimal('nominal_dana_disetujui', 15, 2)->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });
@@ -38,6 +39,7 @@ return new class extends Migration
     {
         Schema::table('riwayat_pengajuan_surats', function (Blueprint $table) {
             $table->dropColumn('tanggal_diedit');
+            $table->dropColumn('nominal_dana_disetujui');
         });
     }
 };
