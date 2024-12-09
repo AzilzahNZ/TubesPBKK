@@ -106,6 +106,7 @@ class SuratMasukController extends Controller
             'surat_keluar_id' => null,
             'nama_pengirim' => $suratMasuk->user->name,
             'tanggal_surat_masuk_keluar' => now(),
+            'tanggal_diedit' => $suratMasuk->tanggal_diedit,
             'kategori' => $kategori,
             'nomor_surat' => $suratMasuk->nomor_surat,
             'jenis_surat' => $suratMasuk->jenis_surat,
@@ -184,7 +185,7 @@ class SuratMasukController extends Controller
         // Pindahkan data ke tabel riwayat_surat
         RiwayatSurat::create([
             'surat_masuk_id' => $suratMasuk->id,
-            'nama_ormawa' => $suratMasuk->user->name,
+            'nama_pengirim' => $suratMasuk->user->name,
             'tanggal_surat_masuk_keluar' => now(),
             'kategori' => 'Surat Masuk',
             'nomor_surat' => $suratMasuk->nomor_surat,

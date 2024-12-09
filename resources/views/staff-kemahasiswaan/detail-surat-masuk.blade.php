@@ -14,6 +14,11 @@
                 </td>
             </tr>
             <tr>
+                <th>Tanggal Diedit</th>
+                <td>{{ $suratMasuk->tanggal_diedit? \Carbon\Carbon::parse($suratMasuk->tanggal_diedit)->timezone('Asia/Jakarta')->translatedformat('d F Y H:i'): '-' }}
+                </td>
+            </tr>
+            <tr>
                 <th>Nomor Surat</th>
                 <td>{{ $suratMasuk->nomor_surat }}</td>
             </tr>
@@ -33,19 +38,16 @@
                 <th>File Surat</th>
                 <td><a href="{{ asset('storage/' . $suratMasuk->file_surat) }}" target="_blank">Unduh</a></td>
             </tr>
-            <tr>
-                <th>Nominal Dana yang Diajukan</th>
-                <td>{{ $suratMasuk->nominal_dana !== null ? 'Rp ' . number_format($suratMasuk->nominal_dana, 0, ',', '.') : '-' }}
-                </td>
-            </tr>
+            @if ($suratMasuk->jenis_surat === 'Proposal Permohonan Dana')
+                <tr>
+                    <th>Nominal Dana yang Diajukan</th>
+                    <td>{{ $suratMasuk->nominal_dana !== null ? 'Rp ' . number_format($suratMasuk->nominal_dana, 0, ',', '.') : '-' }}
+                    </td>
+                </tr>
+            @endif
             <tr>
                 <th>Status</th>
                 <td>{{ $suratMasuk->status }}</td>
-            </tr>
-            <tr>
-                <th>Tanggal Diedit</th>
-                <td>{{ $suratMasuk->tanggal_diedit? \Carbon\Carbon::parse($suratMasuk->tanggal_diedit)->timezone('Asia/Jakarta')->translatedformat('d F Y H:i'): '-' }}
-                </td>
             </tr>
         </table>
 
