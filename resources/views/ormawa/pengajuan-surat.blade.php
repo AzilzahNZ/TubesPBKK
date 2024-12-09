@@ -80,7 +80,9 @@
         <!-- Wrapper untuk tombol Kirim -->
         <div style="display: flex; justify-content: center; margin-top: 20px;">
             <button class="items-center justify-center" type="submit"
-                style="width: 20%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Kirim</button>
+                style="width: 20%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">
+                Kirim
+            </button>
         </div>
     </form>
 

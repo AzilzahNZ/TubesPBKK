@@ -108,31 +108,40 @@ class StaffKemahasiswaanController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
         // Validasi umum untuk semua jenis surat
         $request->validate([
-            'tanggal_diajukan' => 'required|date',
+            'tanggal_dikeluarkan' => 'required|date',
             'nomor_surat' => 'required|string',
             'jenis_surat' => 'required|string',
             'nama_kegiatan' => 'required|string',
             'penanggung_jawab' => 'required|string',
             'file_surat' => 'required|file|mimes:pdf',
-            'nominal_dana' => 'nullable|numeric|min:1',
         ]);
 
-        // Simpan file surat dan dapatkan path-nya
-        $filePath = $request->file('file_surat')->store('surat', 'public');
+        // Simpan data ke tabel surat_keluar
+        $suratKeluar = new SuratKeluar;
+        $suratKeluar->user_id = $user->id; // ID Ormawa berdasarkan akun yang login
+        $suratKeluar->tanggal_dikeluarkan = $request->tanggal_dikeluarkan;
+        $suratKeluar->nomor_surat = $request->nomor_surat;
+        $suratKeluar->jenis_surat = $request->jenis_surat;
+        $suratKeluar->nama_kegiatan = $request->nama_kegiatan;
+        $suratKeluar->penanggung_jawab = $request->penanggung_jawab;
+        $suratKeluar->file_surat = $request->file('file_surat')->store('surat', 'public');
+        $suratKeluar->save();
 
         // Simpan data langsung ke tabel RiwayatSurat
         $riwayatSurat = RiwayatSurat::create([
             'surat_masuk_id' => null,
-            'nama_ormawa' => Auth::user()->name, // Nama Ormawa berdasarkan akun yang login
-            'tanggal_surat_masuk_keluar' => now(),
+            'surat_keluar_id' => $suratKeluar->id,
+            'nama_pengirim' => $user->name, // Nama Ormawa berdasarkan akun yang login
+            'tanggal_surat_masuk_keluar' => $suratKeluar->tanggal_dikeluarkan,
             'kategori' => 'Surat Keluar',
             'nomor_surat' => $request->nomor_surat,
             'jenis_surat' => $request->jenis_surat,
             'nama_kegiatan' => $request->nama_kegiatan,
             'penanggung_jawab' => $request->penanggung_jawab,
-            'file_surat' => $filePath,
+            'file_surat' => $suratKeluar->file_surat,
             'status' => 'Selesai',
             'nominal_dana_disetujui' => $request->nominal_dana ?? null,
         ]);

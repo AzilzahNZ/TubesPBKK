@@ -6,7 +6,7 @@
     <table class="table table-bordered" style="max-width: 100%;">
         <tr>
             <th>Pengirim</th>
-            <td>{{ $riwayat_surats->nama_ormawa }}</td> <!-- Mengakses nama pengguna dari relasi -->
+            <td>{{ $riwayat_surats->nama_pengirim }}</td> <!-- Mengakses nama pengguna dari relasi -->
         </tr>
         <tr>
             <th>Tanggal Diajukan</th>

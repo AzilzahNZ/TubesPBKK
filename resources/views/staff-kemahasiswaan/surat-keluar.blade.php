@@ -26,7 +26,7 @@
                 <div style="margin-bottom: 15px;">
                     <label for="tanggal_surat" style="display: block; font-weight: bold; margin-bottom: 5px;">
                         Tanggal Surat Diajukan</label>
-                    <input type="date" id="tanggal_surat" name="tanggal_diajukan"
+                    <input type="date" id="tanggal_surat" name="tanggal_dikeluarkan"
                         style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 40px;"
                         readonly required>
                 </div>
@@ -45,7 +45,6 @@
                         required>
                         <option value="">Pilih surat yang akan diajukan</option>
                         <option value="Surat Permohonan Izin Kegiatan">Permohonan Izin Kegiatan</option>
-                        <option value="Proposal Permohonan Dana">Proposal Permohonan Dana</option>
                         <option value="Peminjaman Ruangan">Peminjaman Ruangan</option>
                         <option value="Peminjaman Kamera">Peminjaman Kamera</option>
                     </select>

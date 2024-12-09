@@ -103,7 +103,8 @@ class SuratMasukController extends Controller
         // Pindahkan surat ke riwayat surat (jika 6erlukan untuk log riwayat)
         $test = RiwayatSurat::create([
             'surat_masuk_id' => $suratMasuk->id,
-            'nama_ormawa' => $suratMasuk->user->name,
+            'surat_keluar_id' => null,
+            'nama_pengirim' => $suratMasuk->user->name,
             'tanggal_surat_masuk_keluar' => now(),
             'kategori' => $kategori,
             'nomor_surat' => $suratMasuk->nomor_surat,

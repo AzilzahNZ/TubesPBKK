@@ -114,7 +114,7 @@
                                             <tr>
                                                 <td class="table-cell">{{ $loop->iteration + ($riwayat_surats->currentPage() - 1) * $riwayat_surats->perPage() }}</td>
                                                 <td class="table-cell">
-                                                    {{ $dt->suratMasuk->user->name ?? 'Staff Kemahasiswaan' }}</td>
+                                                    {{ $dt->nama_pengirim ?? 'Unknown' }}</td>
                                                 <td class="table-cell">
                                                     {{ Carbon\Carbon::parse($dt->tanggal_surat_masuk_keluar)->translatedFormat('d F Y') }}
                                                 </td>
