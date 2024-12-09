@@ -173,53 +173,6 @@ class OrmawaController extends Controller
     }
 
 
-
-
-    // public function store(Request $request)
-    // {
-    //     // Validasi umum untuk semua jenis surat
-    //     $request->validate([
-    //         'tanggal_diajukan' => 'required|date',
-    //         'nomor_surat' => 'required|string',
-    //         'jenis_surat' => 'required|string',
-    //         'nama_kegiatan' => 'required|string',
-    //         'penanggung_jawab' => 'required|string',
-    //         'file_surat' => 'required|file|mimes:pdf',
-    //         'nominal_dana' => 'nullable|numeric|min:1',
-    //     ]);
-
-    //     // Tambahan validasi jika jenis surat adalah Proposal Permohonan Dana
-    //     if ($request->jenis_surat === 'Proposal Permohonan Dana') {
-    //         $request->validate([
-    //             'nominal_dana' => 'required|numeric|min:1',
-    //         ]);
-    //     }
-
-    //     // Menyimpan data ke database (contoh)
-    //     $data = [
-    //         'user_id' => Auth::id(), // Menambahkan ID pengguna yang sedang login
-    //         'tanggal_diajukan' => $request->tanggal_diajukan,
-    //         'nomor_surat' => $request->nomor_surat,
-    //         'jenis_surat' => $request->jenis_surat,
-    //         'nama_kegiatan' => $request->nama_kegiatan,
-    //         'penanggung_jawab' => $request->penanggung_jawab,
-    //         'file_surat' => $request->file('file_surat')->store('surat', 'public'), // Menyimpan file di folder public/storage/surat
-    //         'nominal_dana' => $request->nominal_dana,
-    //     ];
-
-    //     // Jika jenis surat adalah Proposal Permohonan Dana, tambahkan nominal dana
-    //     if ($request->jenis_surat === 'Proposal Permohonan Dana') {
-    //         $data['nominal_dana'] = $request->nominal_dana;
-    //     }
-
-    //     // Simpan ke database (contoh dengan model PengajuanSurat)
-    //     RiwayatPengajuanSurat::create($data);
-
-    //     // Redirect dengan pesan sukses
-    //     return redirect()->route('ormawa.riwayat-pengajuan-surat')->with('success', 'Pengajuan surat berhasil disimpan!');
-    // }
-
-
     /**
      * Display the specified resource.
      */

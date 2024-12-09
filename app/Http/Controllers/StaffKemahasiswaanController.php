@@ -137,33 +137,33 @@ class StaffKemahasiswaanController extends Controller
             'nominal_dana_disetujui' => $request->nominal_dana ?? null,
         ]);
 
-        // Kirim pesan WhatsApp menggunakan Fonnte
-        $nomorTelepon = Auth::user()->no_telepon; // Ambil nomor telepon dari pengguna yang sedang login
+        // // Kirim pesan WhatsApp menggunakan Fonnte
+        // $nomorTelepon = Auth::user()->no_telepon; // Ambil nomor telepon dari pengguna yang sedang login
 
-        try {
-            if (!$nomorTelepon) {
-                Log::warning('Nomor telepon tidak ditemukan.');
-                return redirect()->back()->with('error', 'Nomor telepon pengguna tidak ditemukan!');
-            }
+        // try {
+        //     if (!$nomorTelepon) {
+        //         Log::warning('Nomor telepon tidak ditemukan.');
+        //         return redirect()->back()->with('error', 'Nomor telepon pengguna tidak ditemukan!');
+        //     }
 
-            $response = Http::withHeaders([
-                'Authorization' => '1gDkUvyVMXaej64QEsrZ', // Ganti dengan API Key Fonnte Anda
-            ])->post('https://api.fonnte.com/send', [
-                'target' => $nomorTelepon, // Nomor WhatsApp tujuan
-                'message' => "Hai, ini SIMPULS. Surat sudah selesai dan bisa diambil di Loket Kemahasiswaan:\n\n" .
-                    "Nomor Surat: {$riwayatSurat->nomor_surat}\n" .
-                    "Jenis Surat: {$riwayatSurat->jenis_surat}\n" .
-                    "Nama Kegiatan: {$riwayatSurat->nama_kegiatan}.",
-            ]);
+        //     $response = Http::withHeaders([
+        //         'Authorization' => '1gDkUvyVMXaej64QEsrZ', // Ganti dengan API Key Fonnte Anda
+        //     ])->post('https://api.fonnte.com/send', [
+        //         'target' => $nomorTelepon, // Nomor WhatsApp tujuan
+        //         'message' => "Hai, ini SIMPULS. Surat sudah selesai dan bisa diambil di Loket Kemahasiswaan:\n\n" .
+        //             "Nomor Surat: {$riwayatSurat->nomor_surat}\n" .
+        //             "Jenis Surat: {$riwayatSurat->jenis_surat}\n" .
+        //             "Nama Kegiatan: {$riwayatSurat->nama_kegiatan}.",
+        //     ]);
 
-            if ($response->successful()) {
-                Log::info('Pesan WhatsApp berhasil dikirim.');
-            } else {
-                Log::warning('Pesan WhatsApp gagal dikirim: ' . $response->body());
-            }
-        } catch (\Exception $e) {
-            Log::error('Terjadi kesalahan saat mengirim pesan WhatsApp: ' . $e->getMessage());
-        }
+        //     if ($response->successful()) {
+        //         Log::info('Pesan WhatsApp berhasil dikirim.');
+        //     } else {
+        //         Log::warning('Pesan WhatsApp gagal dikirim: ' . $response->body());
+        //     }
+        // } catch (\Exception $e) {
+        //     Log::error('Terjadi kesalahan saat mengirim pesan WhatsApp: ' . $e->getMessage());
+        // }
 
         return redirect()->route('riwayat-surat')->with('success', 'Surat keluar berhasil dibuat dan notifikasi WhatsApp dikirim!');
     }
